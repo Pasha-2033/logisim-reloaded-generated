@@ -6,7 +6,7 @@ import javax.swing.*;
 import modules.languages.language;
 import modules.methods.guimethod;
 
-public class Menu extends JFrame {
+public class MainMenu extends JFrame {
     public static JMenuBar upmenu(){
         JMenuBar menu = new JMenuBar();
         menu.add(filemenu());
@@ -53,7 +53,7 @@ public class Menu extends JFrame {
         menu.add(new JMenuItem(language.trnslt("Save"), new ImageIcon("resourses/menuicon/fileicon.png")));
         menu.add(new JMenuItem(language.trnslt("Saveas") + "...", new ImageIcon("resourses/menuicon/foldericon.png")));
         menu.addSeparator();
-        menu.add(new JMenuItem(language.trnslt("Exportimage") + "...", new ImageIcon("resourses/menuicon/foldericon.png")));
+        menu.add(new JMenuItem(language.trnslt("Exportimage") + "...", new ImageIcon("resourses/menuicon/imagicon.png")));
         menu.add(new JMenuItem(language.trnslt("Print") + "...", new ImageIcon("resourses/menuicon/printicon.png")));
         menu.addSeparator();
         JMenuItem settings = new JMenuItem(new guimethod.settings());
