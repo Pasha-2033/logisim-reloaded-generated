@@ -14,9 +14,9 @@ public class Menu extends JFrame {
         return menu;
     }
     public static JMenuBar settingsmenubar(){
-        JMenuBar menubar = new JMenuBar();
-        menubar.add(settingsmenu());
-        return menubar;
+        JMenuBar menu = new JMenuBar();
+        menu.add(settingsmenu());
+        return menu;
     }
     /*public static JMenuBar toolmenu(){
         JMenuBar menu = new JMenuBar();
@@ -38,39 +38,52 @@ public class Menu extends JFrame {
     }*/
     public static JMenu filemenu(){
         JMenu menu = new JMenu(language.trnslt("File"));
-        menu.add(new JMenuItem(language.trnslt("New"), new ImageIcon("resourses/menuicon/fileicon.png")));
-        //menu.add(new JMenuItem(language.trnslt("Open") + "...", new ImageIcon("resourses/menuicon/foldericon.png")));
-        JMenuItem open = new JMenuItem(new guimethod.filechooser());
-        open.setIcon(new ImageIcon("resourses/menuicon/foldericon.png"));
-        menu.add(open);
+        JMenuItem item;
+        item = new JMenuItem(new guimethod.newfile());
+        item.setIcon(new ImageIcon("resourses/menuicon/fileicon.png"));
+        menu.add(item);
+        item = new JMenuItem(new guimethod.open());
+        item.setIcon(new ImageIcon("resourses/menuicon/foldericon.png"));
+        menu.add(item);
         String[] files = openedrecent();
         if (files[0].length() > 0) {
             JMenu submenu = new JMenu(language.trnslt("Openrecent"));
             for (String file : files){
-                submenu.add(new JMenuItem(file,
-                    new ImageIcon("resourses/menuicon/fileicon.png")));
+                item = new JMenuItem(new guimethod.openrecent(file));
+                item.setIcon(new ImageIcon("resourses/menuicon/fileicon.png"));
+                submenu.add(item);
             }
             menu.add(submenu);
         } else {
-            menu.add(new JMenuItem(language.trnslt("Openrecent"),
-                new ImageIcon("resourses/menuicon/fileicon.png")));
-            //menu.add(new JMenuItem(language.trnslt("Openrecent") + " (" + language.trnslt("newfile") + ")"));
+            item = new JMenuItem(new guimethod.openrecent(language.trnslt("Openrecent") + " (" + language.trnslt("New") + ")"));
+            item.setIcon(new ImageIcon("resourses/menuicon/fileicon.png"));
+            menu.add(item);
         }
         menu.addSeparator();
-        menu.add(new JMenuItem(language.trnslt("Close"), new ImageIcon("resourses/menuicon/exiticon.png")));
-        menu.add(new JMenuItem(language.trnslt("Save"), new ImageIcon("resourses/menuicon/fileicon.png")));
-        menu.add(new JMenuItem(language.trnslt("Saveas") + "...", new ImageIcon("resourses/menuicon/foldericon.png")));
+        item = new JMenuItem(new guimethod.close());
+        item.setIcon(new ImageIcon("resourses/menuicon/exiticon.png"));
+        menu.add(item);
+        item = new JMenuItem(new guimethod.save());
+        item.setIcon(new ImageIcon("resourses/menuicon/fileicon.png"));
+        menu.add(item);
+        item = new JMenuItem(new guimethod.saveas());
+        item.setIcon(new ImageIcon("resourses/menuicon/foldericon.png"));
+        menu.add(item);
         menu.addSeparator();
-        menu.add(new JMenuItem(language.trnslt("Exportimage") + "...", new ImageIcon("resourses/menuicon/imagicon.png")));
-        menu.add(new JMenuItem(language.trnslt("Print") + "...", new ImageIcon("resourses/menuicon/printicon.png")));
+        item = new JMenuItem(new guimethod.exportimage());
+        item.setIcon(new ImageIcon("resourses/menuicon/imagicon.png"));
+        menu.add(item);
+        item = new JMenuItem(new guimethod.print());
+        item.setIcon(new ImageIcon("resourses/menuicon/printicon.png"));
+        menu.add(item);
         menu.addSeparator();
-        JMenuItem settings = new JMenuItem(new guimethod.settings());
-        settings.setIcon(new ImageIcon("resourses/menuicon/settingsicon.png"));
-        menu.add(settings);
+        item = new JMenuItem(new guimethod.settings());
+        item.setIcon(new ImageIcon("resourses/menuicon/settingsicon.png"));
+        menu.add(item);
         menu.addSeparator();
-        JMenuItem tmp = new JMenuItem(new guimethod.exit());
-        tmp.setIcon(new ImageIcon("resourses/menuicon/exiticon.png"));
-        menu.add(tmp);
+        item = new JMenuItem(new guimethod.exit());
+        item.setIcon(new ImageIcon("resourses/menuicon/exiticon.png"));
+        menu.add(item);
         return menu;
     }
     public static JMenu editmenu(){
@@ -80,8 +93,8 @@ public class Menu extends JFrame {
         return menu;
     }
     public static JMenu settingsmenu(){
-        JMenu menu = new JMenu(language.trnslt("Theme"));
-        menu.add(new JMenuItem(language.trnslt("None")));
+        JMenu menu = new JMenu(language.trnslt("tmp"));
+        menu.add(new JMenuItem(language.trnslt("tmp")));
         return menu;
     }
     public static String[] openedrecent(){
