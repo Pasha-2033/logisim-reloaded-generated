@@ -7,11 +7,16 @@ import modules.languages.language;
 import modules.methods.guimethod;
 
 public class Menu extends JFrame {
-    public static JMenuBar upmenu(){
+    public static JMenuBar upmenubar(){
         JMenuBar menu = new JMenuBar();
         menu.add(filemenu());
         menu.add(editmenu());
         return menu;
+    }
+    public static JMenuBar settingsmenubar(){
+        JMenuBar menubar = new JMenuBar();
+        menubar.add(settingsmenu());
+        return menubar;
     }
     /*public static JMenuBar toolmenu(){
         JMenuBar menu = new JMenuBar();
@@ -72,6 +77,11 @@ public class Menu extends JFrame {
         JMenu menu = new JMenu(language.trnslt("Project"));
         menu.add(new JMenuItem(language.trnslt("Undo"), new ImageIcon("resourses/menuicon/undoicon.png")));
         menu.add(new JMenuItem(language.trnslt("Return"), new ImageIcon("resourses/menuicon/returnicon.png")));
+        return menu;
+    }
+    public static JMenu settingsmenu(){
+        JMenu menu = new JMenu(language.trnslt("Theme"));
+        menu.add(new JMenuItem(language.trnslt("None")));
         return menu;
     }
     public static String[] openedrecent(){

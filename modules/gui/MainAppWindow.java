@@ -8,6 +8,6 @@ public class MainAppWindow extends JFrame {
         setBounds(x, y, width, height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setJMenuBar(Menu.upmenu());
+        setJMenuBar(Menu.upmenubar());
     }
 }

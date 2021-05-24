@@ -8,6 +8,6 @@ public class SettingsAppWindow extends JFrame {
         setBounds(x, y, width, height);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     
-        //setJMenuBar(Menu.upmenu());
+        setJMenuBar(Menu.settingsmenubar());
       }
 }
