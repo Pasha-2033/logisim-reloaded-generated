@@ -1,6 +1,6 @@
 package modules.gui;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 public class MainAppWindow extends JFrame {
     public MainAppWindow(int x, int y, int width, int height){
@@ -8,6 +8,6 @@ public class MainAppWindow extends JFrame {
         setBounds(x, y, width, height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setJMenuBar(MainMenu.upmenu());
+        setJMenuBar(Menu.upmenu());
     }
 }
