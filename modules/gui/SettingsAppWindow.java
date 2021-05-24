@@ -6,7 +6,7 @@ public class SettingsAppWindow extends JFrame {
     public SettingsAppWindow(int x, int y, int width, int height){
         super("Settings"); //Заголовок окна
         setBounds(x, y, width, height);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     
         //setJMenuBar(Menu.upmenu());
       }
