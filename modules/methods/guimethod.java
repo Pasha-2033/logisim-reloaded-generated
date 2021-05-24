@@ -3,6 +3,7 @@ package modules.methods;
 import java.awt.event.*;
 import javax.swing.*;
 import modules.languages.language;
+import modules.gui.FileChosserWindow;
 import modules.gui.SettingsAppWindow;
 
 public class guimethod {
@@ -24,6 +25,14 @@ public class guimethod {
         public void actionPerformed(ActionEvent e) {
             SettingsAppWindow settings = new SettingsAppWindow(0, 0, 400, 300);
             settings.setVisible(true);
+        }
+    }
+    public static class filechooser extends AbstractAction {
+        public filechooser(){
+            putValue(NAME, language.trnslt("Open"));
+        }
+        public void actionPerformed(ActionEvent e) {
+            new FileChosserWindow();
         }
     }
 }

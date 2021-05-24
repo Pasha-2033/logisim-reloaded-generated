@@ -34,7 +34,10 @@ public class Menu extends JFrame {
     public static JMenu filemenu(){
         JMenu menu = new JMenu(language.trnslt("File"));
         menu.add(new JMenuItem(language.trnslt("New"), new ImageIcon("resourses/menuicon/fileicon.png")));
-        menu.add(new JMenuItem(language.trnslt("Open") + "...", new ImageIcon("resourses/menuicon/foldericon.png")));
+        //menu.add(new JMenuItem(language.trnslt("Open") + "...", new ImageIcon("resourses/menuicon/foldericon.png")));
+        JMenuItem open = new JMenuItem(new guimethod.filechooser());
+        open.setIcon(new ImageIcon("resourses/menuicon/foldericon.png"));
+        menu.add(open);
         String[] files = openedrecent();
         if (files[0].length() > 0) {
             JMenu submenu = new JMenu(language.trnslt("Openrecent"));
