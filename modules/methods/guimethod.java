@@ -22,7 +22,7 @@ public class guimethod {
             putValue(NAME, language.trnslt("Settings"));
         }
         public void actionPerformed(ActionEvent e) {
-            SettingsAppWindow settings = new SettingsAppWindow(0, 0, 400, 200);
+            SettingsAppWindow settings = new SettingsAppWindow(0, 0, 400, 300);
             settings.setVisible(true);
         }
     }
