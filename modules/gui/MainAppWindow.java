@@ -1,6 +1,8 @@
 package modules.gui;
 
 import javax.swing.*;
+import java.awt.*;
+import modules.component.draw.*;
 
 public class MainAppWindow extends JFrame {
     public MainAppWindow(int x, int y, int width, int height){
@@ -10,5 +12,7 @@ public class MainAppWindow extends JFrame {
         setIconImage(new ImageIcon("resourses/programicon.png").getImage());
 
         setJMenuBar(Menu.upmenubar());
+        Graphics g = getGraphics();
+        new power(g);
     }
 }
