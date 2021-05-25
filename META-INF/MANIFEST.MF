@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Created-By: communistic_systema(Pasha-2033) and lllzebralll
+Addressforquestions: https://vk.com/logisim (group chat)
+Main-Class: Main
