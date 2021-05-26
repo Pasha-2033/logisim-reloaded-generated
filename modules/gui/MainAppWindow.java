@@ -15,6 +15,6 @@ public class MainAppWindow extends JFrame {
         setJMenuBar(Menu.upmenubar());
         
         //Graphics g = this.getGraphics();
-        add(new power());
+        add(new power(15,20));
     }
 }
