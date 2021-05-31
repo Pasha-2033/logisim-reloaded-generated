@@ -18,6 +18,6 @@ public class power extends JComponent{
         g2d.setColor(Color.BLACK);
         g2d.setStroke(new BasicStroke(6.0F, 1, 2));//установить толщину
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.drawLine(0+x,0+x,20+y,20+y);//объект g создается автоматически
+        g2d.drawLine(0+x,0+y,20+x,20+y);//объект g создается автоматически
     }
 }
