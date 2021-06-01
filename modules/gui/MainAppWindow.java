@@ -2,7 +2,6 @@ package modules.gui;
 
 import javax.swing.*;
 import java.awt.*;
-import modules.component.draw.power;
 
 public class MainAppWindow extends JFrame {
     public MainAppWindow(int x, int y, int width, int height){
@@ -15,6 +14,6 @@ public class MainAppWindow extends JFrame {
         setJMenuBar(Menu.upmenubar());
         
         //Graphics g = this.getGraphics();
-        add(new power(15,20));
+        //add(new power(15,20));
     }
 }
