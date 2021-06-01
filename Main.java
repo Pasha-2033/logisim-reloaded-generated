@@ -1,7 +1,9 @@
+import javax.swing.UnsupportedLookAndFeelException;
+
 import modules.gui.MainAppWindow;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
         MainAppWindow window = new MainAppWindow(200, 200, 800, 600);
         window.setVisible(true);
     }
