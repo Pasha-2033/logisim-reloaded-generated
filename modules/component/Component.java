@@ -1,5 +1,8 @@
 package modules.component;
 
+import java.util.Collections;
+import java.util.List;
+
 public class Component {
     public static Port[] Ports = {};
     public void setPorts(Port[] ports){
@@ -23,47 +26,57 @@ public class Component {
 
 
 
-    public static int[][] LineData = {};
+    public static List<int[]> LineData = Collections.emptyList();
     public static int[][] RectData = {};
     public static int[][] OvalData = {};
     public static int[][] CircData = {};
     public static int[][] PolyData = {};
-    public static int[][] TextData = {};
+    public static List<List<Object>> TextData = Collections.emptyList();
     public static class ComponentBounds {
-        public int[][] getLineData(){
+        public List<int[]> getLineData(){
             return LineData;
         }
-        public void setLineData(int[][] Data){
+        public void setFullLineData(List<int[]> Data){
             LineData = Data;
+        }
+        public void setLineDatabyindex(int index, int[] Data){
+            try {
+                LineData.set(index, Data);
+            } catch (Exception e) {
+                LineData.add(Data);
+            }
+        }
+        public void addLineData(int[] Data){
+            LineData.add(Data);
         }
         public int[][] getRectData(){
             return RectData;
         }
-        public void setRectData(int[][] Data){
+        public void setFullRectData(int[][] Data){
             RectData = Data;
         }
         public int[][] getOvalData(){
             return OvalData;
         }
-        public void setOvalData(int[][] Data){
+        public void setFullOvalData(int[][] Data){
             OvalData = Data;
         }
         public int[][] getCircData(){
             return CircData;
         }
-        public void setCircData(int[][] Data){
+        public void setFullCircData(int[][] Data){
             CircData = Data;
         }
         public int[][] getPolyData(){
             return PolyData;
         }
-        public void setPolyData(int[][] Data){
+        public void setFullPolyData(int[][] Data){
             PolyData = Data;
         }
-        public int[][] getTextData(){
+        public List<List<Object>> getTextData(){
             return TextData;
         }
-        public void setTextData(int[][] Data){
+        public void setFullTextData(List<List<Object>> Data){
             TextData = Data;
         }
     }

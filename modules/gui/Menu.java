@@ -1,6 +1,7 @@
 package modules.gui;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
 import java.util.*;
 import javax.swing.*;
 import modules.languages.language;
@@ -103,7 +104,7 @@ public class Menu extends JFrame {
         try {
             config.load(new FileReader(new File("settings.properties")));
             return config.getProperty("recentopened").split("\\*");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return none;
