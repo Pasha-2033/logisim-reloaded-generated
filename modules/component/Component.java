@@ -42,5 +42,29 @@ public class Component {
         public void setRectData(int[][] Data){
             RectData = Data;
         }
+        public int[][] getOvalData(){
+            return OvalData;
+        }
+        public void setOvalData(int[][] Data){
+            OvalData = Data;
+        }
+        public int[][] getCircData(){
+            return CircData;
+        }
+        public void setCircData(int[][] Data){
+            CircData = Data;
+        }
+        public int[][] getPolyData(){
+            return PolyData;
+        }
+        public void setPolyData(int[][] Data){
+            PolyData = Data;
+        }
+        public int[][] getTextData(){
+            return TextData;
+        }
+        public void setTextData(int[][] Data){
+            TextData = Data;
+        }
     }
 }
