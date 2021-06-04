@@ -13,7 +13,6 @@ public class Port {
     public List<List<Object>> Data = Collections.emptyList();
     public List<String> DataType = Collections.emptyList();
     public Color color;
-    public int getdatabycomponentid = 0;
     public Port(int x, int y, String type, int[] size){
         String[] tmp = {"int"};
         SetPort(x, y, type, size, tmp, "");
@@ -44,9 +43,8 @@ public class Port {
             }
             this.Data.add(tmp);
         }
+        updateColor();
     }
-
-
     public void setFullData(List<List<Object>> Data){
         if (Data.size() == this.Data.size()){
             boolean todo = true;
@@ -66,8 +64,6 @@ public class Port {
     public List<List<Object>> getData(){
         return Data;
     }
-
-
     public List<Object> getDrawData(){
         return Arrays.asList(location, lable, color);
     }
@@ -92,9 +88,21 @@ public class Port {
             color = Color.BLACK;
         }
     }
-
-    public void setidtogetdata(int id){
-        getdatabycomponentid = id;
+    public Port portsourse;
+    public void setPortSource(Port port){
+        portsourse = port;
+    }
+    public void updatePortData(){
+        try {
+            setFullData(portsourse.getData());
+            updateColor();
+        } catch (Exception e) {
+            e.printStackTrace();
+            updateColor();
+        }
+    }
+    public List<Object> getnotDrawData(){
+        return Arrays.asList(type, size);
     }
 }
 //Data.add(1);

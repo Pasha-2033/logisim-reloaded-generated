@@ -4,6 +4,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class Component {
+    public String componentname;
+    public Component(String componentname){
+        this.componentname = componentname;
+    }
+
+
     public static Port[] Ports = {};
     public void setPorts(Port[] ports){
         Ports = ports;
@@ -27,56 +33,46 @@ public class Component {
 
 
     public static List<int[]> LineData = Collections.emptyList();
-    public static int[][] RectData = {};
-    public static int[][] OvalData = {};
-    public static int[][] CircData = {};
-    public static int[][] PolyData = {};
+    public static List<int[]> RectData = Collections.emptyList();
+    public static List<int[]> OvalData = Collections.emptyList();
+    public static List<int[]> CircData = Collections.emptyList();
+    public static List<int[]> PolyData = Collections.emptyList();
     public static List<List<Object>> TextData = Collections.emptyList();
     public static class ComponentBounds {
         public List<int[]> getLineData(){
             return LineData;
         }
-        public void setFullLineData(List<int[]> Data){
+        public void setLineData(List<int[]> Data){
             LineData = Data;
         }
-        public void setLineDatabyindex(int index, int[] Data){
-            try {
-                LineData.set(index, Data);
-            } catch (Exception e) {
-                LineData.add(Data);
-            }
-        }
-        public void addLineData(int[] Data){
-            LineData.add(Data);
-        }
-        public int[][] getRectData(){
+        public List<int[]> getRectData(){
             return RectData;
         }
-        public void setFullRectData(int[][] Data){
+        public void setRectData(List<int[]> Data){
             RectData = Data;
         }
-        public int[][] getOvalData(){
+        public List<int[]> getOvalData(){
             return OvalData;
         }
-        public void setFullOvalData(int[][] Data){
+        public void setOvalData(List<int[]> Data){
             OvalData = Data;
         }
-        public int[][] getCircData(){
+        public List<int[]> getCircData(){
             return CircData;
         }
-        public void setFullCircData(int[][] Data){
+        public void setCircData(List<int[]> Data){
             CircData = Data;
         }
-        public int[][] getPolyData(){
+        public List<int[]> getPolyData(){
             return PolyData;
         }
-        public void setFullPolyData(int[][] Data){
+        public void setPolyData(List<int[]> Data){
             PolyData = Data;
         }
         public List<List<Object>> getTextData(){
             return TextData;
         }
-        public void setFullTextData(List<List<Object>> Data){
+        public void setTextData(List<List<Object>> Data){
             TextData = Data;
         }
     }
