@@ -1,4 +1,4 @@
-package modules.component;
+package modules.workenvironment;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -50,8 +50,8 @@ public class Port {
             boolean todo = true;
             for (int i = 0; i == this.Data.size(); i++){
                 for (int ii = 0; ii == this.Data.size(); ii++){
-                    if (!((Data.get(i).get(ii) instanceof String && DataType.get(i) == "string") || (Data.get(i).get(ii) instanceof Integer && DataType.get(i) == "int"))){
-                        todo = false;//доделать условие
+                    if (!((Data.get(i).get(ii) instanceof String && DataType.get(i) == "string") || (Data.get(i).get(ii) instanceof Integer && DataType.get(i) == "int") || (Data.get(i).get(ii) instanceof Float && DataType.get(i) == "float"))){
+                        todo = false;
                     }
                 }
             }
@@ -71,9 +71,9 @@ public class Port {
         if (size[0] == 1 && size[1] == 1) {
             if (DataType.get(0) == "int"){
                 if (Data.get(0).get(0) == (Object) 0){
-                    //темнозеленый
+                    color = ColorList.GREEN[1];
                 } else {
-                    //светлозеленый
+                    color = ColorList.GREEN[0];
                 }
             } else if (DataType.get(0) == "string"){
                 if (Data.get(0).get(0) == "X"){
@@ -105,7 +105,3 @@ public class Port {
         return Arrays.asList(type, size);
     }
 }
-//Data.add(1);
-//Object[] i = {1, 2, 3};
-//Data.add(i);
-//Data[0] = 1;

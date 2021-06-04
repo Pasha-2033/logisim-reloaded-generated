@@ -1,8 +1,8 @@
 package modules.component.wires;
 
-import modules.gui.DrawComponent;
+import modules.methods.DrawMethods;
 
-public class power extends DrawComponent {
+public class power extends DrawMethods {
     public power(){}
     public String fasing;
     public int x;
