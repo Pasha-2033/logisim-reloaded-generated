@@ -52,6 +52,20 @@ public class DrawMethods extends JComponent {
             g2d.drawPolygon(poly);
         }
     }
+    public void fillPoly(Graphics g, int[] location, int scale, int[] ComponentLocation, int[] PolyX, int[] PolyY, Color color, Stroke strk){
+        if (PolyX.length == PolyY.length) { //if предохранитель
+            super.paintComponent(g);
+            if (strk == null){
+                strk = new BasicStroke(1.0F, 1, 1);
+            }
+            Polygon poly = new Polygon(PolyX, PolyY, PolyX.length);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setColor(color);
+            g2d.setStroke(new BasicStroke(6.0F, 1, 2));//установить толщину
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.fillPolygon(poly);
+        }
+    }
     public void drawtOval(Graphics g, int[] location, int scale, int[] ComponentLocation, int argX, int argY, int argW, int argH, Color color, Stroke strk){
         super.paintComponent(g);
         if (strk == null){
@@ -63,7 +77,7 @@ public class DrawMethods extends JComponent {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.drawOval(ComponentLocation[0] - location[0] + argX, ComponentLocation[1] + location[1] + argY, argW, argH);
     }
-    public void drawtCirc(Graphics g, int[] location, int scale, int[] ComponentLocation, int argX, int argY, int argR, Color color, Stroke strk){
+    public void fillOval(Graphics g, int[] location, int scale, int[] ComponentLocation, int argX, int argY, int argW, int argH, Color color, Stroke strk){
         super.paintComponent(g);
         if (strk == null){
             strk = new BasicStroke(1.0F, 1, 1);
@@ -72,7 +86,7 @@ public class DrawMethods extends JComponent {
         g2d.setColor(color);
         g2d.setStroke(strk);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.drawOval(ComponentLocation[0] - location[0] + argX, ComponentLocation[1] + location[1] + argY, argR, argR);
+        g2d.fillOval(ComponentLocation[0] - location[0] + argX, ComponentLocation[1] + location[1] + argY, argW, argH);
     }
     public void drawRect(Graphics graphics, int[] screenLocation, int scale, int[] componentLocation, int argX,
             int argY, int argW, int argH, Color color, Stroke strk) {

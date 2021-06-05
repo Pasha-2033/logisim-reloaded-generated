@@ -17,6 +17,9 @@ public class Main {
         ScreenLocation[1] = 0;
     }
     public List<Component> Components = Collections.emptyList();
+    
+
+
     public void drawComponentBody(Component component){
         int[] location = component.getComponentLocation();
         if (component.DrawOder.size() == 0){
@@ -25,10 +28,25 @@ public class Main {
             }
             //продолжить в определенном порядке
         } else {
+            int line = 0;
+            int rect = 0;
+            int oval = 0;
+            int poly = 0;
+            int text = 0;
             for (String data : component.DrawOder){
-                if (data == "string"){
+                if (data == "Line"){
+                    Object[] tmp = component.LineData.get(line);
+                    (new DrawMethods()).drawLine(graphics, ScreenLocation, Scale, location, (int) tmp[0], (int) tmp[1], (int) tmp[2], (int) tmp[3], (Color) tmp[4], (Stroke) tmp[5]);
+                    line++;
+                } else if (data == "Rect"){
+                    Object[] tmp = component.LineData.get(rect);
+                    if (tmp[0] == "in-out"){
 
-                } else if (data == "int"){
+                    } else if (tmp[0] == "in"){
+
+                    } else{
+
+                    }
 
                 }
                 //продолжить

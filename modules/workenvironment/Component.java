@@ -35,7 +35,6 @@ public class Component {
     public List<Object[]> LineData = Collections.emptyList();
     public List<Object[]> RectData = Collections.emptyList();
     public List<Object[]> OvalData = Collections.emptyList();
-    public List<Object[]> CircData = Collections.emptyList();
     public List<Object[]> PolyData = Collections.emptyList();
     public List<Object[]> TextData = Collections.emptyList();
     public void setDrawOrder( List<String> Data){
@@ -49,9 +48,6 @@ public class Component {
     }
     public void setOvalData(List<Object[]> Data){
         OvalData = Data;
-    }
-    public void setCircData(List<Object[]> Data){
-        CircData = Data;
     }
     public void setPolyData(List<Object[]> Data){
         PolyData = Data;
