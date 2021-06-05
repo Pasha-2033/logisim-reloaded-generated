@@ -1,13 +1,10 @@
 package modules.workenvironment;
-
 import java.util.Collections;
 import java.util.List;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Stroke;
-
 import modules.methods.DrawMethods;
-
 public class Main {
     public int[] ScreenLocation;
     public int Scale;
@@ -17,10 +14,9 @@ public class Main {
         ScreenLocation[1] = 0;
     }
     public List<Component> Components = Collections.emptyList();
-    
-
-
+    public List<Component> ProjectComponents = Collections.emptyList();
     public void drawComponentBody(Component component){
+        //провести изменения аргументов int с учетом матрицы поворота
         int[] location = component.getComponentLocation();
         if (component.DrawOder.size() == 0){
             for (Object[] line : component.LineData){
@@ -41,13 +37,44 @@ public class Main {
                 } else if (data == "Rect"){
                     Object[] tmp = component.LineData.get(rect);
                     if (tmp[0] == "in-out"){
-
+                        (new DrawMethods()).fillRect(graphics, ScreenLocation, Scale, location, (int) tmp[0], (int) tmp[1], (int) tmp[2], (int) tmp[3], (Color) tmp[4]);
+                        (new DrawMethods()).drawRect(graphics, ScreenLocation, Scale, location, (int) tmp[0], (int) tmp[1], (int) tmp[2], (int) tmp[3], (Color) tmp[4], (Stroke) tmp[5]);
                     } else if (tmp[0] == "in"){
-
+                        (new DrawMethods()).fillRect(graphics, ScreenLocation, Scale, location, (int) tmp[0], (int) tmp[1], (int) tmp[2], (int) tmp[3], (Color) tmp[4]);
                     } else{
-
+                        (new DrawMethods()).drawRect(graphics, ScreenLocation, Scale, location, (int) tmp[0], (int) tmp[1], (int) tmp[2], (int) tmp[3], (Color) tmp[4], (Stroke) tmp[5]);
                     }
-
+                    rect++;
+                } else if (data == "Oval"){
+                    Object[] tmp = component.OvalData.get(oval);
+                    if (tmp[0] == "in-out"){
+                        //
+                    } else if (tmp[0] == "in"){
+                        //
+                    } else{
+                        // 
+                    }
+                    oval++;
+                } else if (data == "Poly"){
+                    Object[] tmp = component.PolyData.get(poly);
+                    if (tmp[0] == "in-out"){
+                        //
+                    } else if (tmp[0] == "in"){
+                        //
+                    } else{
+                        //
+                    }
+                    poly++;
+                } else {
+                    Object[] tmp = component.TextData.get(text);
+                    if (tmp[0] == "in-out"){
+                        //
+                    } else if (tmp[0] == "in"){
+                        //
+                    } else{
+                        //
+                    }
+                    text++;
                 }
                 //продолжить
             }
@@ -56,7 +83,13 @@ public class Main {
     public void drawComponentPort(Component component){
         int[] location = component.getComponentLocation();
         for (Port port : component.Ports){
-
+            //
         }
+    }
+    public void newprojectcomponent(Component component){
+        ProjectComponents.add(component);
+    }
+    public void deleteprojectcomponent(){
+
     }
 }

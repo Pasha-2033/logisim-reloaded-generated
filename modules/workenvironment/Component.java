@@ -37,7 +37,7 @@ public class Component {
     public List<Object[]> OvalData = Collections.emptyList();
     public List<Object[]> PolyData = Collections.emptyList();
     public List<Object[]> TextData = Collections.emptyList();
-    public void setDrawOrder( List<String> Data){
+    public void setDrawOrder(List<String> Data){
         DrawOder = Data;
     }
     public void setLineData(List<Object[]> Data){
@@ -54,5 +54,9 @@ public class Component {
     }
     public void setTextData(List<Object[]> Data){
         TextData = Data;
+    }
+    public int rotation = 0;
+    public void setrotation(int rotation){
+        this.rotation = rotation;
     }
 }
