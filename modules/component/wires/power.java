@@ -2,7 +2,6 @@ package modules.component.wires;
 import java.util.Arrays;
 import modules.workenvironment.Component;
 import modules.workenvironment.Port;
-
 public class power extends Component {
     public power() {
         super("power");
@@ -10,4 +9,3 @@ public class power extends Component {
         setLineData(Arrays.asList());
     }
 }
-
