@@ -3,6 +3,7 @@ package modules.workenvironment;
 import java.awt.Color;
 
 public class ColorList{
+    //думаю, что просто списочек для нас, а не для проги, она вызывает ошибку по вызову одного из цветов rgb
     public static Color[] BLUE = {new Color(20, 90, 180)};
     public static Color[] GRAY = {new Color(110, 110, 115)};
     public static Color[] GREEN = {new Color(105, 220, 0), new Color(50, 110, 0)};
