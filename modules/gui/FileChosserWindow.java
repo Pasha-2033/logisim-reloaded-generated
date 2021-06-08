@@ -1,9 +1,7 @@
 package modules.gui;
-
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import modules.languages.language;
-
 public class FileChosserWindow {
     public FileChosserWindow(){
         JFileChooser chooser = new JFileChooser();

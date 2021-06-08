@@ -93,30 +93,30 @@ public class DrawComponent {
     }
     //подумать как применить Scale, добавить позицию элемента
     private void drawline(Component component, Graphics graphics, int[] ScreenLocation, int Scale, Object[] LineData){
-        int arg1 = (int) ((int) LineData[0] * Math.cos(Math.toRadians(component.rotation)) - (int) LineData[1] * Math.sin(Math.toRadians(component.rotation))) - ScreenLocation[0];
-        int arg2 = (int) ((int) LineData[0] * Math.sin(Math.toRadians(component.rotation)) + (int) LineData[1] * Math.cos(Math.toRadians(component.rotation))) - ScreenLocation[1];
-        int arg3 = (int) ((int) LineData[2] * Math.cos(Math.toRadians(component.rotation)) - (int) LineData[3] * Math.sin(Math.toRadians(component.rotation))) - ScreenLocation[0];
-        int arg4 = (int) ((int) LineData[2] * Math.sin(Math.toRadians(component.rotation)) + (int) LineData[3] * Math.cos(Math.toRadians(component.rotation))) - ScreenLocation[1];
-        (new DrawMethods()).drawLine(graphics, ScreenLocation, Scale, component.getComponentLocation(), arg1, arg2, arg3, arg4, (Color) LineData[4], (Stroke) LineData[5]);
+        int arg1 = ((int) ((int) LineData[0] * Math.cos(Math.toRadians(component.rotation)) - (int) LineData[1] * Math.sin(Math.toRadians(component.rotation))) + component.ComponentLocation[0]) * Scale - ScreenLocation[0];
+        int arg2 = ((int) ((int) LineData[0] * Math.sin(Math.toRadians(component.rotation)) + (int) LineData[1] * Math.cos(Math.toRadians(component.rotation))) + component.ComponentLocation[1]) * Scale - ScreenLocation[1];
+        int arg3 = ((int) ((int) LineData[2] * Math.cos(Math.toRadians(component.rotation)) - (int) LineData[3] * Math.sin(Math.toRadians(component.rotation))) + component.ComponentLocation[0]) * Scale - ScreenLocation[0];
+        int arg4 = ((int) ((int) LineData[2] * Math.sin(Math.toRadians(component.rotation)) + (int) LineData[3] * Math.cos(Math.toRadians(component.rotation))) + component.ComponentLocation[1]) * Scale - ScreenLocation[1];
+        (new DrawMethods()).drawLine(graphics, ScreenLocation, component.getComponentLocation(), arg1, arg2, arg3, arg4, (Color) LineData[4], (Stroke) LineData[5]);
     }
     private void drawrect(Component component, Graphics graphics, int[] ScreenLocation, int Scale, Object[] RectData){
         int arg1 = (int) ((int) RectData[1] * Math.cos(Math.toRadians(component.rotation)) - (int) RectData[2] * Math.sin(Math.toRadians(component.rotation))) - ScreenLocation[0];
         int arg2 = (int) ((int) RectData[1] * Math.sin(Math.toRadians(component.rotation)) + (int) RectData[2] * Math.cos(Math.toRadians(component.rotation))) - ScreenLocation[1];
-        (new DrawMethods()).drawRect(graphics, ScreenLocation, Scale, component.getComponentLocation(), arg1, arg2, (int) RectData[3], (int) RectData[4], (Color) RectData[5], (Stroke) RectData[6], component.rotation);
+        (new DrawMethods()).drawRect(graphics, ScreenLocation, component.getComponentLocation(), arg1, arg2, (int) RectData[3] * Scale, (int) RectData[4] * Scale, (Color) RectData[5], (Stroke) RectData[6], component.rotation);
     }
     private void fillrect(Component component, Graphics graphics, int[] ScreenLocation, int Scale, Object[] RectData){
         int arg1 = (int) ((int) RectData[1] * Math.cos(Math.toRadians(component.rotation)) - (int) RectData[2] * Math.sin(Math.toRadians(component.rotation))) - ScreenLocation[0];
         int arg2 = (int) ((int) RectData[1] * Math.sin(Math.toRadians(component.rotation)) + (int) RectData[2] * Math.cos(Math.toRadians(component.rotation))) - ScreenLocation[1];
-        (new DrawMethods()).fillRect(graphics, ScreenLocation, Scale, component.getComponentLocation(), arg1, arg2, (int) RectData[3], (int) RectData[4], (Color) RectData[5], component.rotation);
+        (new DrawMethods()).fillRect(graphics, ScreenLocation, component.getComponentLocation(), arg1, arg2, (int) RectData[3], (int) RectData[4], (Color) RectData[5], component.rotation);
     }
     private void drawoval(Component component, Graphics graphics, int[] ScreenLocation, int Scale, Object[] OvalData){
         int arg1 = (int) ((int) OvalData[1] * Math.cos(Math.toRadians(component.rotation)) - (int) OvalData[2] * Math.sin(Math.toRadians(component.rotation))) - ScreenLocation[0];
         int arg2 = (int) ((int) OvalData[1] * Math.sin(Math.toRadians(component.rotation)) + (int) OvalData[2] * Math.cos(Math.toRadians(component.rotation))) - ScreenLocation[1];
-        (new DrawMethods()).drawtOval(graphics, ScreenLocation, Scale, component.getComponentLocation(), arg1, arg2, (int) OvalData[3], (int) OvalData[4], (Color) OvalData[5], (Stroke) OvalData[6], component.rotation);
+        (new DrawMethods()).drawtOval(graphics, ScreenLocation, component.getComponentLocation(), arg1, arg2, (int) OvalData[3], (int) OvalData[4], (Color) OvalData[5], (Stroke) OvalData[6], component.rotation);
     }
     private void filloval(Component component, Graphics graphics, int[] ScreenLocation, int Scale, Object[] OvalData){
         int arg1 = (int) ((int) OvalData[1] * Math.cos(Math.toRadians(component.rotation)) - (int) OvalData[2] * Math.sin(Math.toRadians(component.rotation))) - ScreenLocation[0];
         int arg2 = (int) ((int) OvalData[1] * Math.sin(Math.toRadians(component.rotation)) + (int) OvalData[2] * Math.cos(Math.toRadians(component.rotation))) - ScreenLocation[1];
-        (new DrawMethods()).fillOval(graphics, ScreenLocation, Scale, component.getComponentLocation(), arg1, arg2, (int) OvalData[3], (int) OvalData[4], (Color) OvalData[5], component.rotation);
+        (new DrawMethods()).fillOval(graphics, ScreenLocation, component.getComponentLocation(), arg1, arg2, (int) OvalData[3], (int) OvalData[4], (Color) OvalData[5], component.rotation);
     }
 }

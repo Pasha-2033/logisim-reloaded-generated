@@ -1,10 +1,9 @@
 package modules.workenvironment;
-
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-
 public class Component {
     public String componentname;
     public Icon componenticon = new ImageIcon("путь до стандартной иконки");
@@ -24,19 +23,18 @@ public class Component {
         return ComponentLocation;
     }
     public void setComponentLocation(int[] changelocation){
-        ComponentLocation[0] = changelocation[0];
-        ComponentLocation[1] = changelocation[1];
+        ComponentLocation = changelocation;
     }
     public void changeComponentLocation(int[] changelocation){
         ComponentLocation[0] += changelocation[0];
         ComponentLocation[1] += changelocation[1];
     }
-    public List<String> DrawOder = Collections.emptyList();
-    public List<Object[]> LineData = Collections.emptyList();
-    public List<Object[]> RectData = Collections.emptyList();
-    public List<Object[]> OvalData = Collections.emptyList();
-    public List<Object[]> PolyData = Collections.emptyList();
-    public List<Object[]> TextData = Collections.emptyList();
+    public List<String> DrawOder = new ArrayList<>(Collections.emptyList());
+    public List<Object[]> LineData = new ArrayList<>(Collections.emptyList());
+    public List<Object[]> RectData = new ArrayList<>(Collections.emptyList());
+    public List<Object[]> OvalData = new ArrayList<>(Collections.emptyList());
+    public List<Object[]> PolyData = new ArrayList<>(Collections.emptyList());
+    public List<Object[]> TextData = new ArrayList<>(Collections.emptyList());
     public void setDrawOrder(List<String> Data){
         DrawOder = Data;
     }

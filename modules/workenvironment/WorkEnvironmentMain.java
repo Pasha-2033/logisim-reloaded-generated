@@ -7,9 +7,11 @@ import java.awt.Graphics;
 public class WorkEnvironmentMain {
     public int[] ScreenLocation = {0, 0};
     public int Scale = 100;
-    private Graphics graphics;
+    public Graphics graphics;
     public WorkEnvironmentMain(){
-        Components.add(new power());
+        ProjectComponents.add(new power());
+        componentupdate i = new componentupdate();
+        i.start();
     }
     public List<Component> Components = new ArrayList<>(Collections.emptyList());
     public List<Component> ProjectComponents = new ArrayList<>(Collections.emptyList());
@@ -19,7 +21,7 @@ public class WorkEnvironmentMain {
         }
         public void run(){
             while (true){
-                for (Component comp : Components){
+                for (Component comp : ProjectComponents){
                     new DrawComponent(comp, graphics, ScreenLocation, Scale);
                 }
             }
