@@ -1,12 +1,10 @@
 package modules.gui;
-
 import java.io.File;
 import java.io.FileReader;
 import java.util.*;
 import javax.swing.*;
 import modules.languages.language;
 import modules.methods.guimethod;
-
 public class Menu extends JFrame {
     public static JMenuBar upmenubar(){
         JMenuBar menu = new JMenuBar();

@@ -1,4 +1,4 @@
-package modules.component.wires;
+package modules.standartcomponent.wires;
 import java.awt.Color;
 import java.awt.BasicStroke;
 import modules.workenvironment.Component;

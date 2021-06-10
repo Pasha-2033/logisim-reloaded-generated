@@ -1,10 +1,7 @@
 package modules.methods;
-
 import java.awt.*;
-import javax.swing.*;
-
-//добавить логику scale
-public class DrawMethods extends JComponent {
+import javax.swing.JComponent;
+public class DrawMethods extends JComponent{
     public void drawLine(Graphics g, int[] location, int[] ComponentLocation, int argX, int argY, int arg2X, int arg2Y, Color color, Stroke strk){
         super.paintComponent(g);
         if (strk == null){
