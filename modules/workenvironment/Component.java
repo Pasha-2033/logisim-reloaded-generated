@@ -4,7 +4,9 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-public class Component {
+import javax.swing.JPanel;
+import java.awt.Graphics;
+public class Component extends JPanel {
     public String componentname;
     public Icon componenticon = new ImageIcon("путь до стандартной иконки");
     public Component(String name){
@@ -57,4 +59,11 @@ public class Component {
     public void setrotation(int rotation){
         this.rotation = rotation;
     }
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        new DrawComponent(this, g, ScreenLocation, Scale);
+    }
+    public int[] ScreenLocation;
+    public int Scale;
 }
