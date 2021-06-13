@@ -30,6 +30,7 @@ public class WorkEnvironmentMain {
         ProjectComponents.get(1).Scale = 100;
         ProjectComponents.get(1).ComponentLocation = new int[] {0, 0}; //- проверка относительных координат
         componentframe.add(ProjectComponents.get(0));
+        workplace.setPreferredSize(new Dimension(800,600));
         componentframe.setBorder(BorderFactory.createLineBorder(Color.black));
         toolframe.add(ProjectComponents.get(1));
         toolframe.setPreferredSize(new Dimension(100,100));
