@@ -11,6 +11,7 @@ public class Component extends JPanel {
     public Icon componenticon = new ImageIcon("путь до стандартной иконки");
     public Component(String name){
         componentname = name;
+        this.setOpaque(false);
     }
     public Component(String name, Icon icon){
         componentname = name;
