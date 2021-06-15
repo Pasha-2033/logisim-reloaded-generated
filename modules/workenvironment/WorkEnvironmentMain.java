@@ -44,6 +44,7 @@ public class WorkEnvironmentMain {
         //упаковка экрана
         mainframe.pack();
         //update.start();
+        
     }
     public List<Component> Components = new ArrayList<>(Collections.emptyList());
     public List<Component> ProjectComponents = new ArrayList<>(Collections.emptyList());
@@ -67,3 +68,8 @@ public class WorkEnvironmentMain {
 }
 //ProjectComponents.get(0).setBounds(0, 0, 500, 500); - вряд ли понадобится (и строка ниже)
 //ProjectComponents.get(0).setPreferredSize(new Dimension(500,500));
+
+/*чтобы изменить положение компонента - надо сделать так:
+ProjectComponents.get(n).ComponentLocation = new int[] {x, y};
+ProjectComponents.get(n).repaint();
+*/

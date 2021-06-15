@@ -34,7 +34,7 @@ public class DrawMethods extends JComponent{
         g2d.fillRect(ComponentLocation[0] - location[0] + argX, ComponentLocation[1] + location[1] + argY, argW, argH);
     }
     public void drawPoly(Graphics g, int[] location, int[] ComponentLocation, int[] PolyX, int[] PolyY, Color color, Stroke strk, int rotation){
-        if (PolyX.length == PolyY.length) { //if предохранитель
+        if (PolyX.length == PolyY.length) {
             super.paintComponent(g);
             if (strk == null){
                 strk = new BasicStroke(1.0F, 1, 1);
@@ -43,13 +43,13 @@ public class DrawMethods extends JComponent{
             Graphics2D g2d = (Graphics2D) g;
             g2d.setColor(color);
             g2d.rotate(Math.toRadians(rotation));
-            g2d.setStroke(new BasicStroke(6.0F, 1, 2));//установить толщину
+            g2d.setStroke(new BasicStroke(6.0F, 1, 2));
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.drawPolygon(poly);
         }
     }
     public void fillPoly(Graphics g, int[] location, int[] ComponentLocation, int[] PolyX, int[] PolyY, Color color, int rotation){
-        if (PolyX.length == PolyY.length) { //if предохранитель
+        if (PolyX.length == PolyY.length) {
             super.paintComponent(g);
             Polygon poly = new Polygon(PolyX, PolyY, PolyX.length);
             Graphics2D g2d = (Graphics2D) g;
