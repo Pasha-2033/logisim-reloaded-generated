@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import modules.standartcomponent.wires.power;
@@ -22,8 +23,6 @@ public class WorkEnvironmentMain {
     public int Scale = 100;
     public Graphics graphics;
     public WorkEnvironmentMain(JFrame frame){
-        //подготовка древа компонентов
-        /*      ставим иконки       */
         //подготовка панелей
         initgui();
         //подготовка экрана
@@ -73,6 +72,9 @@ public class WorkEnvironmentMain {
             }
         }
     }
+    public class customtreenode extends DefaultMutableTreeNode{
+        
+    }
     public TreeModel buildcomponentroottree(){
         //корневая панель
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Components");
@@ -82,7 +84,6 @@ public class WorkEnvironmentMain {
         //панель второго порядка
         DefaultMutableTreeNode power = new DefaultMutableTreeNode("Power");
         DefaultMutableTreeNode ground = new DefaultMutableTreeNode("Ground");
-        //иконки
         //загружаем панели
         root.add(wires);
         root.add(elements);
@@ -90,6 +91,13 @@ public class WorkEnvironmentMain {
         wires.add(ground);
         //добавляем базовые папочки - упростим настройки - нельзя выгрузить базовые компоненты программы
         return new DefaultTreeModel(root);
+    }
+    public void deletebasicicons(){
+        DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
+        renderer.setOpenIcon(null);
+        renderer.setClosedIcon(null);
+        renderer.setLeafIcon(null);
+        componentroottree.setCellRenderer(renderer);
     }
     public void initbasiccomponents(){
         //закачиваем сюда список компонентов
@@ -128,6 +136,7 @@ public class WorkEnvironmentMain {
         framesize.setPreferredSize(new Dimension(100,100));
         workplace.setPreferredSize(new Dimension(500, 500));
         mainworkplace.add(workplace);
+        deletebasicicons();
     }
 }
 /*чтобы изменить положение компонента - надо сделать так:
