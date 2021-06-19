@@ -8,8 +8,6 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,11 +15,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
-
 import modules.methods.treenoderenderer;
 import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.power;
@@ -112,16 +108,6 @@ public class WorkEnvironmentMain {
         //добавляем базовые папочки - упростим настройки - нельзя выгрузить базовые компоненты программы
         return new DefaultTreeModel(root);
     }
-    public void deletebasicicons(){
-        //DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
-        //подобрать иконки для папочек
-        /*renderer.setOpenIcon(null);
-        renderer.setClosedIcon(null);*/
-
-        //renderer.setLeafIcon(null);
-        componentroottree.setCellRenderer(new treenoderenderer());
-    }
-
     public void initbasiccomponents(){
         //закачиваем сюда список компонентов
     }
@@ -159,7 +145,7 @@ public class WorkEnvironmentMain {
         framesize.setPreferredSize(new Dimension(100,100));
         workplace.setPreferredSize(new Dimension(500, 500));
         mainworkplace.add(workplace);
-        deletebasicicons();
+        componentroottree.setCellRenderer(new treenoderenderer());
     }
 }
 /*чтобы изменить положение компонента - надо сделать так:
