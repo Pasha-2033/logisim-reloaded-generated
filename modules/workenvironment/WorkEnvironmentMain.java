@@ -8,7 +8,10 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -16,7 +19,11 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
+
+import modules.methods.treenoderenderer;
+import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.power;
 public class WorkEnvironmentMain {
     public int[] ScreenLocation = {0, 0};
@@ -45,8 +52,10 @@ public class WorkEnvironmentMain {
         //упаковка экрана
         mainframe.pack();
     }
-    public List<List<Component>> Components = new ArrayList<>(Collections.emptyList());
+    public List<MainComponentcCass> ComponentLibraries = new ArrayList<>(Collections.emptyList());
+    public List<Component> AvaluableComponents = new ArrayList<>(Collections.emptyList());
     public List<Component> ProjectComponents = new ArrayList<>(Collections.emptyList());
+    public List<Component> ProjectShemes = new ArrayList<>(Collections.emptyList());
     public JFrame mainframe;
     public JPanel mainworkplace = new JPanel(new BorderLayout());
     public JPanel framesize = new JPanel(new BorderLayout());
@@ -72,33 +81,47 @@ public class WorkEnvironmentMain {
             }
         }
     }
-    public class customtreenode extends DefaultMutableTreeNode{
-        
-    }
     public TreeModel buildcomponentroottree(){
         //корневая панель
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Components");
         //панель первого порядка
-        DefaultMutableTreeNode wires = new DefaultMutableTreeNode("Wires");
-        DefaultMutableTreeNode elements = new DefaultMutableTreeNode("Elements");
+        DefaultMutableTreeNode basic = new DefaultMutableTreeNode("Basic Component");
+        DefaultMutableTreeNode imported = new DefaultMutableTreeNode("Modules");
         //панель второго порядка
-        DefaultMutableTreeNode power = new DefaultMutableTreeNode("Power");
-        DefaultMutableTreeNode ground = new DefaultMutableTreeNode("Ground");
+        DefaultMutableTreeNode wires = new DefaultMutableTreeNode("Wires");
+        //панель третьего порядка
+        DefaultMutableTreeNode power = new DefaultMutableTreeNode(new power());
+        DefaultMutableTreeNode ground = new DefaultMutableTreeNode(new ground());
+        //groundnode.add(new JLabel("ground"), BorderLayout.EAST);
         //загружаем панели
-        root.add(wires);
-        root.add(elements);
+        root.add(basic);
+        root.add(imported);
+        basic.add(wires);
         wires.add(power);
         wires.add(ground);
+        for (MainComponentcCass mainclass : ComponentLibraries){
+            DefaultMutableTreeNode tmpnode = new DefaultMutableTreeNode(mainclass.libraryname);
+            imported.add(tmpnode);
+            for (Component component : mainclass.componentlist){
+                JPanel tmppanel = new JPanel();
+                tmppanel.add(new JLabel(component.componenticon));
+                tmppanel.add(new JLabel(component.componentname));
+                tmpnode.add((MutableTreeNode) tmppanel);
+            }
+        }
         //добавляем базовые папочки - упростим настройки - нельзя выгрузить базовые компоненты программы
         return new DefaultTreeModel(root);
     }
     public void deletebasicicons(){
-        DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
-        renderer.setOpenIcon(null);
-        renderer.setClosedIcon(null);
-        renderer.setLeafIcon(null);
-        componentroottree.setCellRenderer(renderer);
+        //DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
+        //подобрать иконки для папочек
+        /*renderer.setOpenIcon(null);
+        renderer.setClosedIcon(null);*/
+
+        //renderer.setLeafIcon(null);
+        componentroottree.setCellRenderer(new treenoderenderer());
     }
+
     public void initbasiccomponents(){
         //закачиваем сюда список компонентов
     }

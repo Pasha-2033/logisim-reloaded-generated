@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 public class Component extends JPanel {
-    public String componentname = "undefind";
     public int Scale;
     public int rotation = 0;
     public int[] ScreenLocation;
@@ -19,7 +18,9 @@ public class Component extends JPanel {
     public List<Object[]> OvalData = new ArrayList<>(Collections.emptyList());
     public List<Object[]> PolyData = new ArrayList<>(Collections.emptyList());
     public List<Object[]> TextData = new ArrayList<>(Collections.emptyList());
-    public Icon componenticon = new ImageIcon("путь до стандартной иконки");
+    public Icon componenticon = new ImageIcon("resourses/menuicon/undoicon.png");
+    public String componentname = "undefind";
+    public Component(){}
     public Component(String name){
         componentname = name;
         setOpaque(false);
