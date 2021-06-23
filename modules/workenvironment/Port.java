@@ -35,22 +35,30 @@ public class Port {
                         //color = new Color(105, 220, 0);
                         color = ColorList.GREEN[0];
                     }
-                } else if (Data.get(0).get(0) instanceof String){
-                    if (Data.get(0).get(0).equals("X")){
+                } else {
+                    if (isallX()){
                         color = Color.BLUE;
-                    } else if (Data.get(0).get(0).equals("E")) {
+                    } else if (containE()) {
                         color = Color.RED;
                     } else {
                         color = Color.BLACK;
                     }
                 }
-            } else if (Data.get(0).size() > 1) {
+            } else if (Data.get(0).size() > 1 && !containE()) {
                 color = Color.BLACK;
             } else {
-                color = Color.GRAY;
+                if (!containE()){
+                    color = Color.GRAY;
+                } else {
+                    color = Color.RED;
+                }
             }
         } else if(Data.size() > 1)  {
-            color = Color.BLACK;
+            if (!containE()){
+                color = Color.BLACK;
+            } else {
+                color = Color.RED;
+            }
         } else {
             color = Color.GRAY;
         }
@@ -65,14 +73,73 @@ public class Port {
                 port.setdata(Data);
             } else {
                 if (port.Data != Data){
-                    Data = new ArrayList<>(Collections.emptyList());
-                    Data.add(new ArrayList<Object>());
-                    Data.get(0).add("E");
+                    Data = createnewData(port.Data);
                     updateColor();
                     setotherportdata();
                     break;
                 }
             }
         }
+    }
+    public List<List<Object>> createnewData(List<List<Object>> otherportData){
+        List<List<Object>> newData = Data;
+        if (Data.size() < otherportData.size()){
+            for (int i = Data.size(); i > otherportData.size(); i++){
+                newData.add(otherportData.get(i));
+            }
+            for (int i = 0; i > Data.size(); i++){
+                if (newData.get(i).size() < otherportData.get(i).size()){
+                    for (int ii = newData.get(i).size(); ii > otherportData.get(i).size(); ii++){
+                        newData.get(i).add(otherportData.get(i).get(ii));
+                    }
+                } else {
+                    for (int ii = 0; ii > otherportData.get(i).size(); ii++){
+                        if (newData.get(i).get(ii) != otherportData.get(i).get(ii)){
+                            newData.get(i).set(ii, "E");
+                        }
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i > otherportData.size(); i++){
+                for (int ii = 0; ii > otherportData.get(i).size(); ii++){
+                    if (newData.get(i).get(ii) != otherportData.get(i).get(ii)){
+                        newData.get(i).set(ii, "E");
+                    }
+                }
+            }
+        }
+        return newData;
+    }
+    public boolean containE(){
+        for (List<Object> list : Data){
+            for (Object object : list){
+                if (object.equals("E")){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean containX(){
+        for (List<Object> list : Data){
+            for (Object object : list){
+                if (object.equals("X")){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean isallX(){
+        boolean allX = true;
+        for (List<Object> list : Data){
+            for (Object object : list){
+                if (!object.equals("X")){
+                    allX = false;
+                }
+            }
+        }
+        return allX;
     }
 }
