@@ -9,17 +9,22 @@ public class Port {
     public String lable;
     public List<List<Object>> Data = new ArrayList<>(Collections.emptyList());
     public Color color;
+    public Component belongsto;
     public List<Port> portsourse = new ArrayList<>(Collections.emptyList());
-    public Port(int x, int y){
-        SetPort(x, y, "", false);
+    public Port(int x, int y, Component belongsto){
+        SetPort(x, y, "", false, belongsto);
     }
-    public Port(int x, int y, String lable){
-        SetPort(x, y, lable, false);
+    public Port(int x, int y, String lable, Component belongsto){
+        SetPort(x, y, lable, false, belongsto);
     }
-    public Port(int x, int y, boolean isbasicsende, String lable){
-        SetPort(x, y, lable, isbasicsende);
+    public Port(int x, int y, boolean isbasicsende, Component belongsto){
+        SetPort(x, y, "", isbasicsende, belongsto);
     }
-    public void SetPort(int x, int y, String lable, boolean isbasicsender){
+    public Port(int x, int y, boolean isbasicsende, String lable, Component belongsto){
+        SetPort(x, y, lable, isbasicsende, belongsto);
+    }
+    public void SetPort(int x, int y, String lable, boolean isbasicsender, Component belongsto){
+        this.belongsto = belongsto;
         this.isbasicsender = isbasicsender;
         this.location = new int[] {x, y};
         this.lable = lable;
@@ -79,6 +84,7 @@ public class Port {
                     break;
                 }
             }
+            port.belongsto.step();;
         }
     }
     public List<List<Object>> createnewData(List<List<Object>> otherportData){

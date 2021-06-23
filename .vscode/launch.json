@@ -6,20 +6,6 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch sample2",
-            "request": "launch",
-            "mainClass": "sample2",
-            "projectName": "logisim-reloaded (generated)_ecc31410"
-        },
-        {
-            "type": "java",
-            "name": "Launch sample1",
-            "request": "launch",
-            "mainClass": "sample1",
-            "projectName": "logisim-reloaded (generated)_ecc31410"
-        },
-        {
-            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "Main"
@@ -29,13 +15,6 @@
             "name": "Launch Main",
             "request": "launch",
             "mainClass": "Main",
-            "projectName": "logisim-reloaded-generated_f9c3c54b"
-        },
-        {
-            "type": "java",
-            "name": "Launch sample1",
-            "request": "launch",
-            "mainClass": "sample1",
             "projectName": "logisim-reloaded-generated_f9c3c54b"
         }
     ]
