@@ -7,9 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 public class Component extends JPanel {
-    public int Scale;
+    public float Scale;
     public int rotation = 0;
-    public int[] ScreenLocation;
     public Port[] Ports = {};
     public int[] ComponentLocation = {0, 0};
     public List<String> DrawOder = new ArrayList<>(Collections.emptyList());
@@ -18,27 +17,33 @@ public class Component extends JPanel {
     public List<Object[]> OvalData = new ArrayList<>(Collections.emptyList());
     public List<Object[]> PolyData = new ArrayList<>(Collections.emptyList());
     public List<Object[]> TextData = new ArrayList<>(Collections.emptyList());
-    public Icon componenticon = new ImageIcon("resourses/menuicon/undoicon.png");
-    public String componentname = "undefind";
-    public Component(){}
-    public Component(String name){
-        componentname = name;
-        setOpaque(false);
+    public Icon componenticon;
+    public String componentname;
+    public Component(){
+        setComponent("undefind", new ImageIcon("resources/menuicon/undoicon.png"), 1.0F);
     }
-    public Component(String name, Icon icon){
-        componentname = name;
-        componenticon = icon;
-        setOpaque(false);
+    public Component(String componentname){
+        setComponent(componentname, new ImageIcon("resources/menuicon/undoicon.png"), 1.0F);
     }
-    public void changeComponentLocation(int[] changelocation){
-        ComponentLocation[0] += changelocation[0];
-        ComponentLocation[1] += changelocation[1];
+    public Component(String componentname, Icon componenticon){
+        setComponent(componentname, componenticon, 1.0F);
+    }
+    public Component(String name, Icon componenticon, float Scale){
+        setComponent(componentname, componenticon, Scale);
+    }
+    public void setComponent(String componentname, Icon componenticon, float Scale){
+        this.componentname = componentname;
+        this.componenticon = componenticon;
+        this.Scale = Scale;
+        setOpaque(false);
     }
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        new DrawComponent(this, g, ScreenLocation, Scale);
+        new DrawComponent(this, g, Scale);
     }
     //стандартные функции компоента, чтобы при вызове их у компонента не вызывало ошибку
     public void step(){}
+    public void stream(){}
+    public void generatetick(){}
 }

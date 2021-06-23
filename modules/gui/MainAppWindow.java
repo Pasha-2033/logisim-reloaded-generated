@@ -10,7 +10,7 @@ public class MainAppWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setIconImage(new ImageIcon("resourses/programicon.png").getImage());
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         setJMenuBar(Menu.upmenubar());
         setVisible(true);
     }

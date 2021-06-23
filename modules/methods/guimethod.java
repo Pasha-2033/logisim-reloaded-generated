@@ -4,7 +4,7 @@ import javax.swing.*;
 import modules.languages.language;
 import modules.gui.FileChosserWindow;
 import modules.gui.SettingsAppWindow;
-public class guimethod {
+public class GUIMethod {
     public static class exit extends AbstractAction {
         public exit(){putValue(NAME, language.trnslt("Exit"));}
         public void actionPerformed(ActionEvent e) {

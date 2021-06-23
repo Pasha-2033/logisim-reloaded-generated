@@ -3,7 +3,9 @@ import javax.swing.ImageIcon;
 import modules.workenvironment.Component;
 public class ground extends Component {
     public ground(){
-        super("ground");
-        componenticon = new ImageIcon("resourses/menuicon/foldericon.png");
+        super("ground", new ImageIcon("resources/componenticon/wires/ground.gif"));
+    }
+    public ground(float Scale){
+        super("ground", new ImageIcon("resources/componenticon/wires/ground.gif"), Scale);
     }
 }

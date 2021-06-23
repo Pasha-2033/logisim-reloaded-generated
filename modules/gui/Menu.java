@@ -4,7 +4,7 @@ import java.io.FileReader;
 import java.util.*;
 import javax.swing.*;
 import modules.languages.language;
-import modules.methods.guimethod;
+import modules.methods.GUIMethod;
 public class Menu extends JFrame {
     public static JMenuBar upmenubar(){
         JMenuBar menu = new JMenuBar();
@@ -38,49 +38,49 @@ public class Menu extends JFrame {
     public static JMenu filemenu(){
         JMenu menu = new JMenu(language.trnslt("File"));
         JMenuItem item;
-        item = new JMenuItem(new guimethod.newfile());
+        item = new JMenuItem(new GUIMethod.newfile());
         item.setIcon(new ImageIcon("resourses/icon-all/Yaru/menu/circ-file.png"));
         menu.add(item);
-        item = new JMenuItem(new guimethod.open());
+        item = new JMenuItem(new GUIMethod.open());
         item.setIcon(new ImageIcon("resourses/icon-all/Yaru/menu/folder.png"));
         menu.add(item);
         String[] files = openedrecent();
         if (files[0].length() > 0) {
             JMenu submenu = new JMenu(language.trnslt("Openrecent"));
             for (String file : files){
-                item = new JMenuItem(new guimethod.openrecent(file));
+                item = new JMenuItem(new GUIMethod.openrecent(file));
                 item.setIcon(new ImageIcon("resourses/icon-all/Yaru/menu/circ-file.png"));
                 submenu.add(item);
             }
             menu.add(submenu);
         } else {
-            item = new JMenuItem(new guimethod.openrecent(language.trnslt("Openrecent") + " (" + language.trnslt("New") + ")"));
+            item = new JMenuItem(new GUIMethod.openrecent(language.trnslt("Openrecent") + " (" + language.trnslt("New") + ")"));
             item.setIcon(new ImageIcon("resourses/icon-all/Yaru/menu/circ-file.png"));
             menu.add(item);
         }
         menu.addSeparator();
-        item = new JMenuItem(new guimethod.close());
+        item = new JMenuItem(new GUIMethod.close());
         item.setIcon(new ImageIcon("resourses/icon-all/Yaru/menu/exit.png"));
         menu.add(item);
-        item = new JMenuItem(new guimethod.save());
+        item = new JMenuItem(new GUIMethod.save());
         item.setIcon(new ImageIcon("resourses/icon-all/Yaru/menu/circ-file.png"));
         menu.add(item);
-        item = new JMenuItem(new guimethod.saveas());
+        item = new JMenuItem(new GUIMethod.saveas());
         item.setIcon(new ImageIcon("resourses/icon-all/Yaru/menu/folder.png"));
         menu.add(item);
         menu.addSeparator();
-        item = new JMenuItem(new guimethod.exportimage());
+        item = new JMenuItem(new GUIMethod.exportimage());
         item.setIcon(new ImageIcon("resourses/icon-all/Yaru/menu/image.png"));
         menu.add(item);
-        item = new JMenuItem(new guimethod.print());
+        item = new JMenuItem(new GUIMethod.print());
         item.setIcon(new ImageIcon("resourses/icon-all/Yaru/menu/printer.png"));
         menu.add(item);
         menu.addSeparator();
-        item = new JMenuItem(new guimethod.settings());
+        item = new JMenuItem(new GUIMethod.settings());
         item.setIcon(new ImageIcon("resourses/icon-all/Yaru/menu/settings.png"));
         menu.add(item);
         menu.addSeparator();
-        item = new JMenuItem(new guimethod.exit());
+        item = new JMenuItem(new GUIMethod.exit());
         item.setIcon(new ImageIcon("resourses/icon-all/Yaru/menu/exit.png"));
         menu.add(item);
         return menu;

@@ -18,12 +18,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
-import modules.methods.treenoderenderer;
+import modules.methods.JTreeNodeRenderer;
 import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.power;
 public class WorkEnvironmentMain {
-    public int[] ScreenLocation = {0, 0};
-    public int Scale = 100;
+    public float Scale = 1.0F;
     public Graphics graphics;
     public WorkEnvironmentMain(JFrame frame){
         //подготовка панелей
@@ -33,15 +32,11 @@ public class WorkEnvironmentMain {
         mainframe.add(mainworkplace);
         mainframe.setMinimumSize(new Dimension(500, 500));
         //закачка компонентов - для тестов
-        ProjectComponents.add(new power());
-        ProjectComponents.get(0).ScreenLocation = new int[] {0, 0};
-        ProjectComponents.get(0).Scale = 100;
+        ProjectComponents.add(new power(Scale));
         ProjectComponents.get(0).ComponentLocation = new int[] {0, 0}; //- проверка относительных координат
-        ProjectComponents.add(new power());
-        ProjectComponents.get(1).ScreenLocation = new int[] {0, 0};
-        ProjectComponents.get(1).Scale = 100;
+        ProjectComponents.add(new power(Scale));
         ProjectComponents.get(1).ComponentLocation = new int[] {0, 0}; //- проверка относительных координат
-        componentframe.add(ProjectComponents.get(0));
+        incomponentframe.add(ProjectComponents.get(0));
         intoolframe.add(ProjectComponents.get(1));
         //загржаем базовые компоненты
         initbasiccomponents();
@@ -59,24 +54,13 @@ public class WorkEnvironmentMain {
     public JPanel outtoolframe = new JPanel(new BorderLayout());
     public JPanel componenttree = new JPanel(new BorderLayout());
     public JPanel componentdata = new JPanel(new BorderLayout());
-    public JPanel componentmenu = new JPanel();
-    public JPanel componentframe = new JPanel(new BorderLayout());
-    public JSplitPane workplace = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentmenu, componentframe);
+    public JPanel componentmenu = new JPanel(new BorderLayout());
+    public JPanel incomponentframe = new JPanel(new BorderLayout());
+    public JPanel outcomponentframe = new JPanel(new BorderLayout());
     public JTree componentroottree = new JTree(buildcomponentroottree());
     public JScrollPane scrpanecomponenttree = new JScrollPane(componentroottree);
-    public class movescreen extends Thread{
-        public int[] screenlocation;
-        public movescreen(int [] screenlocation) {
-            setDaemon(true);
-            this.screenlocation = screenlocation;
-        }
-        public void run(){
-            for (Component component : ProjectComponents) {
-                component.ScreenLocation = screenlocation;
-                component.repaint();
-            }
-        }
-    }
+    public JScrollPane componentframescrolpane = new JScrollPane(incomponentframe);
+    public JSplitPane workplace = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentmenu, outcomponentframe);
     public TreeModel buildcomponentroottree(){
         //корневая панель
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Components");
@@ -86,9 +70,8 @@ public class WorkEnvironmentMain {
         //панель второго порядка
         DefaultMutableTreeNode wires = new DefaultMutableTreeNode("Wires");
         //панель третьего порядка
-        DefaultMutableTreeNode power = new DefaultMutableTreeNode(new power());
+        DefaultMutableTreeNode power = new DefaultMutableTreeNode(new power(Scale));
         DefaultMutableTreeNode ground = new DefaultMutableTreeNode(new ground());
-        //groundnode.add(new JLabel("ground"), BorderLayout.EAST);
         //загружаем панели
         root.add(basic);
         root.add(imported);
@@ -120,9 +103,11 @@ public class WorkEnvironmentMain {
         componentmenu.add(componenttree);
         componentmenu.add(componentdata);
         componentmenu.add(framesize);
-        componentframe.setBorder(BorderFactory.createLineBorder(Color.black));
-        componentframe.setBackground(Color.WHITE);
-        componentframe.setOpaque(true);
+        incomponentframe.setPreferredSize(new Dimension(600,600));
+        incomponentframe.setBorder(BorderFactory.createLineBorder(Color.black));
+        incomponentframe.setBackground(Color.WHITE);
+        incomponentframe.setOpaque(true);
+        outcomponentframe.add(componentframescrolpane);
         componentdata.setBorder(BorderFactory.createLineBorder(Color.black));
         componentdata.setBackground(Color.WHITE);
         componentdata.setOpaque(true);
@@ -145,7 +130,7 @@ public class WorkEnvironmentMain {
         framesize.setPreferredSize(new Dimension(100,100));
         workplace.setPreferredSize(new Dimension(500, 500));
         mainworkplace.add(workplace);
-        componentroottree.setCellRenderer(new treenoderenderer());
+        componentroottree.setCellRenderer(new JTreeNodeRenderer());
     }
 }
 /*чтобы изменить положение компонента - надо сделать так:

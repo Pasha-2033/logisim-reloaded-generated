@@ -1,102 +1,78 @@
 package modules.workenvironment;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.awt.Color;
 public class Port {
+    public boolean isbasicsender;
     public int[] location;
-    public int[] size;
     public String lable;
     public List<List<Object>> Data = new ArrayList<>(Collections.emptyList());
-    public List<String> DataType = new ArrayList<>(Collections.emptyList());
     public Color color;
-    public Port(int x, int y, int[] size){
-        SetPort(x, y, size, new String[] {"int"}, "");
+    public List<Port> portsourse = new ArrayList<>(Collections.emptyList());
+    public Port(int x, int y){
+        SetPort(x, y, "", false);
     }
-    public Port(int x, int y, int[] size, String[] datatype){
-        SetPort(x, y, size, datatype, "");
+    public Port(int x, int y, String lable){
+        SetPort(x, y, lable, false);
     }
-    public Port(int x, int y, int[] size, String[] datatype, String lable){
-        SetPort(x, y, size, datatype, lable);
+    public Port(int x, int y, boolean isbasicsende, String lable){
+        SetPort(x, y, lable, isbasicsende);
     }
-    public void SetPort(int x, int y, int[] size, String[] datatype, String lable){
+    public void SetPort(int x, int y, String lable, boolean isbasicsender){
+        this.isbasicsender = isbasicsender;
         this.location = new int[] {x, y};
-        this.size = size;
         this.lable = lable;
-        for (int i = 0; i < size[0]; i++){
-            List<Object> tmp = new ArrayList<>(Collections.emptyList());
-            this.DataType.add((String) datatype[i]);
-            for (int ii = 0; ii < size[1]; ii++){
-                if (datatype[i] == "int"){
-                    tmp.add(0);
-                } else if (datatype[i] == "float"){
-                    tmp.add(0.0F);
-                } else if (datatype[i] == "string"){
-                    tmp.add("");
-                }
-            }
-            this.Data.add(tmp);
-        }
         updateColor();
     }
-    public void setFullData(List<List<Object>> Data){
-        if (Data.size() == this.Data.size()){
-            boolean todo = true;
-            for (int i = 0; i < this.Data.size(); i++){
-                for (int ii = 0; ii < this.Data.size(); ii++){
-                    if (!((Data.get(i).get(ii) instanceof String && DataType.get(i) == "string") || (Data.get(i).get(ii) instanceof Integer && DataType.get(i) == "int") || (Data.get(i).get(ii) instanceof Float && DataType.get(i) == "float"))){
-                        todo = false;
+    public void updateColor(){
+        if (Data.size() == 1) {
+            if (Data.get(0).size() == 1){
+                if (Data.get(0).get(0) instanceof Integer){
+                    if (Data.get(0).get(0) == (Object) 0){
+                        color = new Color(50, 110, 0);
+                    } else {
+                        //color = new Color(105, 220, 0);
+                        color = ColorList.GREEN[0];
+                    }
+                } else if (Data.get(0).get(0) instanceof String){
+                    if (Data.get(0).get(0).equals("X")){
+                        color = Color.BLUE;
+                    } else if (Data.get(0).get(0).equals("E")) {
+                        color = Color.RED;
+                    } else {
+                        color = Color.BLACK;
                     }
                 }
+            } else if (Data.get(0).size() > 1) {
+                color = Color.BLACK;
+            } else {
+                color = Color.GRAY;
             }
-            if (todo){
-                this.Data = Data;
-                updateColor();
-            }
-        }
-    }
-    public List<List<Object>> getData(){
-        return Data;
-    }
-    public List<Object> getDrawData(){
-        return Arrays.asList(location, lable, color);
-    }
-    public void updateColor(){
-        if (size[0] == 1 && size[1] == 1) {
-            if (DataType.get(0) == "int"){
-                if (Data.get(0).get(0) == (Object) 0){
-                    color = new Color(50, 110, 0);
-                } else {
-                    color = new Color(105, 220, 0);
-                }
-            } else if (DataType.get(0) == "string"){
-                if (Data.get(0).get(0) == "X"){
-                    color = Color.BLUE;
-                } else if (Data.get(0).get(0) == "E") {
-                    color = Color.RED;
-                } else {
-                    color = Color.BLACK;
-                }
-            }
-        } else {
+        } else if(Data.size() > 1)  {
             color = Color.BLACK;
+        } else {
+            color = Color.GRAY;
         }
     }
-    public Port portsourse;
-    public void setPortSource(Port port){
-        portsourse = port;
+    public void setdata(List<List<Object>> Data){
+        this.Data = Data;
+        updateColor();
     }
-    public void updatePortData(){
-        try {
-            setFullData(portsourse.getData());
-            updateColor();
-        } catch (Exception e) {
-            e.printStackTrace();
-            updateColor();
+    public void setotherportdata(){
+        for (Port port : portsourse){
+            if (!port.isbasicsender){
+                port.setdata(Data);
+            } else {
+                if (port.Data != Data){
+                    Data = new ArrayList<>(Collections.emptyList());
+                    Data.add(new ArrayList<Object>());
+                    Data.get(0).add("E");
+                    updateColor();
+                    setotherportdata();
+                    break;
+                }
+            }
         }
-    }
-    public int[] getSize(){
-        return size;
     }
 }
