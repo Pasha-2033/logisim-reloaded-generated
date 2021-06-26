@@ -33,9 +33,13 @@ public class WorkEnvironmentMain {
         mainframe.setMinimumSize(new Dimension(500, 500));
         //закачка компонентов - для тестов
         ProjectComponents.add(new power(Scale));
-        ProjectComponents.get(0).ComponentLocation = new int[] {0, 0}; //- проверка относительных координат
+        ProjectComponents.get(0).ComponentLocation = new int[] {100, 100}; //- проверка относительных координат
+        ProjectComponents.get(0).rotation = 2;
         ProjectComponents.add(new power(Scale));
         ProjectComponents.get(1).ComponentLocation = new int[] {0, 0}; //- проверка относительных координат
+        ProjectComponents.add(new power(Scale));
+        ProjectComponents.get(2).ComponentLocation = new int[] {0, 0}; //- проверка относительных координат
+        incomponentframe.add(ProjectComponents.get(2));
         incomponentframe.add(ProjectComponents.get(0));
         intoolframe.add(ProjectComponents.get(1));
         //загржаем базовые компоненты

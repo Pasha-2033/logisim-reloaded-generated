@@ -37,7 +37,6 @@ public class Port {
                     if (Data.get(0).get(0) == (Object) 0){
                         color = new Color(50, 110, 0);
                     } else {
-                        //color = new Color(105, 220, 0);
                         color = ColorList.GREEN[0];
                     }
                 } else {
@@ -46,7 +45,7 @@ public class Port {
                     } else if (containE()) {
                         color = Color.RED;
                     } else {
-                        color = Color.BLACK;
+                        color = ColorList.BLACK[0];
                     }
                 }
             } else if (Data.get(0).size() > 1 && !containE()) {
@@ -84,7 +83,8 @@ public class Port {
                     break;
                 }
             }
-            port.belongsto.step();;
+            port.belongsto.step();
+            port.belongsto.repaint();
         }
     }
     public List<List<Object>> createnewData(List<List<Object>> otherportData){
