@@ -6,10 +6,13 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -31,21 +34,23 @@ public class WorkEnvironmentMain {
         mainframe = frame;
         mainframe.add(mainworkplace);
         mainframe.setMinimumSize(new Dimension(500, 500));
+        mainframe.pack();
         //закачка компонентов - для тестов
         ProjectComponents.add(new power(Scale));
-        ProjectComponents.get(0).ComponentLocation = new int[] {100, 100}; //- проверка относительных координат
-        ProjectComponents.get(0).rotation = 2;
+        ProjectComponents.get(0).ComponentLocation = new int[] {0, 0}; //- проверка относительных координат
+        //ProjectComponents.get(0).rotation = 400; //- проверка поворота
         ProjectComponents.add(new power(Scale));
         ProjectComponents.get(1).ComponentLocation = new int[] {0, 0}; //- проверка относительных координат
         ProjectComponents.add(new power(Scale));
-        ProjectComponents.get(2).ComponentLocation = new int[] {0, 0}; //- проверка относительных координат
-        incomponentframe.add(ProjectComponents.get(2));
+        ProjectComponents.get(2).ComponentLocation = new int[] {25, 25}; //- проверка относительных координат
         incomponentframe.add(ProjectComponents.get(0));
+        incomponentframe.add(ProjectComponents.get(2));
         intoolframe.add(ProjectComponents.get(1));
         //загржаем базовые компоненты
         initbasiccomponents();
-        //упаковка экрана
-        mainframe.pack();
+        //
+        ProjectComponents.get(0).setBounds(incomponentframe.getBounds());
+        ProjectComponents.get(2).setBounds(incomponentframe.getBounds());
     }
     public List<MainComponentcCass> ComponentLibraries = new ArrayList<>(Collections.emptyList());
     public List<Component> AvaluableComponents = new ArrayList<>(Collections.emptyList());
@@ -74,7 +79,7 @@ public class WorkEnvironmentMain {
         //панель второго порядка
         DefaultMutableTreeNode wires = new DefaultMutableTreeNode("Wires");
         //панель третьего порядка
-        DefaultMutableTreeNode power = new DefaultMutableTreeNode(new power(Scale));
+        DefaultMutableTreeNode power = new DefaultMutableTreeNode(new power());
         DefaultMutableTreeNode ground = new DefaultMutableTreeNode(new ground());
         //загружаем панели
         root.add(basic);
