@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+//import java.util.concurrent.TimeUnit;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -19,7 +19,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
-
 import modules.methods.ComponentLayoutManager;
 import modules.methods.JTreeNodeRenderer;
 import modules.standartcomponent.wires.ground;
@@ -34,8 +33,7 @@ public class WorkEnvironmentMain {
         mainframe = frame;
         mainframe.add(mainworkplace);
         mainframe.setMinimumSize(new Dimension(500, 500));
-        mainframe.pack();
-        //закачка компонентов - для тестов
+        //закачка компонентов - для тестов =================================================================
         ProjectComponents.add(new power(Scale));
         ProjectComponents.get(0).ComponentLocation = new int[] {0, 0}; //- проверка относительных координат
         //ProjectComponents.get(0).rotation = 400; //- проверка поворота
@@ -46,6 +44,8 @@ public class WorkEnvironmentMain {
         incomponentframe.add(ProjectComponents.get(0));
         incomponentframe.add(ProjectComponents.get(2));
         intoolframe.add(ProjectComponents.get(1));
+        //конец тестовой закачки ===========================================================================
+        mainframe.pack();
         //загржаем базовые компоненты
         initbasiccomponents();
     }
@@ -61,7 +61,7 @@ public class WorkEnvironmentMain {
     public JPanel componenttree = new JPanel(new BorderLayout());
     public JPanel componentdata = new JPanel(new BorderLayout());
     public JPanel componentmenu = new JPanel(new BorderLayout());
-    public JPanel incomponentframe = new JPanel(new ComponentLayoutManager(new Dimension(500, 500)));
+    public JPanel incomponentframe = new JPanel(new ComponentLayoutManager());
     public JPanel outcomponentframe = new JPanel(new BorderLayout());
     public JTree componentroottree = new JTree(buildcomponentroottree());
     public JScrollPane scrpanecomponenttree = new JScrollPane(componentroottree);
@@ -139,7 +139,12 @@ public class WorkEnvironmentMain {
         componentroottree.setCellRenderer(new JTreeNodeRenderer());
     }
 }
-/*чтобы изменить положение компонента - надо сделать так:
+/*
+Чтобы изменить положение компонента - надо сделать так:
 ProjectComponents.get(n).ComponentLocation = new int[] {x, y};
 ProjectComponents.get(n).repaint();
+
+Чтобы изменить размер рабочего поля, необходимо ему дать новый LayoutManager, с новым измерением:
+incomponentframe.setLayout(new ComponentLayoutManager(new Dimension(x, y)));
+по умолчанию стоит измерение на 500х500
 */
