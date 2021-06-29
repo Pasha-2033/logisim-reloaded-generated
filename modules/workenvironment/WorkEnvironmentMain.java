@@ -7,12 +7,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -21,6 +19,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
+
+import modules.methods.ComponentLayoutManager;
 import modules.methods.JTreeNodeRenderer;
 import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.power;
@@ -48,9 +48,6 @@ public class WorkEnvironmentMain {
         intoolframe.add(ProjectComponents.get(1));
         //загржаем базовые компоненты
         initbasiccomponents();
-        //
-        ProjectComponents.get(0).setBounds(incomponentframe.getBounds());
-        ProjectComponents.get(2).setBounds(incomponentframe.getBounds());
     }
     public List<MainComponentcCass> ComponentLibraries = new ArrayList<>(Collections.emptyList());
     public List<Component> AvaluableComponents = new ArrayList<>(Collections.emptyList());
@@ -64,7 +61,7 @@ public class WorkEnvironmentMain {
     public JPanel componenttree = new JPanel(new BorderLayout());
     public JPanel componentdata = new JPanel(new BorderLayout());
     public JPanel componentmenu = new JPanel(new BorderLayout());
-    public JPanel incomponentframe = new JPanel(new BorderLayout());
+    public JPanel incomponentframe = new JPanel(new ComponentLayoutManager(new Dimension(500, 500)));
     public JPanel outcomponentframe = new JPanel(new BorderLayout());
     public JTree componentroottree = new JTree(buildcomponentroottree());
     public JScrollPane scrpanecomponenttree = new JScrollPane(componentroottree);
@@ -112,7 +109,7 @@ public class WorkEnvironmentMain {
         componentmenu.add(componenttree);
         componentmenu.add(componentdata);
         componentmenu.add(framesize);
-        incomponentframe.setPreferredSize(new Dimension(600,600));
+        //incomponentframe.setPreferredSize(new Dimension(600,600));
         incomponentframe.setBorder(BorderFactory.createLineBorder(Color.black));
         incomponentframe.setBackground(Color.WHITE);
         incomponentframe.setOpaque(true);
