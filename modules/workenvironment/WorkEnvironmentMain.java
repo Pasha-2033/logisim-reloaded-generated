@@ -20,7 +20,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
-
 import modules.methods.JTreeNodeRenderer;
 import modules.methods.LayoutManagers.ComponentLayoutManager;
 import modules.methods.LayoutManagers.FrameScaleLayout;
@@ -138,10 +137,15 @@ public class WorkEnvironmentMain {
         inframesize.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         inframesize.setBackground(Color.RED);
         inframesize.setOpaque(true);
+        inframesize.add(Scalelabel, BorderLayout.WEST);
         outframesize.add(inframesize);
         workplace.setPreferredSize(new Dimension(500, 500));
         mainworkplace.add(workplace);
         componentroottree.setCellRenderer(new JTreeNodeRenderer());
+        updateJLableScale();
+    }
+    public void updateJLableScale(){
+        Scalelabel.setText(String.valueOf(Math.round(Scale * 100)) + "%");
     }
 }
 /*
