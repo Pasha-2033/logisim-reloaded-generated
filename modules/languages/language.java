@@ -9,10 +9,9 @@ public class language {
         try {
             lang.load(new FileReader(new File("settings.properties")));
             config.load(new FileReader(new File("modules/languages/" + lang.getProperty("language") +  ".properties")));
-            return (String) config.getProperty(wordtotranslate);
+            return (String) config.getProperty(wordtotranslate, wordtotranslate);
         } catch (Exception e) {
-            e.printStackTrace();
+            return wordtotranslate;
         }
-        return "";
     }
 }

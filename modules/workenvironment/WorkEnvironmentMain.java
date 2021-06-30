@@ -1,6 +1,7 @@
 package modules.workenvironment;
 import java.awt.Graphics;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -19,8 +20,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
-import modules.methods.ComponentLayoutManager;
+
 import modules.methods.JTreeNodeRenderer;
+import modules.methods.LayoutManagers.ComponentLayoutManager;
+import modules.methods.LayoutManagers.FrameScaleLayout;
 import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.power;
 public class WorkEnvironmentMain {
@@ -42,7 +45,7 @@ public class WorkEnvironmentMain {
         ProjectComponents.add(new power(Scale));
         ProjectComponents.get(2).ComponentLocation = new int[] {25, 25}; //- проверка относительных координат
         incomponentframe.add(ProjectComponents.get(0));
-        incomponentframe.add(ProjectComponents.get(2));
+        //incomponentframe.add(ProjectComponents.get(2));
         intoolframe.add(ProjectComponents.get(1));
         //конец тестовой закачки ===========================================================================
         mainframe.pack();
@@ -55,9 +58,10 @@ public class WorkEnvironmentMain {
     public List<Component> ProjectShemes = new ArrayList<>(Collections.emptyList());
     public JFrame mainframe;
     public JPanel mainworkplace = new JPanel(new BorderLayout());
-    public JPanel framesize = new JPanel(new BorderLayout());
+    public JPanel inframesize = new JPanel(new BorderLayout());
     public JPanel intoolframe = new JPanel(new BorderLayout());
-    public JPanel outtoolframe = new JPanel(new BorderLayout());
+    public JPanel outtoolframe = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    public JPanel outframesize = new JPanel(new FrameScaleLayout());
     public JPanel componenttree = new JPanel(new BorderLayout());
     public JPanel componentdata = new JPanel(new BorderLayout());
     public JPanel componentmenu = new JPanel(new BorderLayout());
@@ -67,6 +71,7 @@ public class WorkEnvironmentMain {
     public JScrollPane scrpanecomponenttree = new JScrollPane(componentroottree);
     public JScrollPane componentframescrolpane = new JScrollPane(incomponentframe);
     public JSplitPane workplace = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentmenu, outcomponentframe);
+    public JLabel Scalelabel = new JLabel();
     public TreeModel buildcomponentroottree(){
         //корневая панель
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Components");
@@ -101,39 +106,39 @@ public class WorkEnvironmentMain {
         //закачиваем сюда список компонентов
     }
     public void initgui(){
-        componentmenu.setBorder(BorderFactory.createLineBorder(Color.black));
+        componentmenu.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         componentmenu.setLayout(new BoxLayout(componentmenu, BoxLayout.Y_AXIS));
         componentmenu.setPreferredSize(new Dimension(100,100));
         componentmenu.setMinimumSize(new Dimension(100,100));
         componentmenu.add(outtoolframe);
         componentmenu.add(componenttree);
         componentmenu.add(componentdata);
-        componentmenu.add(framesize);
-        //incomponentframe.setPreferredSize(new Dimension(600,600));
-        incomponentframe.setBorder(BorderFactory.createLineBorder(Color.black));
+        componentmenu.add(outframesize);
+        incomponentframe.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         incomponentframe.setBackground(Color.WHITE);
         incomponentframe.setOpaque(true);
         outcomponentframe.add(componentframescrolpane);
-        componentdata.setBorder(BorderFactory.createLineBorder(Color.black));
+        componentdata.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         componentdata.setBackground(Color.WHITE);
         componentdata.setOpaque(true);
-        componentdata.setPreferredSize(new Dimension(100,100));
-        intoolframe.setBorder(BorderFactory.createLineBorder(Color.black));
-        intoolframe.setBackground(Color.RED);
+        componentdata.setPreferredSize(new Dimension(100, 100));
+        intoolframe.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        intoolframe.setBackground(Color.GREEN);
         intoolframe.setOpaque(true);
-        intoolframe.setPreferredSize(new Dimension(100,100));
-        intoolframe.setMinimumSize(new Dimension(100,100));
-        intoolframe.setMaximumSize(new Dimension(100,100));
-        outtoolframe.add(intoolframe, BorderLayout.WEST);
+        intoolframe.setPreferredSize(new Dimension(100, 20));
+        outtoolframe.add(intoolframe);
+        ((FlowLayout) outtoolframe.getLayout()).setVgap(0);
+        ((FlowLayout) outtoolframe.getLayout()).setHgap(0);
         componenttree.add(scrpanecomponenttree);
-        componenttree.setPreferredSize(new Dimension(100,100));
+        componenttree.setPreferredSize(new Dimension(100, 100));
+        scrpanecomponenttree.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         scrpanecomponenttree.setPreferredSize(componenttree.getPreferredSize());
         scrpanecomponenttree.setBackground(Color.WHITE);
         scrpanecomponenttree.setOpaque(true);
-        framesize.setBorder(BorderFactory.createLineBorder(Color.black));
-        framesize.setBackground(Color.RED);
-        framesize.setOpaque(true);
-        framesize.setPreferredSize(new Dimension(100,100));
+        inframesize.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        inframesize.setBackground(Color.RED);
+        inframesize.setOpaque(true);
+        outframesize.add(inframesize);
         workplace.setPreferredSize(new Dimension(500, 500));
         mainworkplace.add(workplace);
         componentroottree.setCellRenderer(new JTreeNodeRenderer());

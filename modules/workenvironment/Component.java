@@ -5,11 +5,13 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import modules.languages.language;
 import java.awt.Graphics;
 public class Component extends JPanel {
+    //добавить список атрибутов компонента
     public float Scale;
     public int rotation = 0;
-    public Port[] Ports = {};
+    public List<Port> Ports = new ArrayList<>(Collections.emptyList());
     public int[] ComponentLocation = {0, 0};
     public List<String> DrawOder = new ArrayList<>(Collections.emptyList());
     public List<Object[]> LineData = new ArrayList<>(Collections.emptyList());
@@ -32,7 +34,7 @@ public class Component extends JPanel {
         setComponent(componentname, componenticon, Scale);
     }
     public void setComponent(String componentname, Icon componenticon, float Scale){
-        this.componentname = componentname;
+        this.componentname = language.trnslt(componentname);
         this.componenticon = componenticon;
         this.Scale = Scale;
         setOpaque(false);

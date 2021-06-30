@@ -104,7 +104,7 @@ public class DrawComponent {
         int arg4 = - Math.round(((int) LineData[2] * (float) Math.sin(Math.toRadians(component.rotation)) - (int) LineData[3] * (float) Math.cos(Math.toRadians(component.rotation))) * Scale);
         int[] location = new int[] {Math.round(component.ComponentLocation[0] * Scale), Math.round(component.ComponentLocation[1] * Scale)};
         Stroke stroke = new BasicStroke(((BasicStroke) LineData[5]).getLineWidth() * Scale, ((BasicStroke) LineData[5]).getEndCap(), ((BasicStroke) LineData[5]).getLineJoin(), ((BasicStroke) LineData[5]).getMiterLimit(), ((BasicStroke) LineData[5]).getDashArray(), ((BasicStroke) LineData[5]).getDashPhase());
-        (new DrawMethods()).drawLine(graphics, location, arg1, arg2, arg3, arg4, (Color) LineData[4], stroke);
+        (new DrawMethods()).drawLine(graphics, location, arg1, -arg2, arg3, arg4, (Color) LineData[4], stroke);
     }
     private void drawrect(Component component, Graphics graphics, float Scale, Object[] RectData){
         int arg1 = Math.round(((int) RectData[1] * (float) Math.cos(Math.toRadians(component.rotation)) - (int) RectData[2] * (float) Math.sin(Math.toRadians(component.rotation))) * Scale);

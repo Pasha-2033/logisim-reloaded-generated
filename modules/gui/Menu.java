@@ -1,8 +1,12 @@
 package modules.gui;
 import java.io.File;
 import java.io.FileReader;
-import java.util.*;
-import javax.swing.*;
+import java.util.Properties;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import modules.languages.language;
 import modules.methods.GUIMethod;
 public class Menu extends JFrame {
@@ -17,24 +21,6 @@ public class Menu extends JFrame {
         menu.add(settingsmenu());
         return menu;
     }
-    /*public static JMenuBar toolmenu(){
-        JMenuBar menu = new JMenuBar();
-        menu.add(filemenu());
-        menu.add(editmenu());
-        return menu;
-    }*/
-    /*public static JMenuBar elementmenu(){
-        JMenuBar menu = new JMenuBar();
-        menu.add(filemenu());
-        menu.add(editmenu());
-        return menu;
-    }*/
-    /*public static JMenuBar attributemenu(){
-        JMenuBar menu = new JMenuBar();
-        menu.add(filemenu());
-        menu.add(editmenu());
-        return menu;
-    }*/
     public static JMenu filemenu(){
         JMenu menu = new JMenu(language.trnslt("File"));
         JMenuItem item;
