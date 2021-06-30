@@ -145,7 +145,22 @@ public class WorkEnvironmentMain {
         updateJLableScale();
     }
     public void updateJLableScale(){
-        Scalelabel.setText(String.valueOf(Math.round(Scale * 100)) + "%");
+        updateJLableScale("", "", "");
+    }
+    public void updateJLableScale(String before, String middle, String after){
+        Scalelabel.setText(before + String.valueOf(Math.round(Scale * 100)) + middle + "%" + after);
+    }
+    public void rerenderComponents(boolean isplus, float Scalechange){
+        if(isplus){
+            updateJLableScale("", "+" + String.valueOf(Math.round(Scale * 100)), "");
+        } else {
+            updateJLableScale("", "-" + String.valueOf(Math.round(Scale * 100)), "");
+        }
+        //изменить размер компонентов -> incomponentframe.setLayout(new ComponentLayoutManager(new Dimension(x, y))), где x и у перерасчитаны
+        for (Component component : ProjectComponents){
+            component.repaint();
+        }
+        updateJLableScale();
     }
 }
 /*
