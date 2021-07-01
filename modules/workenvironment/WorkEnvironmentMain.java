@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 //import java.util.concurrent.TimeUnit;
@@ -29,7 +28,7 @@ import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.power;
 public class WorkEnvironmentMain {
     public float Scale = 1.0F;
-    //public Graphics graphics;
+    public Graphics graphics;
     public WorkEnvironmentMain(JFrame frame){
         //подготовка панелей
         initgui();
