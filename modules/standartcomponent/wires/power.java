@@ -15,7 +15,7 @@ public class power extends Component {
         setPowerData();
     }
     public void setPowerData(){
-        Ports.add(new Port(50, 25, true, this));
+        Ports.add(new Port(50, 25, true, false, this));
         LineData.add(new Object[] {0, 25, 25, 0, ColorList.GREEN[1], new BasicStroke(3.0F, 1, 1)});
         LineData.add(new Object[] {0, 25, 25, 50, ColorList.GREEN[1], new BasicStroke(3.0F, 1, 1)});
         LineData.add(new Object[] {25, 0, 25, 50, ColorList.GREEN[1], new BasicStroke(3.0F, 1, 1)});

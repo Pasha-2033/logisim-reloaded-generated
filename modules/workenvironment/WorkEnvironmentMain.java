@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 //import java.util.concurrent.TimeUnit;
@@ -20,6 +21,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
+import modules.gui.Dots;
 import modules.methods.JTreeNodeRenderer;
 import modules.methods.LayoutManagers.ComponentLayoutManager;
 import modules.methods.LayoutManagers.FrameScaleLayout;
@@ -27,7 +29,7 @@ import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.power;
 public class WorkEnvironmentMain {
     public float Scale = 1.0F;
-    public Graphics graphics;
+    //public Graphics graphics;
     public WorkEnvironmentMain(JFrame frame){
         //подготовка панелей
         initgui();
@@ -51,6 +53,7 @@ public class WorkEnvironmentMain {
         //загржаем базовые компоненты
         initbasiccomponents();
     }
+    public boolean DotsThere = false;
     public List<MainComponentcCass> ComponentLibraries = new ArrayList<>(Collections.emptyList());
     public List<Component> AvaluableComponents = new ArrayList<>(Collections.emptyList());
     public List<Component> ProjectComponents = new ArrayList<>(Collections.emptyList());
@@ -66,6 +69,7 @@ public class WorkEnvironmentMain {
     public JPanel componentmenu = new JPanel(new BorderLayout());
     public JPanel incomponentframe = new JPanel(new ComponentLayoutManager());
     public JPanel outcomponentframe = new JPanel(new BorderLayout());
+    public JPanel dots = new Dots();
     public JTree componentroottree = new JTree(buildcomponentroottree());
     public JScrollPane scrpanecomponenttree = new JScrollPane(componentroottree);
     public JScrollPane componentframescrolpane = new JScrollPane(incomponentframe);
@@ -150,17 +154,32 @@ public class WorkEnvironmentMain {
     public void updateJLableScale(String before, String middle, String after){
         Scalelabel.setText(before + String.valueOf(Math.round(Scale * 100)) + middle + "%" + after);
     }
-    public void rerenderComponents(boolean isplus, float Scalechange){
-        if(isplus){
+    public void rerenderComponents(float Scalechange){
+        if(Scalechange > 0.0F){
             updateJLableScale("", "+" + String.valueOf(Math.round(Scale * 100)), "");
         } else {
             updateJLableScale("", "-" + String.valueOf(Math.round(Scale * 100)), "");
         }
         //изменить размер компонентов -> incomponentframe.setLayout(new ComponentLayoutManager(new Dimension(x, y))), где x и у перерасчитаны
-        for (Component component : ProjectComponents){
+        if (DotsThere){
+            ((Dots) incomponentframe.getComponent(0)).Scale = Scale;
+            incomponentframe.getComponent(0).repaint();
+        }
+        for (Component component : (Component[]) incomponentframe.getComponents()){
+            component.Scale = Scale;
             component.repaint();
         }
         updateJLableScale();
+    }
+    public void addDots(){
+        if (!DotsThere){
+            incomponentframe.add(dots, 0);
+        }
+    }
+    public void removeDots(){
+        if (DotsThere){
+            incomponentframe.remove(0);
+        }
     }
 }
 /*

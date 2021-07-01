@@ -5,6 +5,7 @@ import java.util.List;
 import java.awt.Color;
 public class Port {
     public boolean isbasicsender;
+    public boolean isbasicgetter;
     public int[] location;
     public String lable;
     public List<List<Object>> Data = new ArrayList<>(Collections.emptyList());
@@ -12,18 +13,18 @@ public class Port {
     public Component belongsto;
     public List<Port> portsourse = new ArrayList<>(Collections.emptyList());
     public Port(int x, int y, Component belongsto){
-        SetPort(x, y, "", false, belongsto);
+        SetPort(x, y, "", false, false, belongsto);
     }
     public Port(int x, int y, String lable, Component belongsto){
-        SetPort(x, y, lable, false, belongsto);
+        SetPort(x, y, lable, false, false, belongsto);
     }
-    public Port(int x, int y, boolean isbasicsende, Component belongsto){
-        SetPort(x, y, "", isbasicsende, belongsto);
+    public Port(int x, int y, boolean isbasicsender, boolean isbasicgetter, Component belongsto){
+        SetPort(x, y, "", isbasicsender, isbasicgetter, belongsto);
     }
-    public Port(int x, int y, boolean isbasicsende, String lable, Component belongsto){
-        SetPort(x, y, lable, isbasicsende, belongsto);
+    public Port(int x, int y, boolean isbasicsender, boolean isbasicgetter, String lable, Component belongsto){
+        SetPort(x, y, lable, isbasicsender, isbasicgetter, belongsto);
     }
-    public void SetPort(int x, int y, String lable, boolean isbasicsender, Component belongsto){
+    public void SetPort(int x, int y, String lable, boolean isbasicsender, boolean isbasicgetter, Component belongsto){
         this.belongsto = belongsto;
         this.isbasicsender = isbasicsender;
         this.location = new int[] {x, y};
@@ -72,19 +73,21 @@ public class Port {
         updateColor();
     }
     public void setotherportdata(){
-        for (Port port : portsourse){
-            if (!port.isbasicsender){
-                port.setdata(Data);
-            } else {
-                if (port.Data != Data){
-                    Data = createnewData(port.Data);
-                    updateColor();
-                    setotherportdata();
-                    break;
+        if (!isbasicgetter){
+            for (Port port : portsourse){
+                if (!port.isbasicsender){
+                    port.setdata(Data);
+                } else {
+                    if (port.Data != Data){
+                        Data = createnewData(port.Data);
+                        updateColor();
+                        setotherportdata();
+                        break;
+                    }
                 }
+                port.belongsto.step();
+                port.belongsto.repaint();
             }
-            port.belongsto.step();
-            port.belongsto.repaint();
         }
     }
     public List<List<Object>> createnewData(List<List<Object>> otherportData){
