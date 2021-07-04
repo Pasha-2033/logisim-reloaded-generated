@@ -14,8 +14,8 @@ public class JTreeNodeRenderer implements TreeCellRenderer {
         try {
             Component component = (Component) node.getUserObject();
             if (node.isLeaf()){
-                label.setIcon(component.componenticon);
-                label.setText(component.componentname);
+                label.setIcon(component.getComponentIcon());
+                label.setText(component.getComponentName());
             } else {
                 label.setIcon(new ImageIcon("resources/menuicon/foldericon.png")); //указать иконку папки
             }

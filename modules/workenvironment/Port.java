@@ -36,9 +36,11 @@ public class Port {
             if (Data.get(0).size() == 1){
                 if (Data.get(0).get(0) instanceof Integer){
                     if (Data.get(0).get(0) == (Object) 0){
-                        color = new Color(50, 110, 0);
+                        color = ColorList.GREEN[2];
+                    } else if (Data.get(0).get(0) == (Object) 1){
+                        color = ColorList.GREEN[1];
                     } else {
-                        color = ColorList.GREEN[0];
+                        color = Color.RED;
                     }
                 } else {
                     if (isallX()){
@@ -50,7 +52,7 @@ public class Port {
                     }
                 }
             } else if (Data.get(0).size() > 1 && !containE()) {
-                color = Color.BLACK;
+                color = ColorList.BLACK[0];
             } else {
                 if (!containE()){
                     color = Color.GRAY;
@@ -60,7 +62,7 @@ public class Port {
             }
         } else if(Data.size() > 1)  {
             if (!containE()){
-                color = Color.BLACK;
+                color = ColorList.BLACK[0];
             } else {
                 color = Color.RED;
             }

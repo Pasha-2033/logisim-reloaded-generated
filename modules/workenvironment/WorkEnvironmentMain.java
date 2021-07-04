@@ -29,34 +29,12 @@ import modules.standartcomponent.wires.power;
 public class WorkEnvironmentMain {
     public float Scale = 1.0F;
     public Graphics graphics;
-    public WorkEnvironmentMain(JFrame frame){
-        //подготовка панелей
-        initgui();
-        //подготовка экрана
-        mainframe = frame;
-        mainframe.add(mainworkplace);
-        mainframe.setMinimumSize(new Dimension(500, 500));
-        //закачка компонентов - для тестов =================================================================
-        ProjectComponents.add(new power(Scale));
-        ProjectComponents.get(0).ComponentLocation = new int[] {0, 0}; //- проверка относительных координат
-        //ProjectComponents.get(0).rotation = 400; //- проверка поворота
-        ProjectComponents.add(new power(Scale));
-        ProjectComponents.get(1).ComponentLocation = new int[] {0, 0}; //- проверка относительных координат
-        ProjectComponents.add(new power(Scale));
-        ProjectComponents.get(2).ComponentLocation = new int[] {25, 25}; //- проверка относительных координат
-        incomponentframe.add(ProjectComponents.get(0));
-        //incomponentframe.add(ProjectComponents.get(2));
-        intoolframe.add(ProjectComponents.get(1));
-        //конец тестовой закачки ===========================================================================
-        mainframe.pack();
-        //загржаем базовые компоненты
-        initbasiccomponents();
-    }
     public boolean DotsThere = false;
     public List<MainComponentcCass> ComponentLibraries = new ArrayList<>(Collections.emptyList());
     public List<Component> AvaluableComponents = new ArrayList<>(Collections.emptyList());
     public List<Component> ProjectComponents = new ArrayList<>(Collections.emptyList());
     public List<Component> ProjectShemes = new ArrayList<>(Collections.emptyList());
+    public Component currentSircut = new Component();
     public JFrame mainframe;
     public JPanel mainworkplace = new JPanel(new BorderLayout());
     public JPanel inframesize = new JPanel(new BorderLayout());
@@ -74,6 +52,29 @@ public class WorkEnvironmentMain {
     public JScrollPane componentframescrolpane = new JScrollPane(incomponentframe);
     public JSplitPane workplace = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentmenu, outcomponentframe);
     public JLabel Scalelabel = new JLabel();
+    public WorkEnvironmentMain(JFrame frame){
+        //подготовка панелей
+        initgui();
+        //подготовка экрана
+        mainframe = frame;
+        mainframe.add(mainworkplace);
+        mainframe.setMinimumSize(new Dimension(500, 500));
+        //закачка компонентов - для тестов =================================================================
+        ProjectComponents.add(new power(Scale));
+        ProjectComponents.get(0).setComponentLocation(0,0); //- проверка относительных координат
+        //ProjectComponents.get(0).setRotation(400); //- проверка поворота
+        ProjectComponents.add(new power(Scale));
+        ProjectComponents.get(1).setComponentLocation(0, 0); //- проверка относительных координат
+        ProjectComponents.add(new power(Scale));
+        ProjectComponents.get(2).setComponentLocation(25, 25); //- проверка относительных координат
+        incomponentframe.add(ProjectComponents.get(0));
+        //incomponentframe.add(ProjectComponents.get(2));
+        intoolframe.add(ProjectComponents.get(1));
+        //конец тестовой закачки ===========================================================================
+        mainframe.pack();
+        //загржаем базовые компоненты
+        initbasiccomponents();
+    }
     public TreeModel buildcomponentroottree(){
         //корневая панель
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Components");
@@ -96,8 +97,8 @@ public class WorkEnvironmentMain {
             imported.add(tmpnode);
             for (Component component : mainclass.componentlist){
                 JPanel tmppanel = new JPanel();
-                tmppanel.add(new JLabel(component.componenticon));
-                tmppanel.add(new JLabel(component.componentname));
+                tmppanel.add(new JLabel(component.getComponentIcon()));
+                tmppanel.add(new JLabel(component.getComponentName()));
                 tmpnode.add((MutableTreeNode) tmppanel);
             }
         }
@@ -148,26 +149,25 @@ public class WorkEnvironmentMain {
         updateJLableScale();
     }
     public void updateJLableScale(){
-        updateJLableScale("", "", "");
+        Scalelabel.setText(String.valueOf(Math.round(Scale * 100)) + "%");
     }
-    public void updateJLableScale(String before, String middle, String after){
-        Scalelabel.setText(before + String.valueOf(Math.round(Scale * 100)) + middle + "%" + after);
+    public void updateWorkplaceDimension(){
+        incomponentframe.setLayout(new ComponentLayoutManager(new Dimension((int) (currentSircut.getSize().getWidth() * Scale), (int) (currentSircut.getSize().getHeight() * Scale))));
+        rerenderAllComponents();
+        updateJLableScale();
     }
-    public void rerenderComponents(float Scalechange){
-        if(Scalechange > 0.0F){
-            updateJLableScale("", "+" + String.valueOf(Math.round(Scale * 100)), "");
-        } else {
-            updateJLableScale("", "-" + String.valueOf(Math.round(Scale * 100)), "");
-        }
-        //изменить размер компонентов -> incomponentframe.setLayout(new ComponentLayoutManager(new Dimension(x, y))), где x и у перерасчитаны
-        if (DotsThere){
-            ((Dots) incomponentframe.getComponent(0)).Scale = Scale;
-            incomponentframe.getComponent(0).repaint();
-        }
-        for (Component component : (Component[]) incomponentframe.getComponents()){
-            component.Scale = Scale;
+    public void rerenderAllComponents(){
+        ((Dots) incomponentframe.getComponent(0)).Scale = Scale;
+        //добавить в Dots параметр isDotsThere
+        ((Dots) incomponentframe.getComponent(0)).repaint();
+        for (Component component : currentSircut.getintercomponentsandsircuts()){
+            //сделать фоновым потоком
+            component.setScale(Scale);
             component.repaint();
         }
+        //здесь заменить dots на класс выделения
+        ((Dots) incomponentframe.getComponent(incomponentframe.getComponents().length - 1)).Scale = Scale;
+        ((Dots) incomponentframe.getComponent(incomponentframe.getComponents().length - 1)).repaint();
         updateJLableScale();
     }
     public void addDots(){
@@ -179,6 +179,9 @@ public class WorkEnvironmentMain {
         if (DotsThere){
             incomponentframe.remove(0);
         }
+    }
+    public void addComponent(Component c){
+        incomponentframe.add(c, incomponentframe.getComponentCount() - 2);
     }
 }
 /*
