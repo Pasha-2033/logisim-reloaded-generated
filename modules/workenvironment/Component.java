@@ -6,6 +6,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import modules.languages.language;
+import modules.methods.DetermineComponentDrawingBounds;
 import java.awt.Graphics;
 import java.awt.Dimension;
 import java.awt.Stroke;
@@ -27,6 +28,7 @@ public class Component extends JPanel {
     private List<Object[]> Attributes = new ArrayList<Object[]>(Collections.emptyList());
     private Icon ComponentIcon;
     private String ComponentName;
+    private int[] ComponentDrawingBounds = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
     public Component(){
         setComponent("undefind", new ImageIcon("resources/menuicon/undoicon.png"), 1.0F, false);
     }
@@ -59,6 +61,7 @@ public class Component extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         new DrawComponent(this, g, Scale);
+        ComponentDrawingBounds = DetermineComponentDrawingBounds.determine(this);
     }
     //функции для работы с компонентом
     public Dimension getSize(){
@@ -108,6 +111,9 @@ public class Component extends JPanel {
     }
     public int getRotation(){
         return Rotation;
+    }
+    public void setRotation(int Rotation){
+        this.Rotation = Rotation;
     }
     public List<Port> getPorts(){
         return Ports;
@@ -279,10 +285,16 @@ public class Component extends JPanel {
     public void setComponentName(String ComponentName){
         this.ComponentName = ComponentName;
     }
+    public int[] getComponentDrawingBounds(){
+        return ComponentDrawingBounds;
+    }
+    public void setComponentDrawingBounds(int x, int y, int w, int h){
+        ComponentDrawingBounds = new int[]{x, y, x + w, y, x + w, y + h, x, y + h};
+    }
     //стандартные функции компоента, чтобы при вызове их у компонента не вызывало ошибку
     public void start(){}
     public void step(){}
-    public void stream(){}
+    public void stream(){}//- cделать потоком
     public void generatetick(){}
     public void sircutcheck(){
         if (intercomponentsandsircuts.size() > 0){

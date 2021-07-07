@@ -21,6 +21,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
 import modules.gui.Dots;
+import modules.gui.Excretion;
 import modules.methods.JTreeNodeRenderer;
 import modules.methods.LayoutManagers.ComponentLayoutManager;
 import modules.methods.LayoutManagers.FrameScaleLayout;
@@ -46,7 +47,8 @@ public class WorkEnvironmentMain {
     public JPanel componentmenu = new JPanel(new BorderLayout());
     public JPanel incomponentframe = new JPanel(new ComponentLayoutManager());
     public JPanel outcomponentframe = new JPanel(new BorderLayout());
-    public JPanel dots = new Dots();
+    public Dots dots = new Dots();
+    public Excretion excretion = new Excretion();
     public JTree componentroottree = new JTree(buildcomponentroottree());
     public JScrollPane scrpanecomponenttree = new JScrollPane(componentroottree);
     public JScrollPane componentframescrolpane = new JScrollPane(incomponentframe);
@@ -61,8 +63,8 @@ public class WorkEnvironmentMain {
         mainframe.setMinimumSize(new Dimension(500, 500));
         //закачка компонентов - для тестов =================================================================
         ProjectComponents.add(new power(Scale));
-        ProjectComponents.get(0).setComponentLocation(0,0); //- проверка относительных координат
-        //ProjectComponents.get(0).setRotation(400); //- проверка поворота
+        ProjectComponents.get(0).setComponentLocation(100,100); //- проверка относительных координат
+        ProjectComponents.get(0).setRotation(180); //- проверка поворота
         ProjectComponents.add(new power(Scale));
         ProjectComponents.get(1).setComponentLocation(0, 0); //- проверка относительных координат
         ProjectComponents.add(new power(Scale));
@@ -157,16 +159,16 @@ public class WorkEnvironmentMain {
         updateJLableScale();
     }
     public void rerenderAllComponents(){
-        ((Dots) incomponentframe.getComponent(0)).Scale = Scale;
-        //добавить в Dots параметр isDotsThere
-        ((Dots) incomponentframe.getComponent(0)).repaint();
+        dots.setScale(Scale);
+        dots.setDotsThere(DotsThere);
+        dots.repaint();
         for (Component component : currentSircut.getintercomponentsandsircuts()){
             //сделать фоновым потоком
             component.setScale(Scale);
             component.repaint();
         }
         //здесь заменить dots на класс выделения
-        ((Dots) incomponentframe.getComponent(incomponentframe.getComponents().length - 1)).Scale = Scale;
+        //((Dots) incomponentframe.getComponent(incomponentframe.getComponents().length - 1)).Scale = Scale;
         ((Dots) incomponentframe.getComponent(incomponentframe.getComponents().length - 1)).repaint();
         updateJLableScale();
     }

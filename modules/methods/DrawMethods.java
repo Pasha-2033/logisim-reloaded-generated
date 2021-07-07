@@ -1,5 +1,11 @@
 package modules.methods;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Stroke;
+import java.awt.Polygon;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.BasicStroke;
+import java.awt.RenderingHints;
 import javax.swing.JComponent;
 public class DrawMethods extends JComponent{
     public void drawLine(Graphics g, int[] location, int argX, int argY, int arg2X, int arg2Y, Color color, Stroke strk){
@@ -29,7 +35,7 @@ public class DrawMethods extends JComponent{
     }
     public void fillRect(Graphics g, int[] location, int argX, int argY, int argW, int argH, Color color, int rotation){
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
+        Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(color);
         g2d.rotate(-Math.toRadians(rotation), location[0], location[1]);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -47,7 +53,7 @@ public class DrawMethods extends JComponent{
                 strk = new BasicStroke(1.0F, 1, 1);
             }
             Polygon poly = new Polygon(PolyX, PolyY, PolyX.length);
-            Graphics2D g2d = (Graphics2D) g;
+            Graphics2D g2d = (Graphics2D) g.create();
             g2d.setColor(color);
             g2d.rotate(-Math.toRadians(rotation), location[0], location[1]);
             g2d.setStroke(new BasicStroke(6.0F, 1, 2));
@@ -64,7 +70,7 @@ public class DrawMethods extends JComponent{
                 PolyY[i] =+ location[1];
             }
             Polygon poly = new Polygon(PolyX, PolyY, PolyX.length);
-            Graphics2D g2d = (Graphics2D) g;
+            Graphics2D g2d = (Graphics2D) g.create();
             g2d.setColor(color);
             g2d.rotate(-Math.toRadians(rotation), location[0], location[1]);
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -88,7 +94,7 @@ public class DrawMethods extends JComponent{
     }
     public void fillOval(Graphics g, int[] location, int argX, int argY, int argW, int argH, Color color, int rotation){
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
+        Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(color);
         g2d.rotate(-Math.toRadians(rotation), location[0], location[1]);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
