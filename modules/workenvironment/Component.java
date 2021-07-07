@@ -6,7 +6,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import modules.languages.language;
-import modules.methods.DetermineComponentDrawingBounds;
 import java.awt.Graphics;
 import java.awt.Dimension;
 import java.awt.Stroke;
@@ -28,86 +27,196 @@ public class Component extends JPanel {
     private List<Object[]> Attributes = new ArrayList<Object[]>(Collections.emptyList());
     private Icon ComponentIcon;
     private String ComponentName;
-    private int[] ComponentDrawingBounds = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
     public Component(){
-        setComponent("undefind", new ImageIcon("resources/menuicon/undoicon.png"), 1.0F, false);
+        try {
+            setComponent("undefind", new ImageIcon("resources/menuicon/undoicon.png"), 1.0F, false);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
     public Component(String ComponentName){
-        setComponent(ComponentName, new ImageIcon("resources/menuicon/undoicon.png"), 1.0F, false);
+        
+        try {
+            setComponent(ComponentName, new ImageIcon("resources/menuicon/undoicon.png"), 1.0F, false);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public Component(String ComponentName, boolean isSircut){
-        setComponent(ComponentName, new ImageIcon("resources/menuicon/undoicon.png"), 1.0F, isSircut);
+        
+        try {
+            setComponent(ComponentName, new ImageIcon("resources/menuicon/undoicon.png"), 1.0F, isSircut);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public Component(String ComponentName, Icon ComponentIcon){
-        setComponent(ComponentName, ComponentIcon, 1.0F, false);
+        
+        try {
+            setComponent(ComponentName, ComponentIcon, 1.0F, false);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public Component(String ComponentName, Icon ComponentIcon, boolean isSircut){
-        setComponent(ComponentName, ComponentIcon, 1.0F, isSircut);
+        
+        try {
+            setComponent(ComponentName, ComponentIcon, 1.0F, isSircut);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public Component(String ComponentName, Icon ComponentIcon, float Scale){
-        setComponent(ComponentName, ComponentIcon, Scale, false);
+        
+        try {
+            setComponent(ComponentName, ComponentIcon, Scale, false);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public Component(String ComponentName, Icon ComponentIcon, float Scale, boolean isSircut){
-        setComponent(ComponentName, ComponentIcon, Scale, isSircut);
+        
+        try {
+            setComponent(ComponentName, ComponentIcon, Scale, isSircut);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     private void setComponent(String ComponentName, Icon ComponentIcon, float Scale, boolean isSircut){
-        this.ComponentName = language.trnslt(ComponentName);
-        this.ComponentIcon = ComponentIcon;
-        this.Scale = Scale;
-        this.isSircut = isSircut;
-        setOpaque(false);
+        
+        try {
+            this.ComponentName = language.trnslt(ComponentName);
+            this.ComponentIcon = ComponentIcon;
+            this.Scale = Scale;
+            this.isSircut = isSircut;
+            setOpaque(false);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     @Override
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        new DrawComponent(this, g, Scale);
-        ComponentDrawingBounds = DetermineComponentDrawingBounds.determine(this);
+        
+        try {
+            super.paintComponent(g);
+            new DrawComponent(this, g, Scale);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     //функции для работы с компонентом
     public Dimension getSize(){
         return Size;
+        
     }
     public void setSize(Dimension Size){
-        this.Size = Size;
+        
+        try {
+            this.Size = Size;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public boolean getisSircut(){
         return isSircut;
     }
     public void setisSircut(boolean isSircut){
-        this.isSircut = isSircut;
+        
+        try {
+            this.isSircut = isSircut;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void checkisSicut(){
-        isSircut = intercomponentsandsircuts.size() != 0;
+        
+        try {
+            isSircut = intercomponentsandsircuts.size() != 0;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public List<Component> getintercomponentsandsircuts(){
         return intercomponentsandsircuts;
     }
     public void setintercomponentsandsircuts(List<Component> intercomponentsandsircuts){
-        this.intercomponentsandsircuts = intercomponentsandsircuts;
+        
+        try {
+            this.intercomponentsandsircuts = intercomponentsandsircuts;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void setintercomponentsandsircut(Component component, int index){
-        intercomponentsandsircuts.set(index, component);
+        
+        try {
+            intercomponentsandsircuts.set(index, component);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void addintercomponentsandsircut(Component component){
-        intercomponentsandsircuts.add(component);
+        
+        try {
+            intercomponentsandsircuts.add(component);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void addintercomponentsandsircut(Component component, int index){
-        intercomponentsandsircuts.add(index, component);
+        
+        try {
+            intercomponentsandsircuts.add(index, component);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeintercomponentsandsircut(Component component){
-        intercomponentsandsircuts.remove(component);
+        
+        try {
+            intercomponentsandsircuts.remove(component);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeintercomponentsandsircuts(int index){
-        intercomponentsandsircuts.remove(index);
+        
+        try {
+            intercomponentsandsircuts.remove(index);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeAllintercomponentsandsircuts(){
-        intercomponentsandsircuts = new ArrayList<Component>(Collections.emptyList());
+        
+        try {
+            intercomponentsandsircuts = new ArrayList<Component>(Collections.emptyList());
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public float getScale(){
         return Scale;
     }
     public void setScale(float Scale){
-        this.Scale = Scale;
+        
+        try {
+            this.Scale = Scale;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public int getRotation(){
         return Rotation;
@@ -119,153 +228,404 @@ public class Component extends JPanel {
         return Ports;
     }
     public void setPorts(List<Port> Ports){
-        this.Ports = Ports;
+        
+        try {
+            this.Ports = Ports;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void addPort(Port port){
-        Ports.add(port);
+        
+        try {
+            Ports.add(port);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void addPort(Port port, int index){
-        Ports.add(index, port);
+        
+        try {
+            Ports.add(index, port);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removePort(Port port){
-        Ports.remove(port);
+        
+        try {
+            Ports.remove(port);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removePort(int index){
-        Ports.remove(index);
+        
+        try {
+            Ports.remove(index);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeAllPorts(){
-        Ports = new ArrayList<Port>(Collections.emptyList());
+        
+        try {
+            Ports = new ArrayList<Port>(Collections.emptyList());
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public int[] getComponentLocation(){
         return ComponentLocation;
     }
     public void setComponentLocation(int x, int y){
-        ComponentLocation[0] = x;
-        ComponentLocation[1] = y;
+        
+        try {
+            ComponentLocation[0] = x;
+            ComponentLocation[1] = y;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public List<String> getDrawOder(){
         return DrawOder;
     }
     public void setDrawOder(List<String> DrawOder){
-        this.DrawOder = DrawOder;
+        
+        try {
+            this.DrawOder = DrawOder;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void setDrawOder(String Oder, int index){
-        DrawOder.set(index, Oder);
+        
+        try {
+            DrawOder.set(index, Oder);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void addDrawOder(String Oder){
-        DrawOder.add(Oder);
+        
+        try {
+            DrawOder.add(Oder);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void addDrawOder(String Oder, int index){
-        DrawOder.add(index, Oder);
+        
+        try {
+            DrawOder.add(index, Oder);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeDrawOder(String Oder){
-        DrawOder.remove(Oder);
+        
+        try {
+            DrawOder.remove(Oder);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeAllDrawOder(){
-        DrawOder = new ArrayList<String>(Collections.emptyList());
+        
+        try {
+            DrawOder = new ArrayList<String>(Collections.emptyList());
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public List<Object[]> getLineData(){
         return LineData;
     }
     public void setLineData(List<Object[]> LineData){
-        this.LineData = LineData;
+        
+        try {
+            this.LineData = LineData;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void setLineData(int fromX, int fromY, int toX, int toY, Color color, Stroke strk, int index){
-        LineData.set(index, new Object[]{fromX, fromY, toX, toY, color, strk});
+        
+        try {
+            LineData.set(index, new Object[]{fromX, fromY, toX, toY, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void addLineData(int fromX, int fromY, int toX, int toY, Color color, Stroke strk){
-        LineData.add(new Object[]{fromX, fromY, toX, toY, color, strk});
+        
+        try {
+            LineData.add(new Object[]{fromX, fromY, toX, toY, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void addLineData(int fromX, int fromY, int toX, int toY, Color color, Stroke strk, int index){
-        LineData.add(index, new Object[]{fromX, fromY, toX, toY, color, strk});
+        
+        try {
+            LineData.add(index, new Object[]{fromX, fromY, toX, toY, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeLineData(int fromX, int fromY, int toX, int toY, Color color, Stroke strk){
-        LineData.remove(new Object[]{fromX, fromY, toX, toY, color, strk});
+        
+        try {
+            LineData.remove(new Object[]{fromX, fromY, toX, toY, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeAllLineData(){
-        LineData = new ArrayList<Object[]>(Collections.emptyList());
+        
+        try {
+            LineData = new ArrayList<Object[]>(Collections.emptyList());
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public List<Object[]> getRectData(){
         return RectData;
     }
     public void setRectData(List<Object[]> RectData){
-        this.RectData = RectData;
+        
+        try {
+            this.RectData = RectData;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void setRectData(String mode, int X, int Y, int W, int H, Color color, Stroke strk, int index){
-        RectData.set(index, new Object[] {mode, X, Y, W, H, color, strk});
+        
+        try {
+            RectData.set(index, new Object[] {mode, X, Y, W, H, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void addRectData(String mode, int X, int Y, int W, int H, Color color, Stroke strk){
-        RectData.add(new Object[] {mode, X, Y, W, H, color, strk});
+        
+        try {
+            RectData.add(new Object[] {mode, X, Y, W, H, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void addRectData(String mode, int X, int Y, int W, int H, Color color, Stroke strk, int index){
-        RectData.add(index, new Object[] {mode, X, Y, W, H, color, strk});
+        
+        try {
+            RectData.add(index, new Object[] {mode, X, Y, W, H, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeRectData(String mode, int X, int Y, int W, int H, Color color, Stroke strk){
-        RectData.remove(new Object[] {mode, X, Y, W, H, color, strk});
+        
+        try {
+            RectData.remove(new Object[] {mode, X, Y, W, H, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeRectData(int index){
-        RectData.remove(index);
+        
+        try {
+            RectData.remove(index);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeAllRectData(){
-        RectData = new ArrayList<Object[]>(Collections.emptyList());
+        
+        try {
+            RectData = new ArrayList<Object[]>(Collections.emptyList());
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public List<Object[]> getOvalData(){
         return OvalData;
     }
     public void setOvalData(List<Object[]> OvalData){
-        this.OvalData = OvalData;
+        
+        try {
+            this.OvalData = OvalData;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void setOvalData(String mode, int X, int Y, int W, int H, Color color, Stroke strk, int index){
-        OvalData.set(index, new Object[] {mode, X, Y, W, H, color, strk});
+        
+        try {
+            OvalData.set(index, new Object[] {mode, X, Y, W, H, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void addOvalData(String mode, int X, int Y, int W, int H, Color color, Stroke strk){
-        OvalData.add(new Object[] {mode, X, Y, W, H, color, strk});
+        
+        try {
+            OvalData.add(new Object[] {mode, X, Y, W, H, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void addOvalData(String mode, int X, int Y, int W, int H, Color color, Stroke strk, int index){
-        OvalData.add(index, new Object[] {mode, X, Y, W, H, color, strk});
+        
+        try {
+            OvalData.add(index, new Object[] {mode, X, Y, W, H, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeOvalData(String mode, int X, int Y, int W, int H, Color color, Stroke strk){
-        OvalData.remove(new Object[] {mode, X, Y, W, H, color, strk});
+        
+        try {
+            OvalData.remove(new Object[] {mode, X, Y, W, H, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeOvalData(int index){
-        OvalData.remove(index);
+        
+        try {
+            OvalData.remove(index);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeAllOvalData(){
-        OvalData = new ArrayList<Object[]>(Collections.emptyList());
+        
+        try {
+            OvalData = new ArrayList<Object[]>(Collections.emptyList());
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public List<Object[]> getPolyData(){
         return PolyData;
     }
     public void setPolyData(List<Object[]> PolyData){
-        this.PolyData = PolyData;
+        
+        try {
+            this.PolyData = PolyData;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void setPolyData(String mode, int[] X, int[] Y, Color color, Stroke strk, int index){
-        PolyData.set(index, new Object[] {mode, X, Y, color, strk});
+        
+        try {
+            PolyData.set(index, new Object[] {mode, X, Y, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void addPolyData(String mode, int[] X, int[] Y, Color color, Stroke strk){
-        PolyData.add(new Object[] {mode, X, Y, color, strk});
+        
+        try {
+            PolyData.add(new Object[] {mode, X, Y, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void addPolyData(String mode, int[] X, int[] Y, Color color, Stroke strk, int index){
-        PolyData.add(index, new Object[] {mode, X, Y, color, strk});
+        
+        try {
+            PolyData.add(index, new Object[] {mode, X, Y, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removePolyData(String mode, int[] X, int[] Y, Color color, Stroke strk){
-        PolyData.remove(new Object[] {mode, X, Y, color, strk});
+        
+        try {
+            PolyData.remove(new Object[] {mode, X, Y, color, strk});
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removePolyData(int index){
-        PolyData.remove(index);
+        
+        try {
+            PolyData.remove(index);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeAllPolyData(){
-        PolyData = new ArrayList<Object[]>(Collections.emptyList());
+        
+        try {
+            PolyData = new ArrayList<Object[]>(Collections.emptyList());
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public List<Object[]> getTextData(){
         return TextData;
     }
     //доделпть методы - после методов отрисовки
     public void remove(int index){
-        TextData.remove(index);
+        
+        try {
+            TextData.remove(index);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void removeAllTextData(){
-        TextData = new ArrayList<Object[]>(Collections.emptyList());
+        
+        try {
+            TextData = new ArrayList<Object[]>(Collections.emptyList());
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public List<Object[]> getAttributes(){
         return Attributes;
@@ -277,28 +637,69 @@ public class Component extends JPanel {
         return ComponentIcon;
     }
     public void setComponentIcon(Icon ComponentIcon){
-        this.ComponentIcon = ComponentIcon;
+        
+        try {
+            this.ComponentIcon = ComponentIcon;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public String getComponentName(){
         return ComponentName;
     }
     public void setComponentName(String ComponentName){
-        this.ComponentName = ComponentName;
-    }
-    public int[] getComponentDrawingBounds(){
-        return ComponentDrawingBounds;
-    }
-    public void setComponentDrawingBounds(int x, int y, int w, int h){
-        ComponentDrawingBounds = new int[]{x, y, x + w, y, x + w, y + h, x, y + h};
+        
+        try {
+            this.ComponentName = ComponentName;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     //стандартные функции компоента, чтобы при вызове их у компонента не вызывало ошибку
-    public void start(){}
-    public void step(){}
-    public void stream(){}//- cделать потоком
-    public void generatetick(){}
+    public void start(){
+        
+        try {
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void step(){
+        
+        try {
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void stream(){
+        
+        try {
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void generatetick(){
+        
+        try {
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public void sircutcheck(){
-        if (intercomponentsandsircuts.size() > 0){
-            isSircut = true;
+ 
+        
+        try {
+            if (intercomponentsandsircuts.size() > 0){
+                isSircut = true;
+            }
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }
