@@ -1,4 +1,5 @@
 package modules.methods;
+import java.awt.Font;
 import java.awt.Color;
 import java.awt.Stroke;
 import java.awt.Polygon;
@@ -6,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import java.awt.RenderingHints;
+import java.awt.font.TextLayout;
 import javax.swing.JComponent;
 public class DrawMethods extends JComponent{
     public void drawLine(Graphics g, int[] location, int argX, int argY, int arg2X, int arg2Y, Color color, Stroke strk){
@@ -100,5 +102,22 @@ public class DrawMethods extends JComponent{
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.fillOval(location[0] + argX, location[1] + argY, argW, argH);
         g2d.dispose();
+    }
+    public void drawString(Graphics g, int[] location, int[] componentlocation, String text, Color color, int rotation){
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setColor(color);
+        g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.drawString(text, componentlocation[0] + location[0], componentlocation[1] + location[1]);
+        g2d.dispose();
+    }
+    public void drawString(Graphics g, int[] location, int[] componentlocation, String text, Color color, int rotation, Font font){
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setColor(color);
+        g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        (new TextLayout(text, font, g2d.getFontRenderContext())).draw(g2d, componentlocation[0] + location[0], componentlocation[1] + location[1]);
     }
 }

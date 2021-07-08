@@ -6,6 +6,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import modules.languages.language;
+import modules.methods.ExcitationParser;
 import java.awt.Graphics;
 import java.awt.Dimension;
 import java.awt.Stroke;
@@ -409,6 +410,7 @@ public class Component extends JPanel {
     public void start(){}
     public void prestep(){
         if (isStepavaluable){
+            ExcitationParser.addStepedComponent(this);
             step();
         }
     }

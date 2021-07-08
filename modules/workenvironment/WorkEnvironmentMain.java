@@ -22,12 +22,14 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
 import modules.gui.Dots;
 import modules.gui.Excretion;
+import modules.methods.ExcitationParser;
 import modules.methods.JTreeNodeRenderer;
 import modules.methods.LayoutManagers.ComponentLayoutManager;
 import modules.methods.LayoutManagers.FrameScaleLayout;
 import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.power;
 public class WorkEnvironmentMain {
+    public static ExcitationParser excitationparser = new ExcitationParser();
     public float Scale = 1.0F;
     public Graphics graphics;
     public boolean DotsThere = false;
@@ -66,12 +68,9 @@ public class WorkEnvironmentMain {
         ProjectComponents.get(0).setComponentLocation(100,100); //- проверка относительных координат
         ProjectComponents.get(0).setRotation(180); //- проверка поворота
         ProjectComponents.add(new power(Scale));
-        ProjectComponents.get(1).setComponentLocation(0, 0); //- проверка относительных координат
-        ProjectComponents.add(new power(Scale));
-        ProjectComponents.get(2).setComponentLocation(25, 25); //- проверка относительных координат
+        ProjectComponents.get(1).setComponentLocation(25, 25); //- проверка относительных координат
         incomponentframe.add(ProjectComponents.get(0));
-        //incomponentframe.add(ProjectComponents.get(2));
-        intoolframe.add(ProjectComponents.get(1));
+        incomponentframe.add(ProjectComponents.get(1));
         //конец тестовой закачки ===========================================================================
         mainframe.pack();
         //загржаем базовые компоненты

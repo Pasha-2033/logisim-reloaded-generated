@@ -2,6 +2,7 @@ package modules.workenvironment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import modules.methods.ExcitationParser;
 import java.awt.Color;
 public class Port {
     public boolean isbasicsender;
@@ -24,14 +25,14 @@ public class Port {
     public Port(int x, int y, boolean isbasicsender, boolean isbasicgetter, String lable, Component belongsto){
         SetPort(x, y, lable, isbasicsender, isbasicgetter, belongsto);
     }
-    public void SetPort(int x, int y, String lable, boolean isbasicsender, boolean isbasicgetter, Component belongsto){
+    private void SetPort(int x, int y, String lable, boolean isbasicsender, boolean isbasicgetter, Component belongsto){
         this.belongsto = belongsto;
         this.isbasicsender = isbasicsender;
         this.location = new int[] {x, y};
         this.lable = lable;
         updateColor();
     }
-    public void updateColor(){
+    private void updateColor(){
         if (Data.size() == 1) {
             if (Data.get(0).size() == 1){
                 if (Data.get(0).get(0) instanceof Integer){
@@ -90,6 +91,7 @@ public class Port {
                 port.belongsto.prestep();
                 port.belongsto.repaint();
             }
+            ExcitationParser.addActivePort(this);
         }
     }
     public List<List<Object>> createnewData(List<List<Object>> otherportData){
