@@ -87,7 +87,7 @@ public class Port {
                         break;
                     }
                 }
-                port.belongsto.step();
+                port.belongsto.prestep();
                 port.belongsto.repaint();
             }
         }

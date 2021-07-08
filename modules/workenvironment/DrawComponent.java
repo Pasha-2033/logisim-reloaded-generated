@@ -77,10 +77,12 @@ public class DrawComponent {
                         //
                     }
                     poly++;
-                } else {
+                } else if (data.equals("Text")) {
                     Object[] tmp = component.getTextData().get(text);
                     //
                     text++;
+                } else {
+                    //вывод ошибки
                 }
                 //продолжить
             }

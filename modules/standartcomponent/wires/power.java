@@ -21,7 +21,7 @@ public class power extends Component {
         addLineData(10, 0, 10, 20, ColorList.GREEN[1], new BasicStroke(3.0F, 1, 1));
         addLineData(10, 10, 20, 10, ColorList.GREEN[1], new BasicStroke(3.0F, 1, 1));
         //RectData.add(new Object[] {"", 0, 0, 50, 50, ColorList.BLACK[0], new BasicStroke(1.0F, 1, 1)});
-        addOvalData("", -5, -5, 10, 10, ColorList.BLACK[0], new BasicStroke(1.0F, 1, 1));
+        //addOvalData("", 0, 0, 1, 1, ColorList.BLACK[0], new BasicStroke(1.0F, 1, 1));
         start();
     }
     @Override
