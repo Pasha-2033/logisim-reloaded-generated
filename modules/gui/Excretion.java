@@ -7,6 +7,6 @@ import modules.workenvironment.Component;
 public class Excretion extends JPanel {
     private List<Component> excretedcomponents = new ArrayList<Component>(Collections.emptyList());
     public Excretion(){
-
+        setOpaque(false);
     }
 }

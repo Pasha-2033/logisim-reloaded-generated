@@ -16,7 +16,7 @@ public class Buttons {
             @Override
             public void actionPerformed(ActionEvent e) {
                 WorkEnvironmentMain.Scale += 0.1F;
-                Main.workenvironment.updateWorkplaceDimension();
+                Main.workenvironment.updateWorkplaceDimensionAndRerenderAll();
             }
         }
     }
@@ -30,7 +30,7 @@ public class Buttons {
             public void actionPerformed(ActionEvent e) {
                 if (WorkEnvironmentMain.Scale > 0.1F){
                     WorkEnvironmentMain.Scale -= 0.1F;
-                    Main.workenvironment.updateWorkplaceDimension();
+                    Main.workenvironment.updateWorkplaceDimensionAndRerenderAll();
                 }
             }
         }

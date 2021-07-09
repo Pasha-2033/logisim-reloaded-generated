@@ -1,5 +1,7 @@
 package modules.workenvironment;
 import java.awt.Graphics;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentAdapter;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Color;
@@ -32,32 +34,32 @@ import modules.standartcomponent.wires.power;
 public class WorkEnvironmentMain {
     public static ExcitationParser excitationparser = new ExcitationParser();
     public static float Scale = 1.0F;
-    public Graphics graphics;
+    public static Graphics graphics;
     public static boolean DotsThere = true;
-    public List<MainComponentcCass> ComponentLibraries = new ArrayList<>(Collections.emptyList());
-    public List<Component> AvaluableComponents = new ArrayList<>(Collections.emptyList());
-    public List<Component> ProjectComponents = new ArrayList<>(Collections.emptyList());
-    public List<Component> ProjectShemes = new ArrayList<>(Collections.emptyList());
-    public Component currentSircut = new Component();
-    public JFrame mainframe;
-    public JPanel mainworkplace = new JPanel(new BorderLayout());
-    public JPanel inframesize = new JPanel(new BorderLayout());
-    public JPanel scalebuttonspanel = new JPanel(new BorderLayout());
-    public JPanel intoolframe = new JPanel(new BorderLayout());
-    public JPanel outtoolframe = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    public JPanel outframesize = new JPanel(new FrameScaleLayout());
-    public JPanel componenttree = new JPanel(new BorderLayout());
-    public JPanel componentdata = new JPanel(new BorderLayout());
-    public JPanel componentmenu = new JPanel(new BorderLayout());
-    public JPanel incomponentframe = new JPanel(new ComponentLayoutManager());
-    public JPanel outcomponentframe = new JPanel(new BorderLayout());
-    public Dots dots = new Dots();
-    public Excretion excretion = new Excretion();
-    public JTree componentroottree = new JTree(buildcomponentroottree());
-    public JScrollPane scrpanecomponenttree = new JScrollPane(componentroottree);
-    public JScrollPane componentframescrolpane = new JScrollPane(incomponentframe);
-    public JSplitPane workplace = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentmenu, outcomponentframe);
-    public JLabel Scalelabel = new JLabel();
+    public static List<MainComponentcCass> ComponentLibraries = new ArrayList<>(Collections.emptyList());
+    public static List<Component> AvaluableComponents = new ArrayList<>(Collections.emptyList());
+    public static List<Component> ProjectComponents = new ArrayList<>(Collections.emptyList());
+    public static List<Component> ProjectShemes = new ArrayList<>(Collections.emptyList());
+    public static Component currentSircut = new Component();
+    public static JFrame mainframe;
+    public static JPanel mainworkplace = new JPanel(new BorderLayout());
+    public static JPanel inframesize = new JPanel(new BorderLayout());
+    public static JPanel scalebuttonspanel = new JPanel(new BorderLayout());
+    public static JPanel intoolframe = new JPanel(new BorderLayout());
+    public static JPanel outtoolframe = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    public static JPanel outframesize = new JPanel(new FrameScaleLayout());
+    public static JPanel componenttree = new JPanel(new BorderLayout());
+    public static JPanel componentdata = new JPanel(new BorderLayout());
+    public static JPanel componentmenu = new JPanel(new BorderLayout());
+    public static JPanel incomponentframe = new JPanel(new ComponentLayoutManager());
+    public static JPanel outcomponentframe = new JPanel(new BorderLayout());
+    public static Dots dots = new Dots();
+    public static Excretion excretion = new Excretion();
+    public static JTree componentroottree = new JTree(buildcomponentroottree());
+    public static JScrollPane scrpanecomponenttree = new JScrollPane(componentroottree);
+    public static JScrollPane componentframescrolpane = new JScrollPane(incomponentframe);
+    public static JSplitPane workplace = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentmenu, outcomponentframe);
+    public static JLabel Scalelabel = new JLabel();
     public WorkEnvironmentMain(JFrame frame){
         //подготовка панелей
         initgui();
@@ -65,13 +67,13 @@ public class WorkEnvironmentMain {
         //подготовка экрана
         mainframe = frame;
         mainframe.add(mainworkplace);
-        mainframe.setMinimumSize(new Dimension(500, 500));
+        mainframe.setMinimumSize(new Dimension(100, 100));
         //закачка компонентов - для тестов =================================================================
         ProjectComponents.add(new power());
-        ProjectComponents.get(0).setComponentLocation(100,100); //- проверка относительных координат
+        ProjectComponents.get(0).setComponentLocation(100, 100); //- проверка относительных координат
         ProjectComponents.get(0).setRotation(180); //- проверка поворота
         ProjectComponents.add(new power());
-        ProjectComponents.get(1).setComponentLocation(25, 25); //- проверка относительных координат
+        ProjectComponents.get(1).setComponentLocation(50, 50); //- проверка относительных координат
         incomponentframe.add(ProjectComponents.get(0), incomponentframe.getComponentCount() - 1);
         incomponentframe.add(ProjectComponents.get(1), incomponentframe.getComponentCount() - 1);
         //конец тестовой закачки ===========================================================================
@@ -79,7 +81,7 @@ public class WorkEnvironmentMain {
         //загржаем базовые компоненты
         initbasiccomponents();
     }
-    public TreeModel buildcomponentroottree(){
+    public static TreeModel buildcomponentroottree(){
         //корневая панель
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Components");
         //панель первого порядка
@@ -126,6 +128,13 @@ public class WorkEnvironmentMain {
         incomponentframe.setOpaque(true);
         incomponentframe.add(dots);
         outcomponentframe.add(componentframescrolpane);
+        componentframescrolpane.addComponentListener(
+            new ComponentAdapter() {
+                public void componentResized(ComponentEvent e) {
+                    updateWorkplaceDimensionAndRerenderAll();
+                }
+            }
+        );
         componentdata.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         componentdata.setBackground(Color.WHITE);
         componentdata.setOpaque(true);
@@ -159,12 +168,23 @@ public class WorkEnvironmentMain {
     public void updateJLableScale(){
         Scalelabel.setText(String.valueOf(Math.round(Scale * 100)) + "%");
     }
-    public void updateWorkplaceDimension(){
-        incomponentframe.setLayout(new ComponentLayoutManager(new Dimension((int) (currentSircut.getSize().getWidth() * Scale), (int) (currentSircut.getSize().getHeight() * Scale))));
+    public void updateWorkplaceDimensionAndRerenderAll(){
+        boolean i1 = currentSircut.getSize().getWidth() * Scale >= outcomponentframe.getWidth();
+        boolean i2 = currentSircut.getSize().getHeight() * Scale >= outcomponentframe.getHeight();
+        if (i1 && i2){
+            incomponentframe.setLayout(new ComponentLayoutManager(new Dimension((int) (currentSircut.getSize().getWidth() * Scale), (int) (currentSircut.getSize().getHeight() * Scale))));
+        } else {
+            if (!i1 && i2){
+                incomponentframe.setLayout(new ComponentLayoutManager(new Dimension(outcomponentframe.getWidth(), (int) (currentSircut.getSize().getHeight() * Scale))));
+            } else if (i1 && !i2){
+                incomponentframe.setLayout(new ComponentLayoutManager(new Dimension((int) (currentSircut.getSize().getWidth() * Scale), outcomponentframe.getHeight())));
+            } else {
+                incomponentframe.setLayout(new ComponentLayoutManager(new Dimension(outcomponentframe.getWidth(), outcomponentframe.getHeight())));
+            }
+        }
         rerenderAllComponents();
     }
     public void rerenderAllComponents(){
-        dots.repaint();
         incomponentframe.repaint();
         updateJLableScale();
     }

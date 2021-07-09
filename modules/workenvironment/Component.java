@@ -6,18 +6,22 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import modules.languages.language;
+import modules.methods.ComponentAttributes;
 import modules.methods.ExcitationParser;
+import java.awt.Rectangle;
 import java.awt.Graphics;
 import java.awt.Dimension;
 import java.awt.Stroke;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 public class Component extends JPanel {
     private Dimension Size = new Dimension(500, 500);
     private boolean isSircut = false;
-    private boolean isStepavaluable = true;
+    private boolean isStepavaluable = true; //провести к WorkEnvironmentMain
     private int Rotation = 0;
     private int[] ComponentLocation = {0, 0};
-    private List<Port> Ports = new ArrayList<Port>(Collections.emptyList());
+    private List<Port> Ports = new ArrayList<Port>(Collections.emptyList()); //
     private List<Component> intercomponentsandsircuts = new ArrayList<Component>(Collections.emptyList());
     private List<String> DrawOder = new ArrayList<String>(Collections.emptyList());
     private List<Object[]> LineData = new ArrayList<Object[]>(Collections.emptyList());
@@ -25,9 +29,10 @@ public class Component extends JPanel {
     private List<Object[]> OvalData = new ArrayList<Object[]>(Collections.emptyList());
     private List<Object[]> PolyData = new ArrayList<Object[]>(Collections.emptyList());
     private List<Object[]> TextData = new ArrayList<Object[]>(Collections.emptyList());
-    private List<Object[]> Attributes = new ArrayList<Object[]>(Collections.emptyList());
+    private List<ComponentAttributes> Attributes = new ArrayList<ComponentAttributes>(Collections.emptyList()); //доделать класс и методы
     private Icon ComponentIcon;
     private String ComponentName;
+    private Rectangle bounds = null;
     public Component(){
         setComponent("undefind", new ImageIcon("resources/menuicon/undoicon.png"), false);
     }
@@ -53,6 +58,7 @@ public class Component extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         new DrawComponent(this, g);
+        updatebounds(g);
     }
     //функции для работы с компонентом
     public Dimension getSize(){
@@ -361,11 +367,60 @@ public class Component extends JPanel {
     public List<Object[]> getTextData(){
         return TextData;
     }
-    //доделпть методы - после методов отрисовки
-    public void remove(int index){
+    public void setTextData(List<Object[]> TextData){
+        this.TextData = TextData;
+    }
+    public void setTextData(int x, int y, String text, Color color, int rotation, int index){
+        try{
+            TextData.set(index, new Object[]{new int[]{x, y}, text, color, rotation});
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void setTextData(int x, int y, String text, Color color, int rotation, Font font, int index){
+        try{
+            TextData.set(index, new Object[]{new int[]{x, y}, text, color, rotation, font});
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void addTextData(int x, int y, String text, Color color, int rotation){
+        TextData.add(new Object[]{new int[]{x, y}, text, color, rotation});
+    }
+    public void addTextData(int x, int y, String text, Color color, int rotation, int index){
+        try {
+            TextData.add(index, new Object[]{new int[]{x, y}, text, color, rotation});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void addTextData(int x, int y, String text, Color color, int rotation, Font font){
+        TextData.add(new Object[]{new int[]{x, y}, text, color, rotation, font});
+    }
+    public void addTextData(int x, int y, String text, Color color, int rotation, Font font, int index){
+        try {
+            TextData.add(index, new Object[]{new int[]{x, y}, text, color, rotation, font});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void removeTextData(int index){
         try {
             TextData.remove(index);
-            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void removeTextData(int x, int y, String text, Color color, int rotation){
+        try {
+            TextData.remove(new Object[]{new int[]{x, y}, text, color, rotation});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void removeTextData(int x, int y, String text, Color color, int rotation, Font font){
+        try {
+            TextData.remove(new Object[]{new int[]{x, y}, text, color, rotation, font});
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -373,7 +428,7 @@ public class Component extends JPanel {
     public void removeAllTextData(){
         TextData = new ArrayList<Object[]>(Collections.emptyList());
     }
-    public List<Object[]> getAttributes(){
+    public List<ComponentAttributes> getAttributes(){
         return Attributes;
     }
     //доделать методы для атрибутов
@@ -389,7 +444,61 @@ public class Component extends JPanel {
     public void setComponentName(String ComponentName){
         this.ComponentName = ComponentName;
     }
-    //доделать методы для всех переменных
+    public Rectangle getbounds(){
+        return bounds;
+    }
+    public void setbounds(Rectangle bounds){
+        this.bounds = bounds;
+    }
+    //функция для bounds
+    public void updatebounds(Graphics g){
+        List<Rectangle> tmp = new ArrayList<Rectangle>(Collections.emptyList());
+        Rectangle tmprect;
+        for (Object[] object : LineData){
+            tmprect = new Rectangle((int) object[0], (int) object[1]);
+            tmprect.add((int) object[2], (int) object[3]);
+            tmp.add(tmprect);
+        }
+        for (Object[] object : RectData){
+            tmprect = new Rectangle((int) object[1], (int) object[2]);
+            tmprect.add((int) object[1] + (int) object[3], (int) object[2]);
+            tmprect.add((int) object[1] + (int) object[3], (int) object[2] + (int) object[4]);
+            tmprect.add((int) object[1], (int) object[2] + (int) object[4]);
+            tmp.add(tmprect);
+        }
+        for (Object[] object : OvalData){
+            tmprect = new Rectangle((int) object[1], (int) object[2]);
+            tmprect.add((int) object[1] + (int) object[3], (int) object[2]);
+            tmprect.add((int) object[1] + (int) object[3], (int) object[2] + (int) object[4]);
+            tmprect.add((int) object[1], (int) object[2] + (int) object[4]);
+            tmp.add(tmprect);
+        }
+        for (Object[] object : PolyData){
+            if (((int[]) object[1]).length == ((int[]) object[2]).length){
+                tmprect = new Rectangle(((int[]) object[1])[0], ((int[]) object[2])[0]);
+                for (int i = 1; i < ((int[]) object[1]).length; i++){
+                    tmprect.add(((int[]) object[1])[i], ((int[]) object[2])[i]);
+                }
+                tmp.add(tmprect);
+            }
+        }
+        for (Object[] object : TextData){
+            FontMetrics metrics;
+            if (object.length == 3){
+                metrics = g.getFontMetrics();
+            } else {
+                metrics = g.getFontMetrics((Font) object[3]);
+            }
+            tmp.add(new Rectangle(metrics.stringWidth((String) object[2]), metrics.getHeight()));
+        }
+        if (tmp.isEmpty()){
+            Rectangle rect = tmp.get(0);
+            for (Rectangle r : tmp){
+                rect.add(r);
+            }
+            bounds = rect;
+        }
+    }
     //стандартные функции компоента, чтобы при вызове их у компонента не вызывало ошибку
     public void start(){}
     public void prestep(){
