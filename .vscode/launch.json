@@ -15,14 +15,13 @@
             "type": "java",
             "name": "Launch Current File",
             "request": "launch",
-            "mainClass": "Main"
+            "mainClass": "mainclassfolder.Main"
         },
         {
             "type": "java",
             "name": "Launch Main",
             "request": "launch",
-            "mainClass": "Main",
-            "projectName": "logisim-reloaded-generated_f9c3c54b"
+            "mainClass": "mainclassfolder.Main",
         }
     ]
 }

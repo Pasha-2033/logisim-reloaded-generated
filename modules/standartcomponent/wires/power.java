@@ -10,10 +10,6 @@ public class power extends Component {
         super("power", new ImageIcon("resources/componenticon/wires/power.gif"));
         setPowerData();
     }
-    public power(float Scale) {
-        super("power", new ImageIcon("resources/componenticon/wires/power.gif"), Scale);
-        setPowerData();
-    }
     private void setPowerData(){
         addPort(new Port(50, 25, true, false, this));
         addLineData(0, 10, 10, 0, ColorList.GREEN[1], new BasicStroke(3.0F, 1, 1));

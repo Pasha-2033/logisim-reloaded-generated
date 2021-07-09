@@ -15,7 +15,6 @@ public class Component extends JPanel {
     private Dimension Size = new Dimension(500, 500);
     private boolean isSircut = false;
     private boolean isStepavaluable = true;
-    private float Scale = 1.0F;
     private int Rotation = 0;
     private int[] ComponentLocation = {0, 0};
     private List<Port> Ports = new ArrayList<Port>(Collections.emptyList());
@@ -30,37 +29,30 @@ public class Component extends JPanel {
     private Icon ComponentIcon;
     private String ComponentName;
     public Component(){
-        setComponent("undefind", new ImageIcon("resources/menuicon/undoicon.png"), 1.0F, false);
+        setComponent("undefind", new ImageIcon("resources/menuicon/undoicon.png"), false);
     }
     public Component(String ComponentName){
-        setComponent(ComponentName, new ImageIcon("resources/menuicon/undoicon.png"), 1.0F, false);
+        setComponent(ComponentName, new ImageIcon("resources/menuicon/undoicon.png"), false);
     }
     public Component(String ComponentName, boolean isSircut){
-        setComponent(ComponentName, new ImageIcon("resources/menuicon/undoicon.png"), 1.0F, isSircut);
+        setComponent(ComponentName, new ImageIcon("resources/menuicon/undoicon.png"), isSircut);
     }
     public Component(String ComponentName, Icon ComponentIcon){
-        setComponent(ComponentName, ComponentIcon, 1.0F, false);
+        setComponent(ComponentName, ComponentIcon, false);
     }
     public Component(String ComponentName, Icon ComponentIcon, boolean isSircut){
-        setComponent(ComponentName, ComponentIcon, 1.0F, isSircut);
+        setComponent(ComponentName, ComponentIcon, isSircut);
     }
-    public Component(String ComponentName, Icon ComponentIcon, float Scale){
-        setComponent(ComponentName, ComponentIcon, Scale, false);
-    }
-    public Component(String ComponentName, Icon ComponentIcon, float Scale, boolean isSircut){
-        setComponent(ComponentName, ComponentIcon, Scale, isSircut);
-    }
-    private void setComponent(String ComponentName, Icon ComponentIcon, float Scale, boolean isSircut){
+    private void setComponent(String ComponentName, Icon ComponentIcon, boolean isSircut){
         this.ComponentName = language.trnslt(ComponentName);
         this.ComponentIcon = ComponentIcon;
-        this.Scale = Scale;
         this.isSircut = isSircut;
         setOpaque(false);
     }
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        new DrawComponent(this, g, Scale);
+        new DrawComponent(this, g);
     }
     //функции для работы с компонентом
     public Dimension getSize(){
@@ -117,14 +109,6 @@ public class Component extends JPanel {
     }
     public void removeAllintercomponentsandsircuts(){
         intercomponentsandsircuts = new ArrayList<Component>(Collections.emptyList());
-    }
-    public float getScale(){
-        return Scale;
-    }
-    public void setScale(float Scale){
-        if (Scale > 0){
-            this.Scale = Scale;
-        }
     }
     public int getRotation(){
         return Rotation;

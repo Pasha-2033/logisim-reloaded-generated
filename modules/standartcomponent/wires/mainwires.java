@@ -11,11 +11,4 @@ public class mainwires extends MainComponentcCass {
             new power(), new ground()
         });
     }
-    public mainwires(float Scale){
-        super();
-        this.libraryname = "Wires";
-        this.componentlist = Arrays.asList(new Component[]{
-            new power(Scale), new ground(Scale)
-        });
-    }
 }

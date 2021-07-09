@@ -20,6 +20,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
+import modules.gui.Buttons;
 import modules.gui.Dots;
 import modules.gui.Excretion;
 import modules.methods.ExcitationParser;
@@ -30,9 +31,9 @@ import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.power;
 public class WorkEnvironmentMain {
     public static ExcitationParser excitationparser = new ExcitationParser();
-    public float Scale = 1.0F;
+    public static float Scale = 1.0F;
     public Graphics graphics;
-    public boolean DotsThere = false;
+    public static boolean DotsThere = true;
     public List<MainComponentcCass> ComponentLibraries = new ArrayList<>(Collections.emptyList());
     public List<Component> AvaluableComponents = new ArrayList<>(Collections.emptyList());
     public List<Component> ProjectComponents = new ArrayList<>(Collections.emptyList());
@@ -41,6 +42,7 @@ public class WorkEnvironmentMain {
     public JFrame mainframe;
     public JPanel mainworkplace = new JPanel(new BorderLayout());
     public JPanel inframesize = new JPanel(new BorderLayout());
+    public JPanel scalebuttonspanel = new JPanel(new BorderLayout());
     public JPanel intoolframe = new JPanel(new BorderLayout());
     public JPanel outtoolframe = new JPanel(new FlowLayout(FlowLayout.LEFT));
     public JPanel outframesize = new JPanel(new FrameScaleLayout());
@@ -59,18 +61,19 @@ public class WorkEnvironmentMain {
     public WorkEnvironmentMain(JFrame frame){
         //подготовка панелей
         initgui();
+        Scale = 1.0F;
         //подготовка экрана
         mainframe = frame;
         mainframe.add(mainworkplace);
         mainframe.setMinimumSize(new Dimension(500, 500));
         //закачка компонентов - для тестов =================================================================
-        ProjectComponents.add(new power(Scale));
+        ProjectComponents.add(new power());
         ProjectComponents.get(0).setComponentLocation(100,100); //- проверка относительных координат
         ProjectComponents.get(0).setRotation(180); //- проверка поворота
-        ProjectComponents.add(new power(Scale));
+        ProjectComponents.add(new power());
         ProjectComponents.get(1).setComponentLocation(25, 25); //- проверка относительных координат
-        incomponentframe.add(ProjectComponents.get(0));
-        incomponentframe.add(ProjectComponents.get(1));
+        incomponentframe.add(ProjectComponents.get(0), incomponentframe.getComponentCount() - 1);
+        incomponentframe.add(ProjectComponents.get(1), incomponentframe.getComponentCount() - 1);
         //конец тестовой закачки ===========================================================================
         mainframe.pack();
         //загржаем базовые компоненты
@@ -121,6 +124,7 @@ public class WorkEnvironmentMain {
         incomponentframe.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         incomponentframe.setBackground(Color.WHITE);
         incomponentframe.setOpaque(true);
+        incomponentframe.add(dots);
         outcomponentframe.add(componentframescrolpane);
         componentdata.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         componentdata.setBackground(Color.WHITE);
@@ -139,10 +143,13 @@ public class WorkEnvironmentMain {
         scrpanecomponenttree.setPreferredSize(componenttree.getPreferredSize());
         scrpanecomponenttree.setBackground(Color.WHITE);
         scrpanecomponenttree.setOpaque(true);
+        scalebuttonspanel.add(new Buttons.UPScaleButton(), BorderLayout.NORTH);
+        scalebuttonspanel.add(new Buttons.DOWNScaleButton(), BorderLayout.SOUTH);
         inframesize.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         inframesize.setBackground(Color.RED);
         inframesize.setOpaque(true);
         inframesize.add(Scalelabel, BorderLayout.WEST);
+        inframesize.add(scalebuttonspanel, BorderLayout.EAST);
         outframesize.add(inframesize);
         workplace.setPreferredSize(new Dimension(500, 500));
         mainworkplace.add(workplace);
@@ -155,31 +162,18 @@ public class WorkEnvironmentMain {
     public void updateWorkplaceDimension(){
         incomponentframe.setLayout(new ComponentLayoutManager(new Dimension((int) (currentSircut.getSize().getWidth() * Scale), (int) (currentSircut.getSize().getHeight() * Scale))));
         rerenderAllComponents();
-        updateJLableScale();
     }
     public void rerenderAllComponents(){
-        dots.setScale(Scale);
-        dots.setDotsThere(DotsThere);
         dots.repaint();
-        for (Component component : currentSircut.getintercomponentsandsircuts()){
-            //сделать фоновым потоком
-            component.setScale(Scale);
-            component.repaint();
-        }
-        //здесь заменить dots на класс выделения
-        //((Dots) incomponentframe.getComponent(incomponentframe.getComponents().length - 1)).Scale = Scale;
-        ((Dots) incomponentframe.getComponent(incomponentframe.getComponents().length - 1)).repaint();
+        incomponentframe.repaint();
         updateJLableScale();
     }
     public void addDots(){
-        if (!DotsThere){
-            incomponentframe.add(dots, 0);
-        }
+            DotsThere = true;
     }
     public void removeDots(){
-        if (DotsThere){
-            incomponentframe.remove(0);
-        }
+        DotsThere = false;
+
     }
     public void addComponent(Component c){
         incomponentframe.add(c, incomponentframe.getComponentCount() - 2);
