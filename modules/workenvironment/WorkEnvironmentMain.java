@@ -34,32 +34,32 @@ import modules.standartcomponent.wires.power;
 public class WorkEnvironmentMain {
     public static ExcitationParser excitationparser = new ExcitationParser();
     public static float Scale = 1.0F;
-    public static Graphics graphics;
+    public Graphics graphics;
     public static boolean DotsThere = true;
     public static List<MainComponentcCass> ComponentLibraries = new ArrayList<>(Collections.emptyList());
     public static List<Component> AvaluableComponents = new ArrayList<>(Collections.emptyList());
     public static List<Component> ProjectComponents = new ArrayList<>(Collections.emptyList());
     public static List<Component> ProjectShemes = new ArrayList<>(Collections.emptyList());
     public static Component currentSircut = new Component();
-    public static JFrame mainframe;
-    public static JPanel mainworkplace = new JPanel(new BorderLayout());
-    public static JPanel inframesize = new JPanel(new BorderLayout());
-    public static JPanel scalebuttonspanel = new JPanel(new BorderLayout());
-    public static JPanel intoolframe = new JPanel(new BorderLayout());
-    public static JPanel outtoolframe = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    public static JPanel outframesize = new JPanel(new FrameScaleLayout());
-    public static JPanel componenttree = new JPanel(new BorderLayout());
-    public static JPanel componentdata = new JPanel(new BorderLayout());
-    public static JPanel componentmenu = new JPanel(new BorderLayout());
-    public static JPanel incomponentframe = new JPanel(new ComponentLayoutManager());
-    public static JPanel outcomponentframe = new JPanel(new BorderLayout());
+    public JFrame mainframe;
+    public JPanel mainworkplace = new JPanel(new BorderLayout());
+    public JPanel inframesize = new JPanel(new BorderLayout());
+    public JPanel scalebuttonspanel = new JPanel(new BorderLayout());
+    public JPanel intoolframe = new JPanel(new BorderLayout());
+    public JPanel outtoolframe = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    public JPanel outframesize = new JPanel(new FrameScaleLayout());
+    public JPanel componenttree = new JPanel(new BorderLayout());
+    public JPanel componentdata = new JPanel(new BorderLayout());
+    public JPanel componentmenu = new JPanel(new BorderLayout());
+    public JPanel incomponentframe = new JPanel(new ComponentLayoutManager());
+    public JPanel outcomponentframe = new JPanel(new BorderLayout());
     public static Dots dots = new Dots();
-    public static Excretion excretion = new Excretion();
-    public static JTree componentroottree = new JTree(buildcomponentroottree());
-    public static JScrollPane scrpanecomponenttree = new JScrollPane(componentroottree);
-    public static JScrollPane componentframescrolpane = new JScrollPane(incomponentframe);
-    public static JSplitPane workplace = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentmenu, outcomponentframe);
-    public static JLabel Scalelabel = new JLabel();
+    public Excretion excretion = new Excretion();
+    public JTree componentroottree = new JTree(buildcomponentroottree());
+    public JScrollPane scrpanecomponenttree = new JScrollPane(componentroottree);
+    public JScrollPane componentframescrolpane = new JScrollPane(incomponentframe);
+    public JSplitPane workplace = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentmenu, outcomponentframe);
+    public JLabel Scalelabel = new JLabel();
     public WorkEnvironmentMain(JFrame frame){
         //подготовка панелей
         initgui();
@@ -123,7 +123,7 @@ public class WorkEnvironmentMain {
         componentmenu.add(componenttree);
         componentmenu.add(componentdata);
         componentmenu.add(outframesize);
-        incomponentframe.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        incomponentframe.setBorder(BorderFactory.createLineBorder(ColorList.BLACK[0]));
         incomponentframe.setBackground(Color.WHITE);
         incomponentframe.setOpaque(true);
         incomponentframe.add(dots);
@@ -158,6 +158,7 @@ public class WorkEnvironmentMain {
         inframesize.setBackground(Color.RED);
         inframesize.setOpaque(true);
         inframesize.add(Scalelabel, BorderLayout.WEST);
+        inframesize.add(new Buttons.DoteButton(), BorderLayout.CENTER);
         inframesize.add(scalebuttonspanel, BorderLayout.EAST);
         outframesize.add(inframesize);
         workplace.setPreferredSize(new Dimension(500, 500));
@@ -187,13 +188,6 @@ public class WorkEnvironmentMain {
     public void rerenderAllComponents(){
         incomponentframe.repaint();
         updateJLableScale();
-    }
-    public void addDots(){
-            DotsThere = true;
-    }
-    public void removeDots(){
-        DotsThere = false;
-
     }
     public void addComponent(Component c){
         incomponentframe.add(c, incomponentframe.getComponentCount() - 2);

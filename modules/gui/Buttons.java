@@ -1,4 +1,5 @@
 package modules.gui;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -31,6 +32,26 @@ public class Buttons {
                 if (WorkEnvironmentMain.Scale > 0.1F){
                     WorkEnvironmentMain.Scale -= 0.1F;
                     Main.workenvironment.updateWorkplaceDimensionAndRerenderAll();
+                }
+            }
+        }
+    }
+    public static class DoteButton extends JButton{
+        public DoteButton() {
+            super();
+            setAction(new DoteButtonAction());
+            setPreferredSize(new Dimension(20, 20));
+            setMaximumSize(new Dimension(20, 20));
+        }
+        public class DoteButtonAction extends AbstractAction {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!WorkEnvironmentMain.DotsThere){
+                    WorkEnvironmentMain.dots.setVisible(true);
+                    WorkEnvironmentMain.DotsThere = true;
+                }else {
+                    WorkEnvironmentMain.dots.setVisible(false);
+                    WorkEnvironmentMain.DotsThere = false;
                 }
             }
         }
