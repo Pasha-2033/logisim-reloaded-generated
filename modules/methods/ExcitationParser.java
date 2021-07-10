@@ -14,10 +14,10 @@ public class ExcitationParser {
     public void initParser(){
         //доделать
     }
-    public static void addStepedComponent(Component component){
+    public void addStepedComponent(Component component){
         ComponentParser.add(component);
     }
-    public static void addActivePort(Port ActivePort){
+    public void addActivePort(Port ActivePort){
         PortParser.add(ActivePort);
     }
 }

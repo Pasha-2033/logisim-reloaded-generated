@@ -13,7 +13,7 @@ public class FrameScaleLayout implements LayoutManager{
         return new Dimension(MIN_VALUE, MIN_VALUE);
     }
     public Dimension preferredLayoutSize(Container container) {
-        return new Dimension(container.getWidth(), 20);
+        return new Dimension(container.getWidth(), 30);
     }
     public Dimension maximumLayoutSize(Container container) {
         return new Dimension(MAX_VALUE, MAX_VALUE);
@@ -21,7 +21,7 @@ public class FrameScaleLayout implements LayoutManager{
     public void layoutContainer(Container container){
         Component list[] = container.getComponents();
         for (int i = 0; i < list.length; i++) {
-            list[i].setBounds(0, 0, container.getWidth(), 20);
+            list[i].setBounds(0, 0, container.getWidth(), 30);
         }
     }
 }

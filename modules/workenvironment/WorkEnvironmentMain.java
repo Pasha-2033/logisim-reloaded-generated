@@ -1,5 +1,4 @@
 package modules.workenvironment;
-import java.awt.Graphics;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.BorderLayout;
@@ -29,12 +28,12 @@ import modules.methods.ExcitationParser;
 import modules.methods.JTreeNodeRenderer;
 import modules.methods.LayoutManagers.ComponentLayoutManager;
 import modules.methods.LayoutManagers.FrameScaleLayout;
+import modules.methods.LayoutManagers.ScaleFrameButtonsLayout;
 import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.power;
 public class WorkEnvironmentMain {
     public static ExcitationParser excitationparser = new ExcitationParser();
     public static float Scale = 1.0F;
-    public Graphics graphics;
     public static boolean DotsThere = true;
     public static List<MainComponentcCass> ComponentLibraries = new ArrayList<>(Collections.emptyList());
     public static List<Component> AvaluableComponents = new ArrayList<>(Collections.emptyList());
@@ -44,14 +43,14 @@ public class WorkEnvironmentMain {
     public JFrame mainframe;
     public JPanel mainworkplace = new JPanel(new BorderLayout());
     public JPanel inframesize = new JPanel(new BorderLayout());
-    public JPanel scalebuttonspanel = new JPanel(new BorderLayout());
+    public JPanel scalebuttonspanel = new JPanel(new ScaleFrameButtonsLayout());
     public JPanel intoolframe = new JPanel(new BorderLayout());
     public JPanel outtoolframe = new JPanel(new FlowLayout(FlowLayout.LEFT));
     public JPanel outframesize = new JPanel(new FrameScaleLayout());
     public JPanel componenttree = new JPanel(new BorderLayout());
     public JPanel componentdata = new JPanel(new BorderLayout());
     public JPanel componentmenu = new JPanel(new BorderLayout());
-    public JPanel incomponentframe = new JPanel(new ComponentLayoutManager());
+    public static JPanel incomponentframe = new JPanel(new ComponentLayoutManager());
     public JPanel outcomponentframe = new JPanel(new BorderLayout());
     public static Dots dots = new Dots();
     public Excretion excretion = new Excretion();
@@ -136,7 +135,6 @@ public class WorkEnvironmentMain {
             }
         );
         componentdata.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        componentdata.setBackground(Color.WHITE);
         componentdata.setOpaque(true);
         componentdata.setPreferredSize(new Dimension(100, 100));
         intoolframe.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -152,13 +150,12 @@ public class WorkEnvironmentMain {
         scrpanecomponenttree.setPreferredSize(componenttree.getPreferredSize());
         scrpanecomponenttree.setBackground(Color.WHITE);
         scrpanecomponenttree.setOpaque(true);
-        scalebuttonspanel.add(new Buttons.UPScaleButton(), BorderLayout.NORTH);
-        scalebuttonspanel.add(new Buttons.DOWNScaleButton(), BorderLayout.SOUTH);
+        scalebuttonspanel.add(new Buttons.DoteButton());
+        scalebuttonspanel.add(new Buttons.UPScaleButton());
+        scalebuttonspanel.add(new Buttons.DOWNScaleButton());
         inframesize.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        inframesize.setBackground(Color.RED);
         inframesize.setOpaque(true);
         inframesize.add(Scalelabel, BorderLayout.WEST);
-        inframesize.add(new Buttons.DoteButton(), BorderLayout.CENTER);
         inframesize.add(scalebuttonspanel, BorderLayout.EAST);
         outframesize.add(inframesize);
         workplace.setPreferredSize(new Dimension(500, 500));

@@ -2,7 +2,6 @@ package modules.workenvironment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import modules.methods.ExcitationParser;
 import java.awt.Color;
 public class Port {
     public boolean isbasicsender;
@@ -91,7 +90,7 @@ public class Port {
                 port.belongsto.prestep();
                 port.belongsto.repaint();
             }
-            ExcitationParser.addActivePort(this);
+            WorkEnvironmentMain.excitationparser.addActivePort(this);
         }
     }
     public List<List<Object>> createnewData(List<List<Object>> otherportData){

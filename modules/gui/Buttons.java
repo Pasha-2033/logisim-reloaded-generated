@@ -1,7 +1,8 @@
 package modules.gui;
-import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import mainclassfolder.Main;
 import modules.workenvironment.WorkEnvironmentMain;
@@ -9,9 +10,9 @@ public class Buttons {
     //я не понимаю, почему нет текста?! почему он не устанавливается?!
     public static class UPScaleButton extends JButton{
         public UPScaleButton() {
-            super();
-            setText("U+2194");
             setAction(new UPScaleAction());
+            setText("▲");
+            setMargin(new Insets(0, 0, 0, 0));
         }
         public class UPScaleAction extends AbstractAction {
             @Override
@@ -23,8 +24,9 @@ public class Buttons {
     }
     public static class DOWNScaleButton extends JButton{
         public DOWNScaleButton() {
-            super("&#9650;");
             setAction(new DOWNScaleAction());
+            setText("▼");
+            setMargin(new Insets(0, 0, 0, 0));
         }
         public class DOWNScaleAction extends AbstractAction {
             @Override
@@ -38,10 +40,8 @@ public class Buttons {
     }
     public static class DoteButton extends JButton{
         public DoteButton() {
-            super();
             setAction(new DoteButtonAction());
-            setPreferredSize(new Dimension(20, 20));
-            setMaximumSize(new Dimension(20, 20));
+            setIcon(new ImageIcon(new ImageIcon("resources/menuicon/dotsicon.png").getImage().getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH)));
         }
         public class DoteButtonAction extends AbstractAction {
             @Override

@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import modules.languages.language;
 import modules.methods.ComponentAttributes;
-import modules.methods.ExcitationParser;
 import java.awt.Rectangle;
 import java.awt.Graphics;
 import java.awt.Dimension;
@@ -503,7 +502,7 @@ public class Component extends JPanel {
     public void start(){}
     public void prestep(){
         if (isStepavaluable){
-            ExcitationParser.addStepedComponent(this);
+            WorkEnvironmentMain.excitationparser.addStepedComponent(this);
             step();
         }
     }
