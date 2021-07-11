@@ -92,9 +92,10 @@ public class DrawComponent {
     private void DrawComponentPort(Component component, Graphics graphics){
         int[] location = new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)};
         for (Port port : component.getPorts()){
-            int[] portlocation = new int[] {Math.round((port.location[0] * (float) Math.cos(Math.toRadians(component.getRotation())) - port.location[1] * (float) Math.sin(Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale), Math.round((port.location[0] * (float) Math.sin(Math.toRadians(component.getRotation())) + port.location[1] * (float) Math.cos(Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale)};
-            int radius = Math.round(1 * WorkEnvironmentMain.Scale); //подобрать число вместо 1
-            fillport(graphics, location, portlocation, radius, component.getRotation(), port.color);
+            int[] portlocation = new int[] {Math.round((port.location[0] * (float) Math.cos(-Math.toRadians(component.getRotation())) - port.location[1] * (float) Math.sin(-Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale - WorkEnvironmentMain.Scale * 1.5F), Math.round((port.location[0] * (float) Math.sin(-Math.toRadians(component.getRotation())) + port.location[1] * (float) Math.cos(-Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale - WorkEnvironmentMain.Scale * 1.5F)};
+            int radius = Math.round(3 * WorkEnvironmentMain.Scale);
+            fillport(graphics, location, portlocation, radius, port.color);
+            //доделать поворот порта
         }
     }
     //отрисовка тела компонента
@@ -135,7 +136,7 @@ public class DrawComponent {
         (new DrawMethods()).fillOval(graphics, location, arg1, arg2,  Math.round((int) OvalData[3] * WorkEnvironmentMain.Scale), Math.round((int) OvalData[4] * WorkEnvironmentMain.Scale), (Color) OvalData[5], component.getRotation());
     }
     //отрисовка порта
-    private void fillport(Graphics graphics, int[] location, int[] portlocation, int radius, int rotation, Color portcolor){
-        (new DrawMethods()).fillOval(graphics, location, portlocation[0], portlocation[1], radius, radius, portcolor, rotation);
+    private void fillport(Graphics graphics, int[] location, int[] portlocation, int radius, Color portcolor){
+        (new DrawMethods()).fillOval(graphics, location, portlocation[0], portlocation[1], radius, radius, portcolor, 0);
     };
 }

@@ -6,9 +6,7 @@ import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.BasicStroke;
-import java.awt.geom.AffineTransform;
 import modules.workenvironment.WorkEnvironmentMain;
 import modules.workenvironment.ColorList;
 import modules.workenvironment.Component;
@@ -77,10 +75,7 @@ public class Excretion extends JPanel {
         int[] E4;
         Rectangle r;
         for (Component component : excretedcomponents){
-            AffineTransform AT = new AffineTransform();
-            AT.rotate(-Math.toRadians(component.getRotation()));
-            Shape newRect = AT.createTransformedShape(component.getbounds());
-            r = newRect.getBounds();
+            r = component.getbounds();
             E1 = new int[]{(int) ((component.getComponentLocation()[0] + r.x) * WorkEnvironmentMain.Scale), (int) ((component.getComponentLocation()[1] + r.y) * WorkEnvironmentMain.Scale)};
             E2 = new int[]{(int) ((component.getComponentLocation()[0] + r.x + r.width) * WorkEnvironmentMain.Scale), (int) ((component.getComponentLocation()[1] + r.y) * WorkEnvironmentMain.Scale)};
             E3 = new int[]{(int) ((component.getComponentLocation()[0] + r.x + r.width) * WorkEnvironmentMain.Scale), (int) ((component.getComponentLocation()[1] + r.y + r.height) * WorkEnvironmentMain.Scale)};

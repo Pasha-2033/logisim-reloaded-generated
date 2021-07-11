@@ -20,10 +20,6 @@ public class DrawMethods extends JComponent{
         g2d.setStroke(strk);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.drawLine(location[0] + argX, location[1] + argY, location[0] + arg2X, location[1] + arg2Y);
-        /*Rectangle bounds = new Rectangle(16, 14);
-        bounds.add(12, 18);
-        bounds.add(8, 14);
-        bounds.add(12, 10);*/
         g2d.dispose();
     }
     public void drawRect(Graphics g, int[] location, int argX, int argY, int argW, int argH, Color color, Stroke strk, int rotation){
@@ -123,5 +119,6 @@ public class DrawMethods extends JComponent{
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         (new TextLayout(text, font, g2d.getFontRenderContext())).draw(g2d, componentlocation[0] + location[0], componentlocation[1] + location[1]);
+        g2d.dispose();
     }
 }

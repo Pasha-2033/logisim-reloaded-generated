@@ -53,7 +53,7 @@ public class WorkEnvironmentMain {
     public static JPanel incomponentframe = new JPanel(new ComponentLayoutManager());
     public JPanel outcomponentframe = new JPanel(new BorderLayout());
     public static Dots dots = new Dots();
-    public Excretion excretion = new Excretion();
+    public static Excretion excretion = new Excretion();
     public JTree componentroottree = new JTree(buildcomponentroottree());
     public JScrollPane scrpanecomponenttree = new JScrollPane(componentroottree);
     public JScrollPane componentframescrolpane = new JScrollPane(incomponentframe);
@@ -70,7 +70,7 @@ public class WorkEnvironmentMain {
         //закачка компонентов - для тестов =================================================================
         ProjectComponents.add(new power());
         ProjectComponents.get(0).setComponentLocation(100, 100); //- проверка относительных координат
-        ProjectComponents.get(0).setRotation(180); //- проверка поворота
+        ProjectComponents.get(0).setRotation(10); //- проверка поворота
         ProjectComponents.add(new power());
         ProjectComponents.get(1).setComponentLocation(50, 50); //- проверка относительных координат
         incomponentframe.add(ProjectComponents.get(0), incomponentframe.getComponentCount() - 1);

@@ -13,7 +13,9 @@ import java.awt.Dimension;
 import java.awt.Stroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Shape;
 import java.awt.FontMetrics;
+import java.awt.geom.AffineTransform;
 public class Component extends JPanel {
     private Dimension Size = new Dimension(500, 500);
     private boolean isSircut = false;
@@ -444,7 +446,10 @@ public class Component extends JPanel {
         this.ComponentName = ComponentName;
     }
     public Rectangle getbounds(){
-        return bounds;
+        AffineTransform AT = new AffineTransform();
+        AT.rotate(-Math.toRadians(Rotation));
+        Shape newRect = AT.createTransformedShape(bounds);
+        return newRect.getBounds();
     }
     public void setbounds(Rectangle bounds){
         this.bounds = bounds;

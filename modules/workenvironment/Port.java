@@ -11,7 +11,7 @@ public class Port {
     public List<List<Object>> Data = new ArrayList<>(Collections.emptyList());
     public Color color;
     public Component belongsto;
-    public List<Port> portsourse = new ArrayList<>(Collections.emptyList());
+    public List<Port> portsourse = new ArrayList<Port>(Collections.emptyList());
     public Port(int x, int y, Component belongsto){
         SetPort(x, y, "", false, false, belongsto);
     }
@@ -31,7 +31,7 @@ public class Port {
         this.lable = lable;
         updateColor();
     }
-    private void updateColor(){
+    public void updateColor(){
         if (Data.size() == 1) {
             if (Data.get(0).size() == 1){
                 if (Data.get(0).get(0) instanceof Integer){
@@ -40,13 +40,13 @@ public class Port {
                     } else if (Data.get(0).get(0) == (Object) 1){
                         color = ColorList.GREEN[1];
                     } else {
-                        color = Color.RED;
+                        color = ColorList.RED[1];
                     }
                 } else {
                     if (isallX()){
-                        color = Color.BLUE;
+                        color = ColorList.BLUE[1];
                     } else if (containE()) {
-                        color = Color.RED;
+                        color = ColorList.RED[1];
                     } else {
                         color = ColorList.BLACK[0];
                     }
@@ -55,19 +55,19 @@ public class Port {
                 color = ColorList.BLACK[0];
             } else {
                 if (!containE()){
-                    color = Color.GRAY;
+                    color = ColorList.GRAY[1];
                 } else {
-                    color = Color.RED;
+                    color = ColorList.RED[1];
                 }
             }
         } else if(Data.size() > 1)  {
             if (!containE()){
                 color = ColorList.BLACK[0];
             } else {
-                color = Color.RED;
+                color = ColorList.RED[1];
             }
         } else {
-            color = Color.GRAY;
+            color = ColorList.GRAY[1];
         }
     }
     public void setdata(List<List<Object>> Data){

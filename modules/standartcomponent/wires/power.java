@@ -2,6 +2,8 @@ package modules.standartcomponent.wires;
 import javax.swing.ImageIcon;
 import java.awt.BasicStroke;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import modules.workenvironment.ColorList;
 import modules.workenvironment.Component;
 import modules.workenvironment.Port;
@@ -11,7 +13,7 @@ public class power extends Component {
         setPowerData();
     }
     private void setPowerData(){
-        addPort(new Port(50, 25, true, false, this));
+        addPort(new Port(20, 10, true, false, this));
         addLineData(0, 10, 10, 0, ColorList.GREEN[1], new BasicStroke(3.0F, 1, 1));
         addLineData(0, 10, 10, 20, ColorList.GREEN[1], new BasicStroke(3.0F, 1, 1));
         addLineData(10, 0, 10, 20, ColorList.GREEN[1], new BasicStroke(3.0F, 1, 1));
@@ -22,10 +24,21 @@ public class power extends Component {
     }
     @Override
     public void start(){
-        getPorts().get(0).Data = new ArrayList<>(new ArrayList<>(1));
+        //эту ересь с tmp надо заменить
+        List<List<Object>> tmp = new ArrayList<>(Collections.emptyList());
+        List<Object> tmp2 = new ArrayList<Object>(Collections.emptyList());
+        tmp2.add(1);
+        tmp.add(tmp2);
+        getPorts().get(0).setdata(tmp);
     }
     @Override
     public void step(){
-        getPorts().get(0).Data = new ArrayList<>(new ArrayList<>(1));
+        //эту ересь с tmp надо заменить
+        List<List<Object>> tmp = new ArrayList<>(Collections.emptyList());
+        List<Object> tmp2 = new ArrayList<Object>(Collections.emptyList());
+        tmp2.add(1);
+        tmp.add(tmp2);
+        getPorts().get(0).setdata(new ArrayList<>(new ArrayList<>(1)));
+        getPorts().get(0).updateColor();
     }
 }
