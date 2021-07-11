@@ -11,6 +11,7 @@ public class ComponentListener implements MouseListener{
     public void mouseClicked(MouseEvent e) {
         int x = MouseInfo.getPointerInfo().getLocation().x - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().x;
         int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
+        boolean touched = false;
         if (!WorkEnvironmentMain.excretion.getExcretedComponents().isEmpty()){
             WorkEnvironmentMain.excretion.removeAllExcretedComponents();
         }
@@ -20,10 +21,12 @@ public class ComponentListener implements MouseListener{
             if (isDotInRectangle(x, y, absolutecomponentrect)){
                 WorkEnvironmentMain.excretion.addExcretedComponents(component);
                 WorkEnvironmentMain.excretion.createExcretion();
+                touched = true;
             }
         }
-        if (!isTouchedAnyComponent(x, y)){
+        if (!touched){
             WorkEnvironmentMain.excretion.removeAllExcretedComponents();
+            WorkEnvironmentMain.excretion.removeExcretion();
         }
     }
     @Override
