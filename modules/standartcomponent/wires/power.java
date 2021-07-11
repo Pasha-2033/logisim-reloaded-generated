@@ -24,6 +24,7 @@ public class power extends Component {
     }
     @Override
     public void start(){
+        init();
         //эту ересь с tmp надо заменить
         List<List<Object>> tmp = new ArrayList<>(Collections.emptyList());
         List<Object> tmp2 = new ArrayList<Object>(Collections.emptyList());

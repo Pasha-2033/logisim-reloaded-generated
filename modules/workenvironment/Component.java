@@ -486,16 +486,18 @@ public class Component extends JPanel {
                 tmp.add(tmprect);
             }
         }
-        for (Object[] object : TextData){
-            FontMetrics metrics;
-            if (object.length == 3){
-                metrics = g.getFontMetrics();
-            } else {
-                metrics = g.getFontMetrics((Font) object[3]);
+        if (g != null){
+            for (Object[] object : TextData){
+                FontMetrics metrics;
+                if (object.length == 3){
+                    metrics = this.getGraphics().getFontMetrics();
+                } else {
+                    metrics = this.getGraphics().getFontMetrics((Font) object[3]);
+                }
+                tmp.add(new Rectangle(metrics.stringWidth((String) object[2]), metrics.getHeight()));
             }
-            tmp.add(new Rectangle(metrics.stringWidth((String) object[2]), metrics.getHeight()));
         }
-        if (tmp.isEmpty()){
+        if (!tmp.isEmpty()){
             Rectangle rect = tmp.get(0);
             for (Rectangle r : tmp){
                 rect.add(r);
@@ -518,5 +520,8 @@ public class Component extends JPanel {
         if (intercomponentsandsircuts.size() > 0){
             isSircut = true;
         }
+    }
+    public void init(){
+        updatebounds(null);
     }
 }

@@ -11,7 +11,7 @@ import modules.workenvironment.WorkEnvironmentMain;
 import modules.workenvironment.ColorList;
 import modules.workenvironment.Component;
 public class Excretion extends JPanel {
-    private List<Component> excretedcomponents = new ArrayList<Component>(Collections.emptyList());
+    public List<Component> excretedcomponents = new ArrayList<Component>(Collections.emptyList());
     public Excretion(){
         setOpaque(false);
     }
@@ -61,6 +61,7 @@ public class Excretion extends JPanel {
     }
     public void createExcretion(){
         setVisible(true);
+        repaint();
     }
     public void removeExcretion(){
         setVisible(false);
@@ -74,12 +75,13 @@ public class Excretion extends JPanel {
         int[] E3;
         int[] E4;
         Rectangle r;
+        System.out.println(excretedcomponents.size());
         for (Component component : excretedcomponents){
-            r = component.getbounds();
-            E1 = new int[]{(int) ((component.getComponentLocation()[0] + r.x) * WorkEnvironmentMain.Scale), (int) ((component.getComponentLocation()[1] + r.y) * WorkEnvironmentMain.Scale)};
-            E2 = new int[]{(int) ((component.getComponentLocation()[0] + r.x + r.width) * WorkEnvironmentMain.Scale), (int) ((component.getComponentLocation()[1] + r.y) * WorkEnvironmentMain.Scale)};
-            E3 = new int[]{(int) ((component.getComponentLocation()[0] + r.x + r.width) * WorkEnvironmentMain.Scale), (int) ((component.getComponentLocation()[1] + r.y + r.height) * WorkEnvironmentMain.Scale)};
-            E4 = new int[]{(int) ((component.getComponentLocation()[0] + r.x) * WorkEnvironmentMain.Scale), (int) ((component.getComponentLocation()[1] + r.y + r.height) * WorkEnvironmentMain.Scale)};
+            r = new Rectangle(component.getComponentLocation()[0] + component.getbounds().x, component.getComponentLocation()[0] + component.getbounds().y, component.getbounds().width, component.getbounds().height);
+            E1 = new int[]{(int) (r.x * WorkEnvironmentMain.Scale), (int) (r.y * WorkEnvironmentMain.Scale)};
+            E2 = new int[]{(int) ((r.x + r.width) * WorkEnvironmentMain.Scale), (int) (r.y * WorkEnvironmentMain.Scale)};
+            E3 = new int[]{(int) ((r.x + r.width) * WorkEnvironmentMain.Scale), (int) ((r.y + r.height) * WorkEnvironmentMain.Scale)};
+            E4 = new int[]{(int) (r.x * WorkEnvironmentMain.Scale), (int) ((r.y + r.height) * WorkEnvironmentMain.Scale)};
             g2d.setColor(ColorList.WHITE[0]);
             g2d.fillRect(E1[0], E1[1], 5, 5);
             g2d.fillRect(E2[0], E2[1], 5, 5);

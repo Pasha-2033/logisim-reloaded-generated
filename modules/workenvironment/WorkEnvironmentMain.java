@@ -29,6 +29,7 @@ import modules.methods.JTreeNodeRenderer;
 import modules.methods.LayoutManagers.ComponentLayoutManager;
 import modules.methods.LayoutManagers.FrameScaleLayout;
 import modules.methods.LayoutManagers.ScaleFrameButtonsLayout;
+import modules.methods.Listeners.ComponentListener;
 import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.power;
 public class WorkEnvironmentMain {
@@ -70,11 +71,12 @@ public class WorkEnvironmentMain {
         //закачка компонентов - для тестов =================================================================
         ProjectComponents.add(new power());
         ProjectComponents.get(0).setComponentLocation(100, 100); //- проверка относительных координат
-        ProjectComponents.get(0).setRotation(10); //- проверка поворота
+        ProjectComponents.get(0).setRotation(90); //- проверка поворота
         ProjectComponents.add(new power());
         ProjectComponents.get(1).setComponentLocation(50, 50); //- проверка относительных координат
-        incomponentframe.add(ProjectComponents.get(0), incomponentframe.getComponentCount() - 1);
-        incomponentframe.add(ProjectComponents.get(1), incomponentframe.getComponentCount() - 1);
+        incomponentframe.add(ProjectComponents.get(0), incomponentframe.getComponentCount() - 2);
+        incomponentframe.add(ProjectComponents.get(1), incomponentframe.getComponentCount() - 2);
+        incomponentframe.addMouseListener(new ComponentListener());
         //конец тестовой закачки ===========================================================================
         mainframe.pack();
         //загржаем базовые компоненты
@@ -125,6 +127,7 @@ public class WorkEnvironmentMain {
         incomponentframe.setBorder(BorderFactory.createLineBorder(ColorList.BLACK[0]));
         incomponentframe.setBackground(Color.WHITE);
         incomponentframe.setOpaque(true);
+        incomponentframe.add(excretion);
         incomponentframe.add(dots);
         outcomponentframe.add(componentframescrolpane);
         componentframescrolpane.addComponentListener(
