@@ -173,17 +173,17 @@ public class WorkEnvironmentMain {
         Scalelabel.setText(String.valueOf(Math.round(Scale * 100)) + "%");
     }
     public void updateWorkplaceDimensionAndRerenderAll(){
-        boolean i1 = currentSircut.getSize().getWidth() * Scale >= outcomponentframe.getWidth();
-        boolean i2 = currentSircut.getSize().getHeight() * Scale >= outcomponentframe.getHeight();
+        boolean i1 = currentSircut.getSize().getWidth() * Scale >= componentframescrolpane.getViewport().getWidth();
+        boolean i2 = currentSircut.getSize().getHeight() * Scale >= componentframescrolpane.getViewport().getHeight();
         if (i1 && i2){
             incomponentframe.setLayout(new ComponentLayoutManager(new Dimension((int) (currentSircut.getSize().getWidth() * Scale), (int) (currentSircut.getSize().getHeight() * Scale))));
         } else {
             if (!i1 && i2){
-                incomponentframe.setLayout(new ComponentLayoutManager(new Dimension(outcomponentframe.getWidth(), (int) (currentSircut.getSize().getHeight() * Scale))));
+                incomponentframe.setLayout(new ComponentLayoutManager(new Dimension(componentframescrolpane.getViewport().getWidth(), (int) (currentSircut.getSize().getHeight() * Scale))));
             } else if (i1 && !i2){
-                incomponentframe.setLayout(new ComponentLayoutManager(new Dimension((int) (currentSircut.getSize().getWidth() * Scale), outcomponentframe.getHeight())));
+                incomponentframe.setLayout(new ComponentLayoutManager(new Dimension((int) (currentSircut.getSize().getWidth() * Scale), componentframescrolpane.getViewport().getHeight())));
             } else {
-                incomponentframe.setLayout(new ComponentLayoutManager(new Dimension(outcomponentframe.getWidth(), outcomponentframe.getHeight())));
+                incomponentframe.setLayout(new ComponentLayoutManager(new Dimension(componentframescrolpane.getViewport().getWidth(), componentframescrolpane.getViewport().getHeight())));
             }
         }
         rerenderAllComponents();
