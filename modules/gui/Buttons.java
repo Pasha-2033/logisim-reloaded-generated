@@ -17,8 +17,10 @@ public class Buttons {
         public class UPScaleAction extends AbstractAction {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WorkEnvironmentMain.Scale += 0.1F;
-                Main.workenvironment.updateWorkplaceDimensionAndRerenderAll();
+                if (WorkEnvironmentMain.Scale < 10.0F){
+                    WorkEnvironmentMain.Scale += 0.1F;
+                    Main.workenvironment.updateWorkplaceDimensionAndRerenderAll();
+                }
             }
         }
     }

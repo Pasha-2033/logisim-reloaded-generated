@@ -57,7 +57,7 @@ public class WorkEnvironmentMain {
     public static Excretion excretion = new Excretion();
     public JTree componentroottree = new JTree(buildcomponentroottree());
     public JScrollPane scrpanecomponenttree = new JScrollPane(componentroottree);
-    public JScrollPane componentframescrolpane = new JScrollPane(incomponentframe);
+    public static JScrollPane componentframescrolpane = new JScrollPane(incomponentframe);
     public JSplitPane workplace = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentmenu, outcomponentframe);
     public JLabel Scalelabel = new JLabel();
     public WorkEnvironmentMain(JFrame frame){
@@ -130,6 +130,7 @@ public class WorkEnvironmentMain {
         incomponentframe.add(dots);
         incomponentframe.addMouseListener(new ComponentListener());
         incomponentframe.addMouseMotionListener(new ComponentListener());
+        incomponentframe.addMouseWheelListener(new ComponentListener());
         outcomponentframe.add(componentframescrolpane);
         componentframescrolpane.addComponentListener(
             new ComponentAdapter() {
@@ -141,6 +142,7 @@ public class WorkEnvironmentMain {
         componentdata.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         componentdata.setOpaque(true);
         componentdata.setPreferredSize(new Dimension(100, 100));
+        componentframescrolpane.setWheelScrollingEnabled(false);
         intoolframe.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         intoolframe.setBackground(Color.GREEN);
         intoolframe.setOpaque(true);

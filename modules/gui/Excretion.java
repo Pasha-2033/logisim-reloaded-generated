@@ -90,16 +90,19 @@ public class Excretion extends JPanel {
             E3 = new int[]{(int) ((r.x + r.width) * WorkEnvironmentMain.Scale), (int) ((r.y + r.height) * WorkEnvironmentMain.Scale)};
             E4 = new int[]{(int) (r.x * WorkEnvironmentMain.Scale), (int) ((r.y + r.height) * WorkEnvironmentMain.Scale)};
             g2d.setColor(ColorList.WHITE[0]);
-            g2d.fillRect(E1[0] - 2, E1[1] - 2, 4, 4);
-            g2d.fillRect(E2[0] - 2, E2[1] - 2, 4, 4);
-            g2d.fillRect(E3[0] - 2, E3[1] - 2, 4, 4);
-            g2d.fillRect(E4[0] - 2, E4[1] - 2, 4, 4);
+            int rectScale = (int) (WorkEnvironmentMain.Scale * 4);
+            int rectCorect = (int) (WorkEnvironmentMain.Scale * 2);
+            g2d.setColor(ColorList.WHITE[0]);
+            g2d.fillRect(E1[0] - rectCorect, E1[1] - rectCorect, rectScale, rectScale);
+            g2d.fillRect(E2[0] - rectCorect, E2[1] - rectCorect, rectScale, rectScale);
+            g2d.fillRect(E3[0] - rectCorect, E3[1] - rectCorect, rectScale, rectScale);
+            g2d.fillRect(E4[0] - rectCorect, E4[1] - rectCorect, rectScale, rectScale);
             g2d.setColor(ColorList.BLACK[0]);
             g2d.setStroke(new BasicStroke(1, 1, 1));
-            g2d.drawRect(E1[0] - 2, E1[1] - 2, 4, 4);
-            g2d.drawRect(E2[0] - 2, E2[1] - 2, 4, 4);
-            g2d.drawRect(E3[0] - 2, E3[1] - 2, 4, 4);
-            g2d.drawRect(E4[0] - 2, E4[1] - 2, 4, 4);
+            g2d.drawRect(E1[0] - rectCorect, E1[1] - rectCorect, rectScale, rectScale);
+            g2d.drawRect(E2[0] - rectCorect, E2[1] - rectCorect, rectScale, rectScale);
+            g2d.drawRect(E3[0] - rectCorect, E3[1] - rectCorect, rectScale, rectScale);
+            g2d.drawRect(E4[0] - rectCorect, E4[1] - rectCorect, rectScale, rectScale);
         }
         if (choosingrectangle != null){
             g2d.setColor(ColorList.ComponentChooser[0]);
