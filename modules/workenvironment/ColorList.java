@@ -11,4 +11,5 @@ public class ColorList{
     public static final Color[] WHITE = {Color.WHITE};
     //крайне специализированные цвета
     public static final Color DotsColor = new Color(150, 140, 100);
+    public static final Color ComponentChooser[] = {new Color(75, 35, 255, 120), new Color(75, 35, 255)};
 }

@@ -11,7 +11,8 @@ import modules.workenvironment.WorkEnvironmentMain;
 import modules.workenvironment.ColorList;
 import modules.workenvironment.Component;
 public class Excretion extends JPanel {
-    public List<Component> excretedcomponents = new ArrayList<Component>(Collections.emptyList());
+    private List<Component> excretedcomponents = new ArrayList<Component>(Collections.emptyList());
+    private Rectangle choosingrectangle = null;
     public Excretion(){
         setOpaque(false);
     }
@@ -65,6 +66,13 @@ public class Excretion extends JPanel {
     }
     public void removeExcretion(){
         setVisible(false);
+        repaint();
+    }
+    public void setChoosingRectangle(Rectangle choosingrectangle){
+        this.choosingrectangle = choosingrectangle;
+    }
+    public Rectangle getChossingRectangle(){
+        return choosingrectangle;
     }
     @Override
     public void paintComponent(Graphics g) {
@@ -92,6 +100,29 @@ public class Excretion extends JPanel {
             g2d.drawRect(E2[0] - 2, E2[1] - 2, 4, 4);
             g2d.drawRect(E3[0] - 2, E3[1] - 2, 4, 4);
             g2d.drawRect(E4[0] - 2, E4[1] - 2, 4, 4);
+        }
+        if (choosingrectangle != null){
+            g2d.setColor(ColorList.ComponentChooser[0]);
+            if (choosingrectangle.width >= 0 && choosingrectangle.height >= 0){
+                g2d.fillRect(choosingrectangle.x, choosingrectangle.y, choosingrectangle.width, choosingrectangle.height);
+            } else if(choosingrectangle.width >= 0){
+                g2d.fillRect(choosingrectangle.x, choosingrectangle.y + choosingrectangle.height, choosingrectangle.width, -choosingrectangle.height);
+            } else if(choosingrectangle.height >= 0){
+                g2d.fillRect(choosingrectangle.x + choosingrectangle.width, choosingrectangle.y, -choosingrectangle.width, choosingrectangle.height);
+            } else {
+                g2d.fillRect(choosingrectangle.x + choosingrectangle.width, choosingrectangle.y + choosingrectangle.height, -choosingrectangle.width, -choosingrectangle.height);
+            }
+            g2d.setColor(ColorList.ComponentChooser[1]);
+            g2d.setStroke(new BasicStroke(3, 1, 1));
+            if (choosingrectangle.width >= 0 && choosingrectangle.height >= 0){
+                g2d.drawRect(choosingrectangle.x, choosingrectangle.y, choosingrectangle.width, choosingrectangle.height);
+            } else if(choosingrectangle.width >= 0){
+                g2d.drawRect(choosingrectangle.x, choosingrectangle.y + choosingrectangle.height, choosingrectangle.width, -choosingrectangle.height);
+            } else if(choosingrectangle.height >= 0){
+                g2d.drawRect(choosingrectangle.x + choosingrectangle.width, choosingrectangle.y, -choosingrectangle.width, choosingrectangle.height);
+            } else {
+                g2d.drawRect(choosingrectangle.x + choosingrectangle.width, choosingrectangle.y + choosingrectangle.height, -choosingrectangle.width, -choosingrectangle.height);
+            }
         }
         g2d.dispose();
     }

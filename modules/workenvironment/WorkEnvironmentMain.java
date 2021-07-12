@@ -76,7 +76,6 @@ public class WorkEnvironmentMain {
         ProjectComponents.get(1).setComponentLocation(50, 50); //- проверка относительных координат
         incomponentframe.add(ProjectComponents.get(0), incomponentframe.getComponentCount() - 2);
         incomponentframe.add(ProjectComponents.get(1), incomponentframe.getComponentCount() - 2);
-        incomponentframe.addMouseListener(new ComponentListener());
         //конец тестовой закачки ===========================================================================
         mainframe.pack();
         //загржаем базовые компоненты
@@ -129,6 +128,8 @@ public class WorkEnvironmentMain {
         incomponentframe.setOpaque(true);
         incomponentframe.add(excretion);
         incomponentframe.add(dots);
+        incomponentframe.addMouseListener(new ComponentListener());
+        incomponentframe.addMouseMotionListener(new ComponentListener());
         outcomponentframe.add(componentframescrolpane);
         componentframescrolpane.addComponentListener(
             new ComponentAdapter() {
