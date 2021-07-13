@@ -133,7 +133,7 @@ public class ComponentListener extends MouseInputAdapter{
         } else {
             if (WorkEnvironmentMain.Scale > 0.1F) WorkEnvironmentMain.Scale -= 0.1F;
         }
-        Main.workenvironment.rerenderAllComponents();
+        Main.workenvironment.updateWorkplaceDimensionAndRerenderAll();
     }
     //далее логические вспомогательные методы
     public boolean isTouchedComponent(int dotx, int doty, Rectangle rectangle){

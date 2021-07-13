@@ -8,7 +8,7 @@ public class mainwires extends MainComponentcCass {
         super();
         this.libraryname = "Wires";
         this.componentlist = Arrays.asList(new Component[]{
-            new power(), new ground()
+            new power(), new ground(), new resistor()
         });
     }
 }

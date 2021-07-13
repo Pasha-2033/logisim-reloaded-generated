@@ -24,6 +24,7 @@ import javax.swing.tree.TreeModel;
 import modules.gui.Buttons;
 import modules.gui.Dots;
 import modules.gui.Excretion;
+import modules.languages.language;
 import modules.methods.ExcitationParser;
 import modules.methods.JTreeNodeRenderer;
 import modules.methods.LayoutManagers.ComponentLayoutManager;
@@ -31,8 +32,12 @@ import modules.methods.LayoutManagers.FrameScaleLayout;
 import modules.methods.LayoutManagers.ScaleFrameButtonsLayout;
 import modules.methods.Listeners.ComponentListener;
 import modules.standartcomponent.wires.ground;
+import modules.standartcomponent.wires.mainwires;
 import modules.standartcomponent.wires.power;
+import modules.standartcomponent.wires.resistor;
 public class WorkEnvironmentMain {
+    public String ProjectName;
+    public final String DefaultProjectName = language.trnslt("New Project");
     public static ExcitationParser excitationparser = new ExcitationParser();
     public static float Scale = 1.0F;
     public static boolean DotsThere = true;
@@ -69,35 +74,51 @@ public class WorkEnvironmentMain {
         mainframe.add(mainworkplace);
         mainframe.setMinimumSize(new Dimension(100, 100));
         //закачка компонентов - для тестов =================================================================
-        ProjectComponents.add(new power());
+        ProjectComponents.add(new resistor());
         ProjectComponents.get(0).setComponentLocation(100, 100); //- проверка относительных координат
         ProjectComponents.get(0).setRotation(90); //- проверка поворота
-        ProjectComponents.add(new power());
+        ProjectComponents.add(new ground());
         ProjectComponents.get(1).setComponentLocation(50, 50); //- проверка относительных координат
+        ProjectComponents.add(new power());
+        ProjectComponents.get(2).setComponentLocation(200, 200); //- проверка относительных координат
         incomponentframe.add(ProjectComponents.get(0), incomponentframe.getComponentCount() - 2);
         incomponentframe.add(ProjectComponents.get(1), incomponentframe.getComponentCount() - 2);
+        incomponentframe.add(ProjectComponents.get(2), incomponentframe.getComponentCount() - 2);
         //конец тестовой закачки ===========================================================================
         mainframe.pack();
         //загржаем базовые компоненты
         initbasiccomponents();
     }
-    public static TreeModel buildcomponentroottree(){
+    public TreeModel buildcomponentroottree(){
         //корневая панель
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Components");
+        DefaultMutableTreeNode root;
+        if (ProjectName != null){
+            root = new DefaultMutableTreeNode(ProjectName);
+        } else {
+            root = new DefaultMutableTreeNode(DefaultProjectName);
+        }
         //панель первого порядка
-        DefaultMutableTreeNode basic = new DefaultMutableTreeNode("Basic Component");
-        DefaultMutableTreeNode imported = new DefaultMutableTreeNode("Modules");
+        DefaultMutableTreeNode schemes = new DefaultMutableTreeNode(language.trnslt("Schemes"));
+        DefaultMutableTreeNode components = new DefaultMutableTreeNode(language.trnslt("Components"));
+        root.add(schemes);
+        root.add(components);
+        for (Component component : ProjectComponents){
+            schemes.add(new DefaultMutableTreeNode(component));
+        }
         //панель второго порядка
-        DefaultMutableTreeNode wires = new DefaultMutableTreeNode("Wires");
+        DefaultMutableTreeNode basic = new DefaultMutableTreeNode(language.trnslt("Basic Component"));
+        DefaultMutableTreeNode imported = new DefaultMutableTreeNode(language.trnslt("Modules"));
+        components.add(basic);
+        components.add(imported);
         //панель третьего порядка
-        DefaultMutableTreeNode power = new DefaultMutableTreeNode(new power());
-        DefaultMutableTreeNode ground = new DefaultMutableTreeNode(new ground());
-        //загружаем панели
-        root.add(basic);
-        root.add(imported);
+        DefaultMutableTreeNode wires = new DefaultMutableTreeNode(language.trnslt(new mainwires().libraryname));
+        for (Component component : new mainwires().componentlist){
+            wires.add(new DefaultMutableTreeNode(component));
+        }
         basic.add(wires);
-        wires.add(power);
-        wires.add(ground);
+        //продолжить
+
+
         for (MainComponentcCass mainclass : ComponentLibraries){
             DefaultMutableTreeNode tmpnode = new DefaultMutableTreeNode(mainclass.libraryname);
             imported.add(tmpnode);
