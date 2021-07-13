@@ -1,9 +1,11 @@
 package modules.workenvironment;
 import modules.methods.DrawMethods;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Stroke;
 import java.awt.BasicStroke;
+import java.awt.FontMetrics;
 public class DrawComponent {
     public DrawComponent(Component component, Graphics graphics){
         DrawComponentBody(component, graphics);
@@ -35,56 +37,79 @@ public class DrawComponent {
                 }
             }
             //продолжить в определенном порядке
+            for (Object[] polydata : component.getPolyData()){
+                if (polydata[0].equals("in-out")){
+                    fillpoly(component, graphics, polydata);
+                    drawpoly(component, graphics, polydata);
+                } else if (polydata[0].equals("in")){
+                    fillpoly(component, graphics, polydata);
+                } else {
+                    drawpoly(component, graphics, polydata);
+                }
+            }
+            for (Object[] polyline : component.getPolyLine()){
+                drawpolyline(component, graphics, polyline);
+            }
+            for (Object[] textdata : component.getTextData()){
+                drawstring(component, graphics, textdata);
+            }
         } else {
             int line = 0;
             int rect = 0;
             int oval = 0;
             int poly = 0;
             int text = 0;
+            int curve = 0;
             for (String data : component.getDrawOder()){
-                if (data.equals("Line")){
-                    drawline(component, graphics, component.getLineData().get(line));
-                    line++;
-                } else if (data.equals("Rect")){
-                    Object[] tmp = component.getLineData().get(rect);
-                    if (tmp[0].equals("in-out")){
-                        fillrect(component, graphics, tmp);
-                        drawrect(component, graphics, tmp);
-                    } else if (tmp[0].equals("in")){
-                        fillrect(component, graphics, tmp);
-                    } else{
-                        drawrect(component, graphics, tmp);
+                try{
+                    if (data.equals("LineData")){
+                        drawline(component, graphics, component.getLineData().get(line));
+                        line++;
+                    } else if (data.equals("RectData")){
+                        Object[] tmp = component.getLineData().get(rect);
+                        if (tmp[0].equals("in-out")){
+                            fillrect(component, graphics, tmp);
+                            drawrect(component, graphics, tmp);
+                        } else if (tmp[0].equals("in")){
+                            fillrect(component, graphics, tmp);
+                        } else{
+                            drawrect(component, graphics, tmp);
+                        }
+                        rect++;
+                    } else if (data.equals("OvalData")){
+                        Object[] tmp = component.getOvalData().get(oval);
+                        if (tmp[0].equals("in-out")){
+                            filloval(component, graphics, tmp);
+                            drawoval(component, graphics, tmp);
+                        } else if (tmp[0].equals("in")){
+                            filloval(component, graphics, tmp);
+                        } else{
+                            drawoval(component, graphics, tmp); 
+                        }
+                        oval++;
+                    } else if (data.equals("PolyData")){
+                        Object[] tmp = component.getPolyData().get(poly);
+                        if (tmp[0].equals("in-out")){
+                            fillpoly(component, graphics, tmp);
+                            drawpoly(component, graphics, tmp);
+                        } else if (tmp[0].equals("in")){
+                            fillpoly(component, graphics, tmp);
+                        } else{
+                            drawpoly(component, graphics, tmp);
+                        }
+                        poly++;
+                    } else if (data.equals("TextData")) {
+                        drawstring(component, graphics, component.getTextData().get(text));
+                        text++;
+                    } else if (data.equals("PolyLine")){
+                        drawpolyline(component, graphics, component.getTextData().get(curve));
+                        curve++;
+                    } else {
+                        System.out.println("The argument: " + data + " is invalid for drawing component(" + component.getComponentName() + ")");
                     }
-                    rect++;
-                } else if (data.equals("Oval")){
-                    Object[] tmp = component.getOvalData().get(oval);
-                    if (tmp[0].equals("in-out")){
-                        filloval(component, graphics, tmp);
-                        drawoval(component, graphics, tmp);
-                    } else if (tmp[0].equals("in")){
-                        filloval(component, graphics, tmp);
-                    } else{
-                        drawoval(component, graphics, tmp); 
-                    }
-                    oval++;
-                } else if (data.equals("Poly")){
-                    Object[] tmp = component.getPolyData().get(poly);
-                    if (tmp[0].equals("in-out")){
-                        //
-                    } else if (tmp[0].equals("in")){
-                        //
-                    } else{
-                        //
-                    }
-                    poly++;
-                } else if (data.equals("Text")) {
-                    Object[] tmp = component.getTextData().get(text);
-                    //
-                    text++;
-                } else {
-                    //вывод ошибки
+                } catch (Exception e){
+                    e.printStackTrace();
                 }
-                //продолжить
             }
         }
     }
@@ -134,6 +159,43 @@ public class DrawComponent {
         int arg2 = (int) ((int) OvalData[1] * Math.sin(Math.toRadians(component.getRotation())) + (int) OvalData[2] * Math.cos(Math.toRadians(component.getRotation())));
         int[] location = new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)};
         (new DrawMethods()).fillOval(graphics, location, arg1, arg2,  Math.round((int) OvalData[3] * WorkEnvironmentMain.Scale), Math.round((int) OvalData[4] * WorkEnvironmentMain.Scale), (Color) OvalData[5], component.getRotation());
+    }
+    private void drawpoly(Component component, Graphics graphics, Object[] PolyData){
+        Stroke strk = new BasicStroke(((BasicStroke) PolyData[4]).getLineWidth() * WorkEnvironmentMain.Scale, ((BasicStroke) PolyData[4]).getEndCap(), ((BasicStroke) PolyData[4]).getLineJoin(), ((BasicStroke) PolyData[4]).getMiterLimit(), ((BasicStroke) PolyData[4]).getDashArray(), ((BasicStroke) PolyData[4]).getDashPhase());
+        (new DrawMethods()).drawPoly(graphics, component.getComponentLocation(), (int[]) PolyData[1], (int[]) PolyData[2], (Color) PolyData[3], strk, component.getRotation());
+    }
+    private void fillpoly(Component component, Graphics graphics, Object[] PolyData){
+        (new DrawMethods()).fillPoly(graphics, component.getComponentLocation(), (int[]) PolyData[1], (int[]) PolyData[2], (Color) PolyData[3], component.getRotation());
+    }
+    private void drawstring(Component component, Graphics graphics, Object[] TextData){
+        if (((String) TextData[0]).equals("center")){
+            if (TextData.length == 5){
+                (new DrawMethods()).drawString(graphics, new int[]{Math.round(((int[]) TextData[1])[0] * WorkEnvironmentMain.Scale), Math.round(((int[]) TextData[1])[1] * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], (Color) TextData[3], (int) TextData[4] + component.getRotation());
+            } else {
+                FontMetrics metrics = graphics.getFontMetrics(((Font) TextData[5]).deriveFont(((Font) TextData[5]).getSize() * WorkEnvironmentMain.Scale));
+                (new DrawMethods()).drawString(graphics, new int[]{Math.round((((int[]) TextData[1])[0] - metrics.stringWidth((String) TextData[2])) / 2), Math.round(((int[]) TextData[1])[1] * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], (Color) TextData[3], (int) TextData[4] + component.getRotation(), ((Font) TextData[5]).deriveFont(((Font) TextData[5]).getSize() * WorkEnvironmentMain.Scale));
+            }
+        } else {
+            if (TextData.length == 5){
+                (new DrawMethods()).drawString(graphics, new int[]{Math.round(((int[]) TextData[1])[0] * WorkEnvironmentMain.Scale), Math.round(((int[]) TextData[1])[1] * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], (Color) TextData[3], (int) TextData[4] + component.getRotation());
+            } else {
+                (new DrawMethods()).drawString(graphics, new int[]{Math.round(((int[]) TextData[1])[0] * WorkEnvironmentMain.Scale), Math.round(((int[]) TextData[1])[1] * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], (Color) TextData[3], (int) TextData[4] + component.getRotation(), ((Font) TextData[5]).deriveFont(((Font) TextData[5]).getSize() * WorkEnvironmentMain.Scale));
+            }
+        }
+    }
+    private void drawpolyline(Component component, Graphics graphics, Object[] PolyLine){
+        int[] x = new int[((int[]) PolyLine[0]).length];
+        int[] y = new int[((int[]) PolyLine[1]).length];
+        Stroke strk = new BasicStroke(((BasicStroke) PolyLine[3]).getLineWidth() * WorkEnvironmentMain.Scale, ((BasicStroke) PolyLine[3]).getEndCap(), ((BasicStroke) PolyLine[3]).getLineJoin(), ((BasicStroke) PolyLine[3]).getMiterLimit(), ((BasicStroke) PolyLine[3]).getDashArray(), ((BasicStroke) PolyLine[3]).getDashPhase());
+        for (int i = 0; i < x.length; i++){
+            x[i] = component.getComponentLocation()[0] + ((int[]) PolyLine[0])[i];
+            x[i] = Math.round(x[i] * WorkEnvironmentMain.Scale);
+        }
+        for (int i = 0; i < y.length; i++){
+            y[i] += component.getComponentLocation()[1] + ((int[]) PolyLine[1])[i];
+            y[i] = Math.round(y[i] * WorkEnvironmentMain.Scale);
+        }
+        (new DrawMethods()).drawPolyline(graphics, x, y, new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (Color) PolyLine[2], strk, component.getRotation());
     }
     //отрисовка порта
     private void fillport(Graphics graphics, int[] location, int[] portlocation, int radius, Color portcolor){

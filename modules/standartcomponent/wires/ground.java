@@ -21,8 +21,7 @@ public class ground extends Component {
         start();
     }
     @Override
-    public void start(){
-        init();
+    public void startcode(){
         //эту ересь с tmp надо заменить
         List<List<Object>> tmp = new ArrayList<>(Collections.emptyList());
         List<Object> tmp2 = new ArrayList<Object>(Collections.emptyList());

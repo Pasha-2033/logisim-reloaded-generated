@@ -7,7 +7,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import java.awt.RenderingHints;
-import java.awt.font.TextLayout;
 import javax.swing.JComponent;
 public class DrawMethods extends JComponent{
     public void drawLine(Graphics g, int[] location, int argX, int argY, int arg2X, int arg2Y, Color color, Stroke strk){
@@ -117,8 +116,25 @@ public class DrawMethods extends JComponent{
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(color);
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
+        g2d.setFont(font);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        (new TextLayout(text, font, g2d.getFontRenderContext())).draw(g2d, componentlocation[0] + location[0], componentlocation[1] + location[1]);
+        g2d.drawString(text, componentlocation[0] + location[0], componentlocation[1] + location[1]);
+        g2d.dispose();
+    }
+    public void drawPolyline(Graphics g, int[] x, int[] y, int[] componentlocation, Color color, Stroke strk, int rotation){
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
+        g2d.setColor(color);
+        g2d.setStroke(strk);
+        if (x.length >= y.length){
+            g2d.drawPolyline(x, y, x.length);
+        } else {
+            g2d.drawPolyline(x, y, y.length);
+        }
         g2d.dispose();
     }
 }
+/*
+new BasicStroke(5, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER) - для PolyLine острые края
+*/
