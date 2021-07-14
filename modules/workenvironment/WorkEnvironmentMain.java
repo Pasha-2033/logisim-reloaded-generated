@@ -46,6 +46,7 @@ public class WorkEnvironmentMain {
     public static List<Component> AvaluableComponents = new ArrayList<>(Collections.emptyList());
     public static List<Component> ProjectComponents = new ArrayList<>(Collections.emptyList());
     public static List<Component> ProjectShemes = new ArrayList<>(Collections.emptyList());
+    public static List<ComponentShadow> ShadowedComponents = new ArrayList<>(Collections.emptyList());
     public static Component currentSircut = new Component();
     public JFrame mainframe;
     public JPanel mainworkplace = new JPanel(new BorderLayout());
@@ -83,9 +84,9 @@ public class WorkEnvironmentMain {
         ProjectComponents.get(1).setComponentLocation(50, 50); //- проверка относительных координат
         ProjectComponents.add(new power());
         ProjectComponents.get(2).setComponentLocation(200, 200); //- проверка относительных координат
-        incomponentframe.add(ProjectComponents.get(0), incomponentframe.getComponentCount() - 2);
-        incomponentframe.add(ProjectComponents.get(1), incomponentframe.getComponentCount() - 2);
-        incomponentframe.add(ProjectComponents.get(2), incomponentframe.getComponentCount() - 2);
+        incomponentframe.add(ProjectComponents.get(0), incomponentframe.getComponentCount() - 3);
+        incomponentframe.add(ProjectComponents.get(1), incomponentframe.getComponentCount() - 3);
+        incomponentframe.add(ProjectComponents.get(2), incomponentframe.getComponentCount() - 3);
         //конец тестовой закачки ===========================================================================
         mainframe.pack();
         //загржаем базовые компоненты
@@ -151,6 +152,7 @@ public class WorkEnvironmentMain {
         incomponentframe.setOpaque(true);
         incomponentframe.add(excretion);
         incomponentframe.add(dots);
+        incomponentframe.add(movingcomponentframe);
         incomponentframe.addMouseListener(new ComponentListener());
         incomponentframe.addMouseMotionListener(new ComponentListener());
         incomponentframe.addMouseWheelListener(new ComponentListener());
@@ -213,6 +215,7 @@ public class WorkEnvironmentMain {
     }
     public void rerenderAllComponents(){
         incomponentframe.repaint();
+        excretion.repaint();
         updateJLableScale();
     }
     public void addComponent(Component c){

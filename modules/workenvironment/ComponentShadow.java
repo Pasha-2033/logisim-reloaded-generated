@@ -21,6 +21,9 @@ public class ComponentShadow extends Component{
         setbounds(component.getbounds());
         WorkEnvironmentMain.movingcomponentframe.add(this);
     }
+    public final void removethisshadow(){
+        WorkEnvironmentMain.movingcomponentframe.remove(this);
+    }
     @Override
     public final void paintComponent(Graphics g) {
         super.paintComponent(g);
