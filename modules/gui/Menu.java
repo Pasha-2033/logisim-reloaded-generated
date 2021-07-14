@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import modules.languages.language;
+import modules.languages.Language;
 import modules.methods.GUIMethod;
 public class Menu extends JFrame {
     public static JMenuBar upmenubar(){
@@ -22,7 +22,7 @@ public class Menu extends JFrame {
         return menu;
     }
     public static JMenu filemenu(){
-        JMenu menu = new JMenu(language.trnslt("File"));
+        JMenu menu = new JMenu(Language.trnslt("File"));
         JMenuItem item;
         item = new JMenuItem(new GUIMethod.newfile());
         item.setIcon(new ImageIcon("resources/icon-all/Yaru/menu/circ-file.png"));
@@ -32,7 +32,7 @@ public class Menu extends JFrame {
         menu.add(item);
         String[] files = openedrecent();
         if (files[0].length() > 0) {
-            JMenu submenu = new JMenu(language.trnslt("Openrecent"));
+            JMenu submenu = new JMenu(Language.trnslt("Openrecent"));
             for (String file : files){
                 item = new JMenuItem(new GUIMethod.openrecent(file));
                 item.setIcon(new ImageIcon("resources/icon-all/Yaru/menu/circ-file.png"));
@@ -40,7 +40,7 @@ public class Menu extends JFrame {
             }
             menu.add(submenu);
         } else {
-            item = new JMenuItem(new GUIMethod.openrecent(language.trnslt("Openrecent") + " (" + language.trnslt("New") + ")"));
+            item = new JMenuItem(new GUIMethod.openrecent(Language.trnslt("Openrecent") + " (" + Language.trnslt("New") + ")"));
             item.setIcon(new ImageIcon("resources/icon-all/Yaru/menu/circ-file.png"));
             menu.add(item);
         }
@@ -72,14 +72,14 @@ public class Menu extends JFrame {
         return menu;
     }
     public static JMenu editmenu(){
-        JMenu menu = new JMenu(language.trnslt("Project"));
-        menu.add(new JMenuItem(language.trnslt("Undo"), new ImageIcon("resources/icon-all/Yaru/menu/undo.png")));
-        menu.add(new JMenuItem(language.trnslt("Return"), new ImageIcon("resources/icon-all/Yaru/menu/return.png")));
+        JMenu menu = new JMenu(Language.trnslt("Project"));
+        menu.add(new JMenuItem(Language.trnslt("Undo"), new ImageIcon("resources/icon-all/Yaru/menu/undo.png")));
+        menu.add(new JMenuItem(Language.trnslt("Return"), new ImageIcon("resources/icon-all/Yaru/menu/return.png")));
         return menu;
     }
     public static JMenu settingsmenu(){
-        JMenu menu = new JMenu(language.trnslt("tmp"));
-        menu.add(new JMenuItem(language.trnslt("tmp")));
+        JMenu menu = new JMenu(Language.trnslt("tmp"));
+        menu.add(new JMenuItem(Language.trnslt("tmp")));
         return menu;
     }
     public static String[] openedrecent(){

@@ -7,6 +7,7 @@ import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.awt.Point;
 import modules.workenvironment.Component;
+import modules.workenvironment.ComponentShadow;
 import modules.workenvironment.WorkEnvironmentMain;
 import mainclassfolder.Main;
 public class ComponentListener extends MouseInputAdapter{
@@ -58,9 +59,13 @@ public class ComponentListener extends MouseInputAdapter{
                 }
             }
             if (touched){
-                //прописать изменение положения компонентов
                 //сначала прячем их и рисеум их тени, передвигаем их кратно 10 (мне кажется так лучше всего)
-                //потом всех их коказываем в методе mouseReleased
+                //создаем тени компонентов
+                for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
+                    component.setVisible(false);
+                    new ComponentShadow(component);
+                }
+                //прописать изменение положения компонентов
             } else {
                 int x = MouseInfo.getPointerInfo().getLocation().x - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().x;
                 int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
@@ -104,6 +109,9 @@ public class ComponentListener extends MouseInputAdapter{
             }
             boolean touched = false;
             if (!WorkEnvironmentMain.excretion.getExcretedComponents().isEmpty()){
+                for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
+                    component.setVisible(true);
+                }
                 WorkEnvironmentMain.excretion.removeAllExcretedComponents();
             }
             //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){

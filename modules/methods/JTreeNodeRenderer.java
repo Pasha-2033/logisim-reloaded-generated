@@ -5,7 +5,7 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellRenderer;
 
-import modules.languages.language;
+import modules.languages.Language;
 import modules.workenvironment.Component;
 import modules.workenvironment.MainComponentcCass;
 public class JTreeNodeRenderer implements TreeCellRenderer {
@@ -17,7 +17,7 @@ public class JTreeNodeRenderer implements TreeCellRenderer {
             Component component = (Component) node.getUserObject();
             if (node.isLeaf()){
                 label.setIcon(component.getComponentIcon());
-                label.setText(language.trnslt(component.getComponentName()));
+                label.setText(Language.trnslt(component.getComponentName()));
             } else {
                 label.setIcon(new ImageIcon("resources/menuicon/foldericon.png")); //указать иконку папки
             }
@@ -25,7 +25,7 @@ public class JTreeNodeRenderer implements TreeCellRenderer {
             try {
                 MainComponentcCass library = (MainComponentcCass) node.getUserObject();
                 label.setIcon(library.libraryicon);
-                label.setText(language.trnslt(library.libraryname));
+                label.setText(Language.trnslt(library.libraryname));
             }catch (Exception ee){
                 label.setText(node.toString());
                 label.setIcon(new ImageIcon("resources/menuicon/foldericon.png")); //указать иконку папки

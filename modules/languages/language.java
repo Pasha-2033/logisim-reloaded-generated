@@ -2,7 +2,7 @@ package modules.languages;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Properties;
-public class language {
+public class Language {
     public static String trnslt(String wordtotranslate) {
         Properties config = new Properties();
         Properties lang = new Properties();

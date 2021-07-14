@@ -3,4 +3,4 @@ Created-By: communistic_systema(Pasha-2033) and lllzebralll
 Version: 0
 Addressforquestions: https://vk.com/logisim (group chat)
 GitHub: https://github.com/Pasha-2033/logisim-reloaded-generated
-Main-Class: Main
+Main-Class: mainclassfolder.Main

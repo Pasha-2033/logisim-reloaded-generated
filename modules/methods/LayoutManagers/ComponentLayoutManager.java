@@ -25,7 +25,7 @@ public class ComponentLayoutManager implements LayoutManager{
     public void layoutContainer(Container container){
         Component list[] = container.getComponents();
         for (int i = 0; i < list.length; i++) {
-            list[i].setBounds(0, 0, Size.width, Size.height);
+            list[i].setBounds(0, 0, container.getSize().width, container.getSize().height);
         }
     }
 }

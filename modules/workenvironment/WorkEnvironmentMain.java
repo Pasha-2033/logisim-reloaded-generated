@@ -24,7 +24,7 @@ import javax.swing.tree.TreeModel;
 import modules.gui.Buttons;
 import modules.gui.Dots;
 import modules.gui.Excretion;
-import modules.languages.language;
+import modules.languages.Language;
 import modules.methods.ExcitationParser;
 import modules.methods.JTreeNodeRenderer;
 import modules.methods.LayoutManagers.ComponentLayoutManager;
@@ -36,8 +36,9 @@ import modules.standartcomponent.wires.mainwires;
 import modules.standartcomponent.wires.power;
 import modules.standartcomponent.wires.resistor;
 public class WorkEnvironmentMain {
+    public static boolean isStepavaluable = true;
     public String ProjectName;
-    public final String DefaultProjectName = language.trnslt("New Project");
+    public final String DefaultProjectName = Language.trnslt("New Project");
     public static ExcitationParser excitationparser = new ExcitationParser();
     public static float Scale = 1.0F;
     public static boolean DotsThere = true;
@@ -57,6 +58,7 @@ public class WorkEnvironmentMain {
     public JPanel componentdata = new JPanel(new BorderLayout());
     public JPanel componentmenu = new JPanel(new BorderLayout());
     public static JPanel incomponentframe = new JPanel(new ComponentLayoutManager());
+    public static JPanel movingcomponentframe = new JPanel(new ComponentLayoutManager());
     public JPanel outcomponentframe = new JPanel(new BorderLayout());
     public static Dots dots = new Dots();
     public static Excretion excretion = new Excretion();
@@ -98,20 +100,20 @@ public class WorkEnvironmentMain {
             root = new DefaultMutableTreeNode(DefaultProjectName);
         }
         //панель первого порядка
-        DefaultMutableTreeNode schemes = new DefaultMutableTreeNode(language.trnslt("Schemes"));
-        DefaultMutableTreeNode components = new DefaultMutableTreeNode(language.trnslt("Components"));
+        DefaultMutableTreeNode schemes = new DefaultMutableTreeNode(Language.trnslt("Schemes"));
+        DefaultMutableTreeNode components = new DefaultMutableTreeNode(Language.trnslt("Components"));
         root.add(schemes);
         root.add(components);
         for (Component component : ProjectComponents){
             schemes.add(new DefaultMutableTreeNode(component));
         }
         //панель второго порядка
-        DefaultMutableTreeNode basic = new DefaultMutableTreeNode(language.trnslt("Basic Component"));
-        DefaultMutableTreeNode imported = new DefaultMutableTreeNode(language.trnslt("Modules"));
+        DefaultMutableTreeNode basic = new DefaultMutableTreeNode(Language.trnslt("Basic Component"));
+        DefaultMutableTreeNode imported = new DefaultMutableTreeNode(Language.trnslt("Modules"));
         components.add(basic);
         components.add(imported);
         //панель третьего порядка
-        DefaultMutableTreeNode wires = new DefaultMutableTreeNode(language.trnslt(new mainwires().libraryname));
+        DefaultMutableTreeNode wires = new DefaultMutableTreeNode(Language.trnslt(new mainwires().libraryname));
         for (Component component : new mainwires().componentlist){
             wires.add(new DefaultMutableTreeNode(component));
         }

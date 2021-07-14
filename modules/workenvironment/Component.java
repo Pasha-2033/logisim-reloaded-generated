@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import modules.languages.language;
+import modules.languages.Language;
 import modules.methods.ComponentAttributes;
 import java.awt.Rectangle;
 import java.awt.Graphics;
@@ -19,10 +19,9 @@ import java.awt.geom.AffineTransform;
 public class Component extends JPanel {
     private Dimension Size = new Dimension(500, 500);
     private boolean isSircut = false;
-    private boolean isStepavaluable = true; //провести к WorkEnvironmentMain
     private int Rotation = 0;
     private int[] ComponentLocation = {0, 0};
-    private List<Port> Ports = new ArrayList<Port>(Collections.emptyList()); //
+    private List<Port> Ports = new ArrayList<Port>(Collections.emptyList());
     private List<Component> intercomponentsandsircuts = new ArrayList<Component>(Collections.emptyList());
     private List<String> DrawOder = new ArrayList<String>(Collections.emptyList());
     private List<Object[]> LineData = new ArrayList<Object[]>(Collections.emptyList());
@@ -51,13 +50,13 @@ public class Component extends JPanel {
         setComponent(ComponentName, ComponentIcon, isSircut);
     }
     private final void setComponent(String ComponentName, Icon ComponentIcon, boolean isSircut){
-        this.ComponentName = language.trnslt(ComponentName);
+        this.ComponentName = Language.trnslt(ComponentName);
         this.ComponentIcon = ComponentIcon;
         this.isSircut = isSircut;
         setOpaque(false);
     }
     @Override
-    public final void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         new DrawComponent(this, g);
         updatebounds(g);
@@ -84,7 +83,7 @@ public class Component extends JPanel {
     public final void setintercomponentsandsircuts(List<Component> intercomponentsandsircuts){
         this.intercomponentsandsircuts = intercomponentsandsircuts;
     }
-    public final void setintercomponentsandsircut(Component component, int index){
+    public final void setintercomponentsandsircuts(Component component, int index){
         if (component != this && component != null){
             try {
                 intercomponentsandsircuts.set(index, component);
@@ -93,12 +92,12 @@ public class Component extends JPanel {
             }
         }
     }
-    public final void addintercomponentsandsircut(Component component){
+    public final void addintercomponentsandsircuts(Component component){
         if (component != this && component != null){
             intercomponentsandsircuts.add(component);
         }
     }
-    public final void addintercomponentsandsircut(Component component, int index){
+    public final void addintercomponentsandsircuts(Component component, int index){
         if (component != this && component != null){
             try {
                 intercomponentsandsircuts.add(index, component);
@@ -107,7 +106,7 @@ public class Component extends JPanel {
             }
         }
     }
-    public final void removeintercomponentsandsircut(Component component){
+    public final void removeintercomponentsandsircuts(Component component){
         try {
             intercomponentsandsircuts.remove(component);
         } catch (Exception e) {
@@ -479,6 +478,9 @@ public class Component extends JPanel {
     public final List<ComponentAttributes> getAttributes(){
         return Attributes;
     }
+    public final void setAttributes(List<ComponentAttributes> Attributes){
+        this.Attributes = Attributes;
+    }
     //доделать методы для атрибутов
     public final Icon getComponentIcon(){
         return ComponentIcon;
@@ -574,7 +576,7 @@ public class Component extends JPanel {
     }
     public void startcode(){}
     public final void prestep(){
-        if (isStepavaluable){
+        if (WorkEnvironmentMain.isStepavaluable){
             WorkEnvironmentMain.excitationparser.addStepedComponent(this);
             step();
         }
