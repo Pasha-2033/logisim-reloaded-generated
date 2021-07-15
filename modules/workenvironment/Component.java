@@ -20,6 +20,7 @@ public class Component extends JPanel {
     private Dimension Size = new Dimension(500, 500);
     private boolean isSircut = false;
     private int Rotation = 0;
+    private int[] RotationFlag = {0, 0};
     private int[] ComponentLocation = {0, 0};
     private List<Port> Ports = new ArrayList<Port>(Collections.emptyList());
     private List<Component> intercomponentsandsircuts = new ArrayList<Component>(Collections.emptyList());
@@ -161,6 +162,12 @@ public class Component extends JPanel {
     }
     public final void removeAllPorts(){
         Ports = new ArrayList<Port>(Collections.emptyList());
+    }
+    public final int[] getRotationFlag(){
+        return RotationFlag;
+    }
+    public final void setRotationFlag(int x, int y){
+        RotationFlag = new int[]{x, y};
     }
     public final int[] getComponentLocation(){
         return ComponentLocation;
@@ -497,7 +504,7 @@ public class Component extends JPanel {
     public final Rectangle getbounds(){
         AffineTransform AT = new AffineTransform();
         AT.rotate(-Math.toRadians(Rotation));
-        Shape newRect = AT.createTransformedShape(bounds);
+        Shape newRect = AT.createTransformedShape(new Rectangle((int) (bounds.getX() - RotationFlag[0]), (int) (bounds.getY() - RotationFlag[1]), (int) bounds.getWidth(), (int) bounds.getHeight()));
         return newRect.getBounds();
     }
     public final void setbounds(Rectangle bounds){

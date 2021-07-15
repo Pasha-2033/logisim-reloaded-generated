@@ -13,11 +13,12 @@ public class ground extends Component {
         setGroundData();
     }
     private void setGroundData(){
-        addPort(new Port(0, 0, true, false, this));
-        addLineData(-20, 2, -20, -2, ColorList.GREEN[2], new BasicStroke(3.0F, 1, 1));
-        addLineData(-15, 6, -15, -6, ColorList.GREEN[2], new BasicStroke(3.0F, 1, 1));
-        addLineData(-10, -10, -10, 10, ColorList.GREEN[2], new BasicStroke(3.0F, 1, 1));
-        addLineData(-10, 0, 0, 0, ColorList.GREEN[2], new BasicStroke(3.0F, 1, 1));
+        setRotationFlag(20, 10);
+        addPort(new Port(0+20, 0+10, true, false, this));
+        addLineData(-20+20, 2+10, -20+20, -2+10, ColorList.GREEN[2], new BasicStroke(3.0F, 1, 1));
+        addLineData(-15+20, 6+10, -15+20, -6+10, ColorList.GREEN[2], new BasicStroke(3.0F, 1, 1));
+        addLineData(-10+20, -10+10, -10+20, 10+10, ColorList.GREEN[2], new BasicStroke(3.0F, 1, 1));
+        addLineData(-10+20, 0+10, 0+20, 0+10, ColorList.GREEN[2], new BasicStroke(3.0F, 1, 1));
         start();
     }
     @Override
@@ -36,6 +37,6 @@ public class ground extends Component {
         List<Object> tmp2 = new ArrayList<Object>(Collections.emptyList());
         tmp2.add(0);
         tmp.add(tmp2);
-        getPorts().get(0).setdata(new ArrayList<>(new ArrayList<>(1)));
+        getPorts().get(0).setdata(tmp);
     }
 }

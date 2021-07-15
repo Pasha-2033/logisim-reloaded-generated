@@ -5,6 +5,7 @@ public class ComponentShadow extends Component{
         setSize(component.getSize());
         setisSircut(component.getisSircut());
         setRotation(component.getRotation());
+        setRotationFlag(component.getRotationFlag()[0], component.getRotationFlag()[1]);
         setComponentLocation(component.getComponentLocation()[0], component.getComponentLocation()[1]);
         setPorts(component.getPorts());
         setintercomponentsandsircuts(component.getintercomponentsandsircuts());
