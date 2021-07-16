@@ -84,7 +84,7 @@ public class Excretion extends JPanel {
         int[] E4;
         Rectangle r;
         for (Component component : excretedcomponents){
-            r = new Rectangle(component.getComponentLocation()[0] + component.getbounds().x, component.getComponentLocation()[0] + component.getbounds().y, component.getbounds().width, component.getbounds().height);
+            r = new Rectangle(component.getComponentLocation()[0] + component.getbounds().x, component.getComponentLocation()[1] + component.getbounds().y, component.getbounds().width, component.getbounds().height);
             E1 = new int[]{(int) (r.x * WorkEnvironmentMain.Scale), (int) (r.y * WorkEnvironmentMain.Scale)};
             E2 = new int[]{(int) ((r.x + r.width) * WorkEnvironmentMain.Scale), (int) (r.y * WorkEnvironmentMain.Scale)};
             E3 = new int[]{(int) ((r.x + r.width) * WorkEnvironmentMain.Scale), (int) ((r.y + r.height) * WorkEnvironmentMain.Scale)};
