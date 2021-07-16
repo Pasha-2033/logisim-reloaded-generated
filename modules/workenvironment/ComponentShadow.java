@@ -1,12 +1,14 @@
 package modules.workenvironment;
 import java.awt.Graphics;
 public class ComponentShadow extends Component{
+    private int[] base = new int[]{0, 0};
     public ComponentShadow(Component component){
         setSize(component.getSize());
         setisSircut(component.getisSircut());
         setRotation(component.getRotation());
         setRotationFlag(component.getRotationFlag()[0], component.getRotationFlag()[1]);
         setComponentLocation(component.getComponentLocation()[0], component.getComponentLocation()[1]);
+        setComponentBase(component.getComponentLocation()[0], component.getComponentLocation()[1]);
         setPorts(component.getPorts());
         setintercomponentsandsircuts(component.getintercomponentsandsircuts());
         setDrawOder(component.getDrawOder());
@@ -24,6 +26,12 @@ public class ComponentShadow extends Component{
     }
     public final void removethisshadow(){
         WorkEnvironmentMain.movingcomponentframe.remove(this);
+    }
+    public final int[] getComponentBase(){
+        return base;
+    }
+    public final void setComponentBase(int x, int y){
+        base = new int[]{x, y};
     }
     @Override
     public final void paintComponent(Graphics g) {
