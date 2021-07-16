@@ -63,11 +63,15 @@ public class ComponentListener extends MouseInputAdapter{
             }
             if (touched){
                 WorkEnvironmentMain.movingcomponentframe.setVisible(true);
+                //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
+                for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
+                    component.setVisible(false);
+                }
                 for (ComponentShadow component : WorkEnvironmentMain.ShadowedComponents){
                     int x = MouseInfo.getPointerInfo().getLocation().x - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().x;
                     int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
-                    int dx = (x - mousePressedPoint.x);
-                    int dy = (y - mousePressedPoint.y);
+                    int dx = Math.round((x - mousePressedPoint.x) / WorkEnvironmentMain.Scale);
+                    int dy = Math.round((y - mousePressedPoint.y) / WorkEnvironmentMain.Scale);
                     component.setComponentLocation(component.getComponentBase()[0] + dx, component.getComponentBase()[1] + dy);
                     component.repaint();
                 }
@@ -100,6 +104,10 @@ public class ComponentListener extends MouseInputAdapter{
     }
     @Override
     public void mouseReleased(MouseEvent e) {
+        //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
+        for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
+            component.setVisible(true);
+        }
         boolean touched = false;
         //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
         for (Component component : WorkEnvironmentMain.ProjectComponents){
