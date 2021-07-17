@@ -55,7 +55,7 @@ public class ComponentListener extends MouseInputAdapter{
         if (SwingUtilities.isLeftMouseButton(e)){
             boolean touched = false;
             //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
-            for (Component component : WorkEnvironmentMain.ProjectComponents){
+            for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
                 Rectangle absolutecomponentrect = new Rectangle(Math.round((component.getComponentLocation()[0] + component.getbounds().x) * WorkEnvironmentMain.Scale), Math.round((component.getComponentLocation()[1] + component.getbounds().y) * WorkEnvironmentMain.Scale), Math.round(component.getbounds().width * WorkEnvironmentMain.Scale), Math.round(component.getbounds().height * WorkEnvironmentMain.Scale));
                 if (isTouchedComponent(mousePressedPoint.x, mousePressedPoint.y, absolutecomponentrect)){
                     touched = true;
@@ -64,7 +64,6 @@ public class ComponentListener extends MouseInputAdapter{
             }
             if (touched){
                 WorkEnvironmentMain.movingcomponentframe.setVisible(true);
-                //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
                 for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
                     component.setVisible(false);
                 }
@@ -81,6 +80,8 @@ public class ComponentListener extends MouseInputAdapter{
                 int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
                 WorkEnvironmentMain.excretion.setChoosingRectangle(new Rectangle(mousePressedPoint.x, mousePressedPoint.y, x - mousePressedPoint.x, y - mousePressedPoint.y));
                 WorkEnvironmentMain.excretion.createExcretion();
+                WorkEnvironmentMain.movingcomponentframe.setVisible(false);
+                WorkEnvironmentMain.excretion.removeAllExcretedComponents();
             }
         } else if (SwingUtilities.isRightMouseButton(e)){
             //вряд ли понадобится
@@ -106,13 +107,9 @@ public class ComponentListener extends MouseInputAdapter{
     @Override
     public void mouseReleased(MouseEvent e) {
         WorkEnvironmentMain.movingcomponentframe.setVisible(false);
-        //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
+        boolean touched = false;
         for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
             component.setVisible(true);
-        }
-        boolean touched = false;
-        //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
-        for (Component component : WorkEnvironmentMain.ProjectComponents){
             Rectangle absolutecomponentrect = new Rectangle(Math.round((component.getComponentLocation()[0] + component.getbounds().x) * WorkEnvironmentMain.Scale), Math.round((component.getComponentLocation()[1] + component.getbounds().y) * WorkEnvironmentMain.Scale), Math.round(component.getbounds().width * WorkEnvironmentMain.Scale), Math.round(component.getbounds().height * WorkEnvironmentMain.Scale));
             if (isTouchedComponent(mousePressedPoint.x, mousePressedPoint.y, absolutecomponentrect)){
                 touched = true;
