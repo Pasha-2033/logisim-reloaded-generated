@@ -79,7 +79,7 @@ public class WorkEnvironmentMain {
         //закачка компонентов - для тестов =================================================================
         ProjectComponents.add(new resistor());
         ProjectComponents.get(0).setComponentLocation(100, 100); //- проверка относительных координат
-        ProjectComponents.get(0).setRotation(90); //- проверка поворота
+        ProjectComponents.get(0).setRotation(0); //- проверка поворота
         ProjectComponents.add(new ground());
         ProjectComponents.get(1).setComponentLocation(50, 50); //- проверка относительных координат
         ProjectComponents.add(new power());

@@ -16,6 +16,7 @@ public class ComponentListener extends MouseInputAdapter{
     public static Point mousePressedPoint = new Point(0, 0);
     @Override
     public void mouseClicked(MouseEvent e) {
+        WorkEnvironmentMain.movingcomponentframe.setVisible(false);
         if (SwingUtilities.isLeftMouseButton(e)){
             int x = MouseInfo.getPointerInfo().getLocation().x - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().x;
             int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
@@ -104,6 +105,7 @@ public class ComponentListener extends MouseInputAdapter{
     }
     @Override
     public void mouseReleased(MouseEvent e) {
+        WorkEnvironmentMain.movingcomponentframe.setVisible(false);
         //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
         for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
             component.setVisible(true);
@@ -129,7 +131,6 @@ public class ComponentListener extends MouseInputAdapter{
                         component.setVisible(true);
                     }
                 }
-            WorkEnvironmentMain.movingcomponentframe.setVisible(false);
             WorkEnvironmentMain.ShadowedComponents = new ArrayList<ComponentShadow>(Collections.emptyList());
             WorkEnvironmentMain.excretion.removeAllExcretedComponents();
             WorkEnvironmentMain.movingcomponentframe.removeAll();

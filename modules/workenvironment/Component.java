@@ -515,8 +515,7 @@ public class Component extends JPanel {
         List<Rectangle> tmp = new ArrayList<Rectangle>(Collections.emptyList());
         Rectangle tmprect;
         for (Object[] object : LineData){
-            tmprect = new Rectangle((int) object[0], (int) object[1]);
-            tmprect.add((int) object[2], (int) object[3]);
+            tmprect = new Rectangle((int) object[0], (int) object[1], (int) object[2] - (int) object[0], (int) object[3] - (int) object[1]);
             tmp.add(tmprect);
         }
         for (Object[] object : RectData){
@@ -544,16 +543,42 @@ public class Component extends JPanel {
         }
         for (Object[] object : PolyLine){
             if (((int[]) object[0]).length <= ((int[]) object[1]).length){
-                tmprect = new Rectangle(((int[]) object[0])[0], ((int[]) object[1])[0]);
+                int xmin = ((int[]) object[0])[0];
+                int ymin = ((int[]) object[1])[0];
+                int xmax = xmin;
+                int ymax = ymin;
                 for (int i = 1; i < ((int[]) object[0]).length; i++){
-                    tmprect.add(((int[]) object[0])[i], ((int[]) object[1])[i]);
+                    if (((int[]) object[0])[i] < xmin){
+                        xmin = ((int[]) object[0])[i];
+                    } else if (((int[]) object[0])[i] > xmax){
+                        xmax = ((int[]) object[0])[i];
+                    }
+                    if (((int[]) object[1])[i] < ymin){
+                        ymin = ((int[]) object[1])[i];
+                    } else if (((int[]) object[1])[i] > ymax){
+                        ymax = ((int[]) object[1])[i];
+                    }
                 }
+                tmprect = new Rectangle(xmin, ymin, xmax - xmin, ymax - ymin);
                 tmp.add(tmprect);
             } else {
-                tmprect = new Rectangle(((int[]) object[0])[0], ((int[]) object[1])[0]);
+                int xmin = ((int[]) object[0])[0];
+                int ymin = ((int[]) object[1])[0];
+                int xmax = xmin;
+                int ymax = ymin;
                 for (int i = 1; i < ((int[]) object[1]).length; i++){
-                    tmprect.add(((int[]) object[0])[i], ((int[]) object[1])[i]);
+                    if (((int[]) object[0])[i] < xmin){
+                        xmin = ((int[]) object[0])[i];
+                    } else if (((int[]) object[0])[i] > xmax){
+                        xmax = ((int[]) object[0])[i];
+                    }
+                    if (((int[]) object[1])[i] < ymin){
+                        ymin = ((int[]) object[1])[i];
+                    } else if (((int[]) object[1])[i] > ymax){
+                        ymax = ((int[]) object[1])[i];
+                    }
                 }
+                tmprect = new Rectangle(xmin, ymin, xmax - xmin, ymax - ymin);
                 tmp.add(tmprect);
             }
         }
@@ -565,7 +590,11 @@ public class Component extends JPanel {
                 } else {
                     metrics = this.getGraphics().getFontMetrics((Font) object[5]);
                 }
-                tmp.add(new Rectangle(metrics.stringWidth((String) object[2]), metrics.getHeight()));
+                if (((String) object[0]).equals("center")){
+                    tmp.add(new Rectangle(((int[]) object[1])[0] - metrics.stringWidth((String) object[2]) / 2, ((int[]) object[1])[1] - metrics.getHeight(), metrics.stringWidth((String) object[2]), metrics.getHeight()));
+                } else {
+                    tmp.add(new Rectangle(metrics.stringWidth((String) object[2]), metrics.getHeight()));
+                }
             }
         }
         if (!tmp.isEmpty()){
@@ -574,6 +603,8 @@ public class Component extends JPanel {
                 rect.add(r);
             }
             bounds = rect;
+        } else {
+            bounds = new Rectangle(0, 0, 0, 0);
         }
     }
     //стандартные функции компоента, чтобы при вызове их у компонента не вызывало ошибку

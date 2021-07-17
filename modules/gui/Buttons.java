@@ -48,7 +48,7 @@ public class Buttons {
         public class DoteButtonAction extends AbstractAction {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //WorkEnvironmentMain.ProjectComponents.get(1).setRotation(WorkEnvironmentMain.ProjectComponents.get(1).getRotation() + 5); //для проверки вращения
+                WorkEnvironmentMain.ProjectComponents.get(0).setRotation(WorkEnvironmentMain.ProjectComponents.get(0).getRotation() + 5); //для проверки вращения
                 if (!WorkEnvironmentMain.DotsThere){
                     WorkEnvironmentMain.dots.setVisible(true);
                     WorkEnvironmentMain.DotsThere = true;

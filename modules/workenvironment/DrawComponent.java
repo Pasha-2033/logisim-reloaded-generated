@@ -221,16 +221,16 @@ public class DrawComponent {
     private void drawstring(Component component, Graphics graphics, Object[] TextData){
         if (((String) TextData[0]).equals("center")){
             if (TextData.length == 5){
-                (new DrawMethods()).drawString(graphics, new int[]{Math.round(((int[]) TextData[1])[0] * WorkEnvironmentMain.Scale), Math.round(((int[]) TextData[1])[1] * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], (Color) TextData[3], (int) TextData[4] + component.getRotation());
+                (new DrawMethods()).drawString(graphics, new int[]{Math.round((((int[]) TextData[1])[0] - component.getRotationFlag()[0]) * WorkEnvironmentMain.Scale), Math.round((((int[]) TextData[1])[1] - component.getRotationFlag()[1]) * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], (Color) TextData[3], (int) TextData[4] + component.getRotation());
             } else {
                 FontMetrics metrics = graphics.getFontMetrics(((Font) TextData[5]).deriveFont(((Font) TextData[5]).getSize() * WorkEnvironmentMain.Scale));
-                (new DrawMethods()).drawString(graphics, new int[]{Math.round((((int[]) TextData[1])[0] - metrics.stringWidth((String) TextData[2])) / 2), Math.round(((int[]) TextData[1])[1] * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], (Color) TextData[3], (int) TextData[4] + component.getRotation(), ((Font) TextData[5]).deriveFont(((Font) TextData[5]).getSize() * WorkEnvironmentMain.Scale));
+                (new DrawMethods()).drawString(graphics, new int[]{Math.round((((int[]) TextData[1])[0] - component.getRotationFlag()[0] - metrics.stringWidth((String) TextData[2])) / 2), Math.round((((int[]) TextData[1])[1] - component.getRotationFlag()[0]) * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], (Color) TextData[3], (int) TextData[4] + component.getRotation(), ((Font) TextData[5]).deriveFont(((Font) TextData[5]).getSize() * WorkEnvironmentMain.Scale));
             }
         } else {
             if (TextData.length == 5){
-                (new DrawMethods()).drawString(graphics, new int[]{Math.round(((int[]) TextData[1])[0] * WorkEnvironmentMain.Scale), Math.round(((int[]) TextData[1])[1] * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], (Color) TextData[3], (int) TextData[4] + component.getRotation());
+                (new DrawMethods()).drawString(graphics, new int[]{Math.round((((int[]) TextData[1])[0] - component.getRotationFlag()[0]) * WorkEnvironmentMain.Scale), Math.round((((int[]) TextData[1])[1] - component.getRotationFlag()[1]) * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], (Color) TextData[3], (int) TextData[4] + component.getRotation());
             } else {
-                (new DrawMethods()).drawString(graphics, new int[]{Math.round(((int[]) TextData[1])[0] * WorkEnvironmentMain.Scale), Math.round(((int[]) TextData[1])[1] * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], (Color) TextData[3], (int) TextData[4] + component.getRotation(), ((Font) TextData[5]).deriveFont(((Font) TextData[5]).getSize() * WorkEnvironmentMain.Scale));
+                (new DrawMethods()).drawString(graphics, new int[]{Math.round((((int[]) TextData[1])[0] - component.getRotationFlag()[0]) * WorkEnvironmentMain.Scale), Math.round((((int[]) TextData[1])[1] - component.getRotationFlag()[1]) * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], (Color) TextData[3], (int) TextData[4] + component.getRotation(), ((Font) TextData[5]).deriveFont(((Font) TextData[5]).getSize() * WorkEnvironmentMain.Scale));
             }
         }
     }
@@ -239,11 +239,11 @@ public class DrawComponent {
         int[] y = new int[((int[]) PolyLine[1]).length];
         Stroke strk = new BasicStroke(((BasicStroke) PolyLine[3]).getLineWidth() * WorkEnvironmentMain.Scale, ((BasicStroke) PolyLine[3]).getEndCap(), ((BasicStroke) PolyLine[3]).getLineJoin(), ((BasicStroke) PolyLine[3]).getMiterLimit(), ((BasicStroke) PolyLine[3]).getDashArray(), ((BasicStroke) PolyLine[3]).getDashPhase());
         for (int i = 0; i < x.length; i++){
-            x[i] = component.getComponentLocation()[0] + ((int[]) PolyLine[0])[i];
+            x[i] = component.getComponentLocation()[0] + ((int[]) PolyLine[0])[i] - component.getRotationFlag()[0];
             x[i] = Math.round(x[i] * WorkEnvironmentMain.Scale);
         }
         for (int i = 0; i < y.length; i++){
-            y[i] += component.getComponentLocation()[1] + ((int[]) PolyLine[1])[i];
+            y[i] += component.getComponentLocation()[1] + ((int[]) PolyLine[1])[i] - component.getRotationFlag()[1];
             y[i] = Math.round(y[i] * WorkEnvironmentMain.Scale);
         }
         (new DrawMethods()).drawPolyline(graphics, x, y, new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (Color) PolyLine[2], strk, component.getRotation());
@@ -293,16 +293,16 @@ public class DrawComponent {
     private void drawstring(ComponentShadow component, Graphics graphics, Object[] TextData){
         if (((String) TextData[0]).equals("center")){
             if (TextData.length == 5){
-                (new DrawMethods()).drawString(graphics, new int[]{Math.round(((int[]) TextData[1])[0] * WorkEnvironmentMain.Scale), Math.round(((int[]) TextData[1])[1] * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], ColorList.GRAY[1], (int) TextData[4] + component.getRotation());
+                (new DrawMethods()).drawString(graphics, new int[]{Math.round((((int[]) TextData[1])[0] - component.getRotationFlag()[0]) * WorkEnvironmentMain.Scale), Math.round((((int[]) TextData[1])[1] - component.getRotationFlag()[1]) * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], ColorList.GRAY[1], (int) TextData[4] + component.getRotation());
             } else {
                 FontMetrics metrics = graphics.getFontMetrics(((Font) TextData[5]).deriveFont(((Font) TextData[5]).getSize() * WorkEnvironmentMain.Scale));
-                (new DrawMethods()).drawString(graphics, new int[]{Math.round((((int[]) TextData[1])[0] - metrics.stringWidth((String) TextData[2])) / 2), Math.round(((int[]) TextData[1])[1] * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], ColorList.GRAY[1], (int) TextData[4] + component.getRotation(), ((Font) TextData[5]).deriveFont(((Font) TextData[5]).getSize() * WorkEnvironmentMain.Scale));
+                (new DrawMethods()).drawString(graphics, new int[]{Math.round((((int[]) TextData[1])[0] - component.getRotationFlag()[0] - metrics.stringWidth((String) TextData[2])) / 2), Math.round((((int[]) TextData[1])[1] - component.getRotationFlag()[0]) * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], ColorList.GRAY[1], (int) TextData[4] + component.getRotation(), ((Font) TextData[5]).deriveFont(((Font) TextData[5]).getSize() * WorkEnvironmentMain.Scale));
             }
         } else {
             if (TextData.length == 5){
-                (new DrawMethods()).drawString(graphics, new int[]{Math.round(((int[]) TextData[1])[0] * WorkEnvironmentMain.Scale), Math.round(((int[]) TextData[1])[1] * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], ColorList.GRAY[1], (int) TextData[4] + component.getRotation());
+                (new DrawMethods()).drawString(graphics, new int[]{Math.round((((int[]) TextData[1])[0] - component.getRotationFlag()[0]) * WorkEnvironmentMain.Scale), Math.round((((int[]) TextData[1])[1] - component.getRotationFlag()[1]) * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], ColorList.GRAY[1], (int) TextData[4] + component.getRotation());
             } else {
-                (new DrawMethods()).drawString(graphics, new int[]{Math.round(((int[]) TextData[1])[0] * WorkEnvironmentMain.Scale), Math.round(((int[]) TextData[1])[1] * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], ColorList.GRAY[1], (int) TextData[4] + component.getRotation(), ((Font) TextData[5]).deriveFont(((Font) TextData[5]).getSize() * WorkEnvironmentMain.Scale));
+                (new DrawMethods()).drawString(graphics, new int[]{Math.round((((int[]) TextData[1])[0] - component.getRotationFlag()[0]) * WorkEnvironmentMain.Scale), Math.round((((int[]) TextData[1])[1] - component.getRotationFlag()[1]) * WorkEnvironmentMain.Scale)}, new int[]{Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (String) TextData[2], ColorList.GRAY[1], (int) TextData[4] + component.getRotation(), ((Font) TextData[5]).deriveFont(((Font) TextData[5]).getSize() * WorkEnvironmentMain.Scale));
             }
         }
     }
@@ -311,11 +311,11 @@ public class DrawComponent {
         int[] y = new int[((int[]) PolyLine[1]).length];
         Stroke strk = new BasicStroke(((BasicStroke) PolyLine[3]).getLineWidth() * WorkEnvironmentMain.Scale, ((BasicStroke) PolyLine[3]).getEndCap(), ((BasicStroke) PolyLine[3]).getLineJoin(), ((BasicStroke) PolyLine[3]).getMiterLimit(), ((BasicStroke) PolyLine[3]).getDashArray(), ((BasicStroke) PolyLine[3]).getDashPhase());
         for (int i = 0; i < x.length; i++){
-            x[i] = component.getComponentLocation()[0] + ((int[]) PolyLine[0])[i];
+            x[i] = component.getComponentLocation()[0] + ((int[]) PolyLine[0])[i] - component.getRotationFlag()[0];
             x[i] = Math.round(x[i] * WorkEnvironmentMain.Scale);
         }
         for (int i = 0; i < y.length; i++){
-            y[i] += component.getComponentLocation()[1] + ((int[]) PolyLine[1])[i];
+            y[i] = component.getComponentLocation()[1] + ((int[]) PolyLine[1])[i] - component.getRotationFlag()[1];
             y[i] = Math.round(y[i] * WorkEnvironmentMain.Scale);
         }
         (new DrawMethods()).drawPolyline(graphics, x, y, new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, ColorList.GRAY[1], strk, component.getRotation());

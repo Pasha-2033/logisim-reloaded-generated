@@ -2,7 +2,9 @@ package modules.workenvironment;
 import java.awt.Graphics;
 public class ComponentShadow extends Component{
     private int[] base = new int[]{0, 0};
+    private Component parent;
     public ComponentShadow(Component component){
+        parent = component;
         setSize(component.getSize());
         setisSircut(component.getisSircut());
         setRotation(component.getRotation());
@@ -33,9 +35,11 @@ public class ComponentShadow extends Component{
     public final void setComponentBase(int x, int y){
         base = new int[]{x, y};
     }
+    public final Component getParentComponent(){
+        return parent;
+    }
     @Override
-    public final void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void paintComponent(Graphics g) {
         new DrawComponent(this, g);
     }
 }
