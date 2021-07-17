@@ -106,19 +106,48 @@ public class ComponentListener extends MouseInputAdapter{
     }
     @Override
     public void mouseReleased(MouseEvent e) {
-        WorkEnvironmentMain.movingcomponentframe.setVisible(false);
-        boolean touched = false;
-        for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
-            component.setVisible(true);
-            Rectangle absolutecomponentrect = new Rectangle(Math.round((component.getComponentLocation()[0] + component.getbounds().x) * WorkEnvironmentMain.Scale), Math.round((component.getComponentLocation()[1] + component.getbounds().y) * WorkEnvironmentMain.Scale), Math.round(component.getbounds().width * WorkEnvironmentMain.Scale), Math.round(component.getbounds().height * WorkEnvironmentMain.Scale));
-            if (isTouchedComponent(mousePressedPoint.x, mousePressedPoint.y, absolutecomponentrect)){
-                touched = true;
-                break;
-            }
-        }
-        if (touched) {
-            if (!WorkEnvironmentMain.ShadowedComponents.isEmpty()){
-                if (SwingUtilities.isLeftMouseButton(e)){
+        if (SwingUtilities.isLeftMouseButton(e)){
+            boolean touched;
+            if (WorkEnvironmentMain.excretion.getExcretedComponents().isEmpty()){
+                int x = MouseInfo.getPointerInfo().getLocation().x - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().x;
+                int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
+                Rectangle mouseRectangle;
+                if (x - mousePressedPoint.x >= 0 && y - mousePressedPoint.y >= 0){
+                    mouseRectangle = new Rectangle(mousePressedPoint.x, mousePressedPoint.y, x - mousePressedPoint.x, y - mousePressedPoint.y);
+                } else if (x - mousePressedPoint.x >= 0){
+                    mouseRectangle = new Rectangle(mousePressedPoint.x, mousePressedPoint.y + y - mousePressedPoint.y, x - mousePressedPoint.x, -(y - mousePressedPoint.y));
+                } else if (y - mousePressedPoint.y >= 0){
+                    mouseRectangle = new Rectangle(mousePressedPoint.x + x - mousePressedPoint.x, mousePressedPoint.y, -(x - mousePressedPoint.x), y - mousePressedPoint.y);
+                } else {
+                    mouseRectangle = new Rectangle(mousePressedPoint.x + x - mousePressedPoint.x, mousePressedPoint.y + (y - mousePressedPoint.y), -(x - mousePressedPoint.x), -(y - mousePressedPoint.y));
+                }
+                touched = false;
+                //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
+                for (Component component : WorkEnvironmentMain.ProjectComponents){
+                    Rectangle absolutecomponentrect = new Rectangle(Math.round((component.getComponentLocation()[0] + component.getbounds().x) * WorkEnvironmentMain.Scale), Math.round((component.getComponentLocation()[1] + component.getbounds().y) * WorkEnvironmentMain.Scale), Math.round(component.getbounds().width * WorkEnvironmentMain.Scale), Math.round(component.getbounds().height * WorkEnvironmentMain.Scale));
+                    if (isTouchedComponent(mouseRectangle, absolutecomponentrect)){
+                        WorkEnvironmentMain.excretion.addExcretedComponents(component);
+                        WorkEnvironmentMain.ShadowedComponents.add(new ComponentShadow(component));
+                        WorkEnvironmentMain.excretion.createExcretion();
+                        touched = true;
+                    }
+                }
+                if (!touched){
+                    WorkEnvironmentMain.excretion.removeAllExcretedComponents();
+                    WorkEnvironmentMain.excretion.removeExcretion();
+                }
+            } else {
+                WorkEnvironmentMain.movingcomponentframe.setVisible(false);
+                touched = false;
+                for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
+                    component.setVisible(true);
+                    Rectangle absolutecomponentrect = new Rectangle(Math.round((component.getComponentLocation()[0] + component.getbounds().x) * WorkEnvironmentMain.Scale), Math.round((component.getComponentLocation()[1] + component.getbounds().y) * WorkEnvironmentMain.Scale), Math.round(component.getbounds().width * WorkEnvironmentMain.Scale), Math.round(component.getbounds().height * WorkEnvironmentMain.Scale));
+                    if (isTouchedComponent(mousePressedPoint.x, mousePressedPoint.y, absolutecomponentrect)){
+                        touched = true;
+                        break;
+                    }
+                }
+                if (touched && !WorkEnvironmentMain.ShadowedComponents.isEmpty()) {
                     for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
                         int x = MouseInfo.getPointerInfo().getLocation().x - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().x;
                         int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
@@ -128,38 +157,9 @@ public class ComponentListener extends MouseInputAdapter{
                         component.setVisible(true);
                     }
                 }
-            WorkEnvironmentMain.ShadowedComponents = new ArrayList<ComponentShadow>(Collections.emptyList());
-            WorkEnvironmentMain.excretion.removeAllExcretedComponents();
-            WorkEnvironmentMain.movingcomponentframe.removeAll();
-            }
-        }
-        if (SwingUtilities.isLeftMouseButton(e)){
-            int x = MouseInfo.getPointerInfo().getLocation().x - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().x;
-            int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
-            Rectangle mouseRectangle;
-            if (x - mousePressedPoint.x >= 0 && y - mousePressedPoint.y >= 0){
-                mouseRectangle = new Rectangle(mousePressedPoint.x, mousePressedPoint.y, x - mousePressedPoint.x, y - mousePressedPoint.y);
-            } else if (x - mousePressedPoint.x >= 0){
-                mouseRectangle = new Rectangle(mousePressedPoint.x, mousePressedPoint.y + y - mousePressedPoint.y, x - mousePressedPoint.x, -(y - mousePressedPoint.y));
-            } else if (y - mousePressedPoint.y >= 0){
-                mouseRectangle = new Rectangle(mousePressedPoint.x + x - mousePressedPoint.x, mousePressedPoint.y, -(x - mousePressedPoint.x), y - mousePressedPoint.y);
-            } else {
-                mouseRectangle = new Rectangle(mousePressedPoint.x + x - mousePressedPoint.x, mousePressedPoint.y + (y - mousePressedPoint.y), -(x - mousePressedPoint.x), -(y - mousePressedPoint.y));
-            }
-            touched = false;
-            //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
-            for (Component component : WorkEnvironmentMain.ProjectComponents){
-                Rectangle absolutecomponentrect = new Rectangle(Math.round((component.getComponentLocation()[0] + component.getbounds().x) * WorkEnvironmentMain.Scale), Math.round((component.getComponentLocation()[1] + component.getbounds().y) * WorkEnvironmentMain.Scale), Math.round(component.getbounds().width * WorkEnvironmentMain.Scale), Math.round(component.getbounds().height * WorkEnvironmentMain.Scale));
-                if (isTouchedComponent(mouseRectangle, absolutecomponentrect)){
-                    WorkEnvironmentMain.excretion.addExcretedComponents(component);
-                    WorkEnvironmentMain.ShadowedComponents.add(new ComponentShadow(component));
-                    WorkEnvironmentMain.excretion.createExcretion();
-                    touched = true;
-                }
-            }
-            if (!touched){
-                WorkEnvironmentMain.excretion.removeAllExcretedComponents();
-                WorkEnvironmentMain.excretion.removeExcretion();
+                //WorkEnvironmentMain.ShadowedComponents = new ArrayList<ComponentShadow>(Collections.emptyList());
+                //WorkEnvironmentMain.excretion.removeAllExcretedComponents();
+                //WorkEnvironmentMain.movingcomponentframe.removeAll();
             }
             WorkEnvironmentMain.excretion.setChoosingRectangle(null);
         }
