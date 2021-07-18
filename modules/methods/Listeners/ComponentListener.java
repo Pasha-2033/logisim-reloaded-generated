@@ -157,9 +157,12 @@ public class ComponentListener extends MouseInputAdapter{
                         component.setVisible(true);
                     }
                 }
-                //WorkEnvironmentMain.ShadowedComponents = new ArrayList<ComponentShadow>(Collections.emptyList());
-                //WorkEnvironmentMain.excretion.removeAllExcretedComponents();
-                //WorkEnvironmentMain.movingcomponentframe.removeAll();
+                WorkEnvironmentMain.ShadowedComponents = new ArrayList<ComponentShadow>(Collections.emptyList());
+                WorkEnvironmentMain.movingcomponentframe.removeAll();
+                for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
+                    WorkEnvironmentMain.ShadowedComponents.add(new ComponentShadow(component));
+                    WorkEnvironmentMain.excretion.createExcretion();
+                }
             }
             WorkEnvironmentMain.excretion.setChoosingRectangle(null);
         }
