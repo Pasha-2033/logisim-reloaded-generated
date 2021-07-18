@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 //import java.util.concurrent.TimeUnit;
@@ -17,13 +18,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
 import modules.gui.Buttons;
 import modules.gui.Dots;
 import modules.gui.Excretion;
+import modules.gui.MainAppWindow;
 import modules.languages.Language;
 import modules.methods.ExcitationParser;
 import modules.methods.JTreeNodeRenderer;
@@ -38,14 +40,14 @@ import modules.standartcomponent.wires.resistor;
 public class WorkEnvironmentMain {
     public static boolean isStepavaluable = true;
     public String ProjectName;
-    public final String DefaultProjectName = Language.trnslt("New Project");
+    public final String DefaultProjectName = Language.trnslt("NewProject");
     public static ExcitationParser excitationparser = new ExcitationParser();
     public static float Scale = 1.0F;
     public static boolean DotsThere = true;
-    public static List<MainComponentcCass> ComponentLibraries = new ArrayList<>(Collections.emptyList());
+    public static final List<MainComponentcCass> ComponentDefaultLibraries = Arrays.asList(new mainwires());
+    public static List<MainComponentcCass> ComponentImportedLibraries = new ArrayList<>(Collections.emptyList());
     public static List<Component> AvaluableComponents = new ArrayList<>(Collections.emptyList());
     public static List<Component> ProjectComponents = new ArrayList<>(Collections.emptyList());
-    public static List<Component> ProjectShemes = new ArrayList<>(Collections.emptyList());
     public static List<ComponentShadow> ShadowedComponents = new ArrayList<>(Collections.emptyList());
     public static Component currentSircut = new Component();
     public JFrame mainframe;
@@ -68,12 +70,11 @@ public class WorkEnvironmentMain {
     public static JScrollPane componentframescrolpane = new JScrollPane(incomponentframe);
     public JSplitPane workplace = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentmenu, outcomponentframe);
     public JLabel Scalelabel = new JLabel();
-    public WorkEnvironmentMain(JFrame frame){
+    public WorkEnvironmentMain() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
         //подготовка панелей
         initgui();
-        Scale = 1.0F;
         //подготовка экрана
-        mainframe = frame;
+        mainframe = new MainAppWindow(0, 0, 500, 500);
         mainframe.add(mainworkplace);
         mainframe.setMinimumSize(new Dimension(100, 100));
         //закачка компонентов - для тестов =================================================================
@@ -89,16 +90,16 @@ public class WorkEnvironmentMain {
         incomponentframe.add(ProjectComponents.get(2), incomponentframe.getComponentCount() - 2);
         //конец тестовой закачки ===========================================================================
         mainframe.pack();
-        //загржаем базовые компоненты
-        initbasiccomponents();
+        //обновляем компоненты для работы с ними
+        updateAvaluableComponents();
     }
     public TreeModel buildcomponentroottree(){
         //корневая панель
         DefaultMutableTreeNode root;
         if (ProjectName != null){
-            root = new DefaultMutableTreeNode(ProjectName);
+            root = new DefaultMutableTreeNode(Language.trnslt(ProjectName));
         } else {
-            root = new DefaultMutableTreeNode(DefaultProjectName);
+            root = new DefaultMutableTreeNode(Language.trnslt(DefaultProjectName));
         }
         //панель первого порядка
         DefaultMutableTreeNode schemes = new DefaultMutableTreeNode(Language.trnslt("Schemes"));
@@ -109,36 +110,44 @@ public class WorkEnvironmentMain {
             schemes.add(new DefaultMutableTreeNode(component));
         }
         //панель второго порядка
-        DefaultMutableTreeNode basic = new DefaultMutableTreeNode(Language.trnslt("Basic Component"));
+        DefaultMutableTreeNode basic = new DefaultMutableTreeNode(Language.trnslt("BasicComponent"));
         DefaultMutableTreeNode imported = new DefaultMutableTreeNode(Language.trnslt("Modules"));
         components.add(basic);
         components.add(imported);
-        //панель третьего порядка
-        DefaultMutableTreeNode wires = new DefaultMutableTreeNode(Language.trnslt(new mainwires().libraryname));
-        for (Component component : new mainwires().componentlist){
-            wires.add(new DefaultMutableTreeNode(component));
-        }
-        basic.add(wires);
-        //продолжить
-
-
-        for (MainComponentcCass mainclass : ComponentLibraries){
-            DefaultMutableTreeNode tmpnode = new DefaultMutableTreeNode(mainclass.libraryname);
-            imported.add(tmpnode);
+        //панели третьего и четвертого порядка
+        for (MainComponentcCass mainclass : ComponentDefaultLibraries){
+            DefaultMutableTreeNode librarynode = new DefaultMutableTreeNode(Language.trnslt(mainclass.libraryname));
             for (Component component : mainclass.componentlist){
-                JPanel tmppanel = new JPanel();
-                tmppanel.add(new JLabel(component.getComponentIcon()));
-                tmppanel.add(new JLabel(component.getComponentName()));
-                tmpnode.add((MutableTreeNode) tmppanel);
+                librarynode.add(new DefaultMutableTreeNode(component));
             }
+            basic.add(librarynode);
         }
-        //добавляем базовые папочки - упростим настройки - нельзя выгрузить базовые компоненты программы
+        for (MainComponentcCass mainclass : ComponentImportedLibraries){
+            DefaultMutableTreeNode librarynode = new DefaultMutableTreeNode(Language.trnslt(mainclass.libraryname));
+            for (Component component : mainclass.componentlist){
+                librarynode.add(new DefaultMutableTreeNode(component));
+            }
+            imported.add(librarynode);
+        }
         return new DefaultTreeModel(root);
     }
-    public void initbasiccomponents(){
-        //закачиваем сюда список компонентов
+    public final void updateComponentTree(){
+        componentroottree = new JTree(buildcomponentroottree());
     }
-    public void initgui(){
+    public final void updateAvaluableComponents(){
+        AvaluableComponents = new ArrayList<>(Collections.emptyList());
+        for (MainComponentcCass mainclass : ComponentDefaultLibraries){
+            for (Component component : mainclass.componentlist){
+                AvaluableComponents.add(component);
+            }
+        }
+        for (MainComponentcCass mainclass : ComponentImportedLibraries){
+            for (Component component : mainclass.componentlist){
+                AvaluableComponents.add(component);
+            }
+        }
+    }
+    public final void initgui(){
         componentmenu.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         componentmenu.setLayout(new BoxLayout(componentmenu, BoxLayout.Y_AXIS));
         componentmenu.setPreferredSize(new Dimension(100,100));
@@ -158,13 +167,11 @@ public class WorkEnvironmentMain {
         incomponentframe.addMouseMotionListener(new ComponentListener());
         incomponentframe.addMouseWheelListener(new ComponentListener());
         outcomponentframe.add(componentframescrolpane);
-        componentframescrolpane.addComponentListener(
-            new ComponentAdapter() {
-                public void componentResized(ComponentEvent e) {
-                    updateWorkplaceDimensionAndRerenderAll();
-                }
+        componentframescrolpane.addComponentListener(new ComponentAdapter() {
+            public final void componentResized(ComponentEvent e) {
+                updateWorkplaceDimensionAndRerenderAll();
             }
-        );
+        });
         componentdata.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         componentdata.setOpaque(true);
         componentdata.setPreferredSize(new Dimension(100, 100));

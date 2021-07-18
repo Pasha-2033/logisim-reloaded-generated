@@ -1,8 +1,6 @@
 package modules.standartcomponent.wires;
 import java.awt.BasicStroke;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 import javax.swing.ImageIcon;
 import modules.workenvironment.ColorList;
 import modules.workenvironment.Component;
@@ -23,20 +21,10 @@ public class ground extends Component {
     }
     @Override
     public void startcode(){
-        //эту ересь с tmp надо заменить
-        List<List<Object>> tmp = new ArrayList<>(Collections.emptyList());
-        List<Object> tmp2 = new ArrayList<Object>(Collections.emptyList());
-        tmp2.add(0);
-        tmp.add(tmp2);
-        getPorts().get(0).setdata(tmp);
+        getPorts().get(0).setdata(Arrays.asList(Arrays.asList(0)));
     }
     @Override
     public void step(){
-        //эту ересь с tmp надо заменить
-        List<List<Object>> tmp = new ArrayList<>(Collections.emptyList());
-        List<Object> tmp2 = new ArrayList<Object>(Collections.emptyList());
-        tmp2.add(0);
-        tmp.add(tmp2);
-        getPorts().get(0).setdata(tmp);
+        getPorts().get(0).setdata(Arrays.asList(Arrays.asList(0)));
     }
 }

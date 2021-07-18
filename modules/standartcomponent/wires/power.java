@@ -1,9 +1,7 @@
 package modules.standartcomponent.wires;
 import javax.swing.ImageIcon;
 import java.awt.BasicStroke;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 import modules.workenvironment.ColorList;
 import modules.workenvironment.Component;
 import modules.workenvironment.Port;
@@ -25,20 +23,10 @@ public class power extends Component {
     }
     @Override
     public void startcode(){
-        //эту ересь с tmp надо заменить
-        List<List<Object>> tmp = new ArrayList<>(Collections.emptyList());
-        List<Object> tmp2 = new ArrayList<Object>(Collections.emptyList());
-        tmp2.add(1);
-        tmp.add(tmp2);
-        getPorts().get(0).setdata(tmp);
+        getPorts().get(0).setdata(Arrays.asList(Arrays.asList(1)));
     }
     @Override
     public void step(){
-        //эту ересь с tmp надо заменить
-        List<List<Object>> tmp = new ArrayList<>(Collections.emptyList());
-        List<Object> tmp2 = new ArrayList<Object>(Collections.emptyList());
-        tmp2.add(1);
-        tmp.add(tmp2);
-        getPorts().get(0).setdata(tmp);
+        getPorts().get(0).setdata(Arrays.asList(Arrays.asList(1)));
     }
 }

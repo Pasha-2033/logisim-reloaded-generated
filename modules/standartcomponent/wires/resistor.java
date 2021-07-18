@@ -1,7 +1,8 @@
 package modules.standartcomponent.wires;
 import java.awt.BasicStroke;
-import javax.swing.ImageIcon;
 import java.awt.Font;
+import javax.swing.ImageIcon;
+import java.util.Arrays;
 import modules.workenvironment.ColorList;
 import modules.workenvironment.Component;
 import modules.workenvironment.Port;
@@ -13,21 +14,22 @@ public class resistor extends Component{
     private void setResistorData(){
         //дождаться переделки в drawcomponent для polyline и фиксануть все
         setRotationFlag(30, 32);
-        addPort(new Port(0+30, 0+32, true, false, this));
-        addTextData("center", 0+30, -32+32, "1", ColorList.GREEN[0], 0, new Font("TimesRoman", Font.PLAIN, 8));
-        addLineData(-7+30, -30+32, 7+30, -30+32,  ColorList.GREEN[0], new BasicStroke(2.0F, 0, 0));
-        addLineData(0+30, -27+32, 0+30, -30+32,  ColorList.GREEN[0], new BasicStroke(2.0F, 1, 0));
-        addLineData(0+30, -5+32, 0+30, 0+32, ColorList.BLACK[0], new BasicStroke(2.0F, 1, 0));
-        addPolyLine(new int[]{0+30, -5+30, 5+30, -5+30, 5+30, -5+30, 0+30}, new int[]{-5+32, -8+32, -12+32, -16+32, -20+32, -24+32, -27+32}, ColorList.BLACK[0], new BasicStroke(2, 0, 0));
+        addPort(new Port(30, 32, false, false, this));
+        addTextData("center", 30, 0, "1", ColorList.GREEN[0], 0, new Font("TimesRoman", Font.PLAIN, 8));
+        addLineData(23, 2, 37, 2,  ColorList.GREEN[0], new BasicStroke(2.0F, 0, 0));
+        addLineData(30, 5, 30, 2,  ColorList.GREEN[0], new BasicStroke(2.0F, 1, 0));
+        addLineData(30, 27, 30, 32, ColorList.GRAY[1], new BasicStroke(2.0F, 1, 0));
+        addPolyLine(new int[]{30, 25, 35, 25, 35, 25, 30}, new int[]{27, 24, 20, 16, 12, 8, 5}, ColorList.BLACK[0], new BasicStroke(2, 0, 0));
         start();
     }
 
     //вот эти два метода доделывать
     @Override
-    public void startcode(){
-    }
+    public void startcode(){}
     @Override
     public void step(){
-
+        getPorts().get(0).Data.equals(Arrays.asList(Arrays.asList("X")));
+        //создать атрибуты
+        getPorts().get(0).setdata(Arrays.asList(Arrays.asList(1)));
     }
 }

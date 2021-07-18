@@ -7,6 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import modules.languages.Language;
 import modules.methods.ComponentAttributes;
+import modules.methods.Daemons.ComponentStream;
+
 import java.awt.Rectangle;
 import java.awt.Graphics;
 import java.awt.Dimension;
@@ -620,7 +622,7 @@ public class Component extends JPanel {
         }
     }
     public void step(){}
-    public void stream(){}
+    public ComponentStream stream = new ComponentStream();
     public void generatetick(){}
     public final void sircutcheck(){
         if (intercomponentsandsircuts.size() > 0){
