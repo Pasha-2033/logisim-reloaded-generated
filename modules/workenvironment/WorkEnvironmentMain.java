@@ -33,6 +33,7 @@ import modules.methods.LayoutManagers.ComponentLayoutManager;
 import modules.methods.LayoutManagers.FrameScaleLayout;
 import modules.methods.LayoutManagers.ScaleFrameButtonsLayout;
 import modules.methods.Listeners.ComponentListener;
+import modules.methods.Listeners.ComponentTreeListener;
 import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.mainwires;
 import modules.standartcomponent.wires.power;
@@ -106,6 +107,10 @@ public class WorkEnvironmentMain {
         DefaultMutableTreeNode components = new DefaultMutableTreeNode(Language.trnslt("Components"));
         root.add(schemes);
         root.add(components);
+        if (ProjectComponents.isEmpty()){
+            //доделать
+            schemes.add(new DefaultMutableTreeNode(new Component()));
+        }
         for (Component component : ProjectComponents){
             schemes.add(new DefaultMutableTreeNode(component));
         }
@@ -133,6 +138,7 @@ public class WorkEnvironmentMain {
     }
     public final void updateComponentTree(){
         componentroottree = new JTree(buildcomponentroottree());
+        componentroottree.addMouseListener(new ComponentTreeListener(componentroottree));
     }
     public final void updateAvaluableComponents(){
         AvaluableComponents = new ArrayList<>(Collections.emptyList());
@@ -148,6 +154,7 @@ public class WorkEnvironmentMain {
         }
     }
     public final void initgui(){
+        componentroottree.addMouseListener(new ComponentTreeListener(componentroottree));
         componentmenu.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         componentmenu.setLayout(new BoxLayout(componentmenu, BoxLayout.Y_AXIS));
         componentmenu.setPreferredSize(new Dimension(100,100));
@@ -227,7 +234,11 @@ public class WorkEnvironmentMain {
         updateJLableScale();
     }
     public void addComponent(Component c){
-        incomponentframe.add(c, incomponentframe.getComponentCount() - 2);
+        currentSircut.add(c);
+        incomponentframe.add(currentSircut.getComponent(currentSircut.getintercomponentsandsircuts().indexOf(c)), incomponentframe.getComponentCount() - 2);
+    }
+    public void refreshWorkplace(){
+        //дописать
     }
 }
 /*

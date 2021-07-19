@@ -19,6 +19,7 @@ import java.awt.Shape;
 import java.awt.FontMetrics;
 import java.awt.geom.AffineTransform;
 public class Component extends JPanel {
+    private final Icon DEFAULT_ICON =  new ImageIcon("resources/componenticon/noiconforcomponent.png");
     private Dimension Size = new Dimension(500, 500);
     private boolean isSircut = false;
     private int Rotation = 0;
@@ -38,13 +39,13 @@ public class Component extends JPanel {
     private String ComponentName;
     private Rectangle bounds = null;
     public Component(){
-        setComponent("undefind", new ImageIcon("resources/menuicon/undoicon.png"), false);
+        setComponent("undefind", DEFAULT_ICON, false);
     }
     public Component(String ComponentName){
-        setComponent(ComponentName, new ImageIcon("resources/menuicon/undoicon.png"), false);
+        setComponent(ComponentName, DEFAULT_ICON, false);
     }
     public Component(String ComponentName, boolean isSircut){
-        setComponent(ComponentName, new ImageIcon("resources/menuicon/undoicon.png"), isSircut);
+        setComponent(ComponentName, DEFAULT_ICON, isSircut);
     }
     public Component(String ComponentName, Icon ComponentIcon){
         setComponent(ComponentName, ComponentIcon, false);
@@ -54,7 +55,11 @@ public class Component extends JPanel {
     }
     private final void setComponent(String ComponentName, Icon ComponentIcon, boolean isSircut){
         this.ComponentName = Language.trnslt(ComponentName);
-        this.ComponentIcon = ComponentIcon;
+        if (ComponentIcon.getIconWidth() > 0 && ComponentIcon.getIconHeight() > 0){
+            this.ComponentIcon = ComponentIcon;
+        } else {
+            this.ComponentIcon = DEFAULT_ICON;
+        }
         this.isSircut = isSircut;
         setOpaque(false);
     }

@@ -22,7 +22,6 @@ public class resistor extends Component{
         addPolyLine(new int[]{30, 25, 35, 25, 35, 25, 30}, new int[]{27, 24, 20, 16, 12, 8, 5}, ColorList.BLACK[0], new BasicStroke(2, 0, 0));
         start();
     }
-
     //вот эти два метода доделывать
     @Override
     public void startcode(){}
