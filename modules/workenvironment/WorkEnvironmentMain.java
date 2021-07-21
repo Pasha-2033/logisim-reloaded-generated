@@ -1,5 +1,6 @@
 package modules.workenvironment;
 import java.awt.event.ComponentEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.awt.event.ComponentAdapter;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -78,20 +79,23 @@ public class WorkEnvironmentMain {
         //подготовка панелей
         initgui();
         //подготовка экрана
-        mainframe = new MainAppWindow(0, 0, 500, 500);
+        mainframe = new MainAppWindow(0, 0, 600, 600);
         mainframe.add(mainworkplace);
         mainframe.setMinimumSize(new Dimension(100, 100));
         //закачка компонентов - для тестов =================================================================
-        ProjectComponents.add(new resistor());
-        ProjectComponents.get(0).setComponentLocation(100, 100); //- проверка относительных координат
-        ProjectComponents.get(0).setRotation(0); //- проверка поворота
-        ProjectComponents.add(new ground());
-        ProjectComponents.get(1).setComponentLocation(50, 50); //- проверка относительных координат
-        ProjectComponents.add(new power());
-        ProjectComponents.get(2).setComponentLocation(200, 200); //- проверка относительных координат
-        incomponentframe.add(ProjectComponents.get(0), incomponentframe.getComponentCount() - 4);
-        incomponentframe.add(ProjectComponents.get(1), incomponentframe.getComponentCount() - 4);
-        incomponentframe.add(ProjectComponents.get(2), incomponentframe.getComponentCount() - 4);
+        currentSircut.addintercomponentsandsircuts(new resistor());
+        currentSircut.getintercomponentsandsircuts().get(0).setComponentLocation(100, 100); //- проверка относительных координат
+        //currentSircut.getintercomponentsandsircuts().get(0).setRotation(0); //- проверка поворота
+        currentSircut.addintercomponentsandsircuts(new ground());
+        currentSircut.getintercomponentsandsircuts().get(1).setComponentLocation(50, 50); //- проверка относительных координат
+        currentSircut.addintercomponentsandsircuts(new power());
+        currentSircut.getintercomponentsandsircuts().get(2).setComponentLocation(200, 200); //- проверка относительных координат
+        currentSircut.addintercomponentsandsircuts(new resistor());
+        currentSircut.getintercomponentsandsircuts().get(3).setComponentLocation(300, 300); //- проверка относительных координат
+        incomponentframe.add(currentSircut.getintercomponentsandsircuts().get(0), 1);
+        incomponentframe.add(currentSircut.getintercomponentsandsircuts().get(1), 1);
+        incomponentframe.add(currentSircut.getintercomponentsandsircuts().get(2), 1);
+        incomponentframe.add(currentSircut.getintercomponentsandsircuts().get(3), 1);
         //конец тестовой закачки ===========================================================================
         mainframe.pack();
         //обновляем компоненты для работы с ними
@@ -160,8 +164,6 @@ public class WorkEnvironmentMain {
         componentroottree.addMouseListener(new ComponentTreeListener(componentroottree));
         componentmenu.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         componentmenu.setLayout(new BoxLayout(componentmenu, BoxLayout.Y_AXIS));
-        componentmenu.setPreferredSize(new Dimension(100,100));
-        componentmenu.setMinimumSize(new Dimension(100,100));
         componentmenu.add(outtoolframe);
         componentmenu.add(componenttree);
         componentmenu.add(componentdata);
@@ -209,7 +211,8 @@ public class WorkEnvironmentMain {
         inframesize.add(Scalelabel, BorderLayout.WEST);
         inframesize.add(scalebuttonspanel, BorderLayout.EAST);
         outframesize.add(inframesize);
-        workplace.setPreferredSize(new Dimension(500, 500));
+        workplace.setPreferredSize(new Dimension(600, 600));
+        workplace.setDividerLocation(200);
         mainworkplace.add(workplace);
         componentroottree.setCellRenderer(new JTreeNodeRenderer());
         updateJLableScale();
@@ -238,12 +241,40 @@ public class WorkEnvironmentMain {
         excretion.repaint();
         updateJLableScale();
     }
-    public void addComponent(Component c){
-        currentSircut.add(c);
-        incomponentframe.add(currentSircut.getComponent(currentSircut.getintercomponentsandsircuts().indexOf(c)), incomponentframe.getComponentCount() - 2);
+    public void addComponent(Component component, int x, int y){
+        try {
+            currentSircut.addintercomponentsandsircuts(component.getClass().getDeclaredConstructor().newInstance());
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+            e.printStackTrace();
+        }
+        currentSircut.getintercomponentsandsircuts().get(currentSircut.getintercomponentsandsircuts().size() - 1).setComponentLocation(x, y);
+        incomponentframe.add(currentSircut.getintercomponentsandsircuts().get(currentSircut.getintercomponentsandsircuts().size() - 1), 1);
+    }
+    public void removeComponent(Component component){
+        currentSircut.removeintercomponentsandsircuts(component);
+        try {
+            incomponentframe.remove(component);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void removeComponent(int index){
+        currentSircut.removeintercomponentsandsircuts(index);
+        try {
+            incomponentframe.remove(index);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void removeAllComponent(){
+        currentSircut.removeAllintercomponentsandsircuts();
+        incomponentframe.removeAll();
     }
     public void refreshWorkplace(){
-        //дописать
+        incomponentframe.removeAll();
+        for (Component component : currentSircut.getintercomponentsandsircuts()){
+            incomponentframe.add(component, 1);
+        }
     }
 }
 /*

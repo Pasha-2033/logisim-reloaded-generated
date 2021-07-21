@@ -20,21 +20,17 @@ public class ComponentListener extends MouseInputAdapter{
         int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
         WorkEnvironmentMain.movingcomponentframe.setVisible(false);
         if (SwingUtilities.isLeftMouseButton(e)){
-            ////////////////
             if (WorkEnvironmentMain.newone.getComponentCount() != 0){
-                WorkEnvironmentMain.newComponent.setComponentLocation(Math.round(x / WorkEnvironmentMain.Scale), Math.round(y / WorkEnvironmentMain.Scale));
-                //WorkEnvironmentMain.currentSircut.add(WorkEnvironmentMain.newComponent);
-                WorkEnvironmentMain.incomponentframe.add(WorkEnvironmentMain.newComponent);
+                Main.workenvironment.addComponent(WorkEnvironmentMain.newComponent, Math.round(x / WorkEnvironmentMain.Scale), Math.round(y / WorkEnvironmentMain.Scale));
+                Main.workenvironment.rerenderAllComponents();
                 WorkEnvironmentMain.newone.removeAll();
                 WorkEnvironmentMain.incomponentframe.revalidate();
             }
-            //////////
             boolean touched = false;
             if (!WorkEnvironmentMain.excretion.getExcretedComponents().isEmpty()){
                 WorkEnvironmentMain.excretion.removeAllExcretedComponents();
             }
-            //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
-            for (Component component : WorkEnvironmentMain.ProjectComponents){
+            for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
                 Rectangle absolutecomponentrect = new Rectangle(Math.round((component.getComponentLocation()[0] + component.getbounds().x) * WorkEnvironmentMain.Scale), Math.round((component.getComponentLocation()[1] + component.getbounds().y) * WorkEnvironmentMain.Scale), Math.round(component.getbounds().width * WorkEnvironmentMain.Scale), Math.round(component.getbounds().height * WorkEnvironmentMain.Scale));
                 if (isTouchedComponent(x, y, absolutecomponentrect)){
                     WorkEnvironmentMain.excretion.addExcretedComponents(component);
@@ -58,23 +54,19 @@ public class ComponentListener extends MouseInputAdapter{
         int x = MouseInfo.getPointerInfo().getLocation().x - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().x;
         int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
         mousePressedPoint = new Point(x, y);
-        //////
         if (WorkEnvironmentMain.newone.getComponentCount() != 0){
-            WorkEnvironmentMain.newComponent.setComponentLocation(Math.round(x / WorkEnvironmentMain.Scale), Math.round(y / WorkEnvironmentMain.Scale));
-            //WorkEnvironmentMain.currentSircut.add(WorkEnvironmentMain.newComponent);
-            WorkEnvironmentMain.incomponentframe.add(WorkEnvironmentMain.newComponent);
+            Main.workenvironment.addComponent(WorkEnvironmentMain.newComponent, Math.round(x / WorkEnvironmentMain.Scale), Math.round(y / WorkEnvironmentMain.Scale));
+            Main.workenvironment.rerenderAllComponents();
             WorkEnvironmentMain.newone.removeAll();
             WorkEnvironmentMain.incomponentframe.revalidate();
         }
-        //////////////////////////////
     }
     @Override
     public void mouseDragged(MouseEvent e) {
         if (SwingUtilities.isLeftMouseButton(e)){
             WorkEnvironmentMain.movingcomponentframe.setVisible(true);
             boolean touched = false;
-            //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
-            for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
+            for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
                 Rectangle absolutecomponentrect = new Rectangle(Math.round((component.getComponentLocation()[0] + component.getbounds().x) * WorkEnvironmentMain.Scale), Math.round((component.getComponentLocation()[1] + component.getbounds().y) * WorkEnvironmentMain.Scale), Math.round(component.getbounds().width * WorkEnvironmentMain.Scale), Math.round(component.getbounds().height * WorkEnvironmentMain.Scale));
                 if (isTouchedComponent(mousePressedPoint.x, mousePressedPoint.y, absolutecomponentrect)){
                     touched = true;
@@ -146,8 +138,7 @@ public class ComponentListener extends MouseInputAdapter{
                     mouseRectangle = new Rectangle(mousePressedPoint.x + x - mousePressedPoint.x, mousePressedPoint.y + (y - mousePressedPoint.y), -(x - mousePressedPoint.x), -(y - mousePressedPoint.y));
                 }
                 touched = false;
-                //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
-                for (Component component : WorkEnvironmentMain.ProjectComponents){
+                for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
                     Rectangle absolutecomponentrect = new Rectangle(Math.round((component.getComponentLocation()[0] + component.getbounds().x) * WorkEnvironmentMain.Scale), Math.round((component.getComponentLocation()[1] + component.getbounds().y) * WorkEnvironmentMain.Scale), Math.round(component.getbounds().width * WorkEnvironmentMain.Scale), Math.round(component.getbounds().height * WorkEnvironmentMain.Scale));
                     if (isTouchedComponent(mouseRectangle, absolutecomponentrect)){
                         WorkEnvironmentMain.excretion.addExcretedComponents(component);
@@ -161,7 +152,6 @@ public class ComponentListener extends MouseInputAdapter{
                     WorkEnvironmentMain.excretion.removeExcretion();
                 }
             } else {
-                //WorkEnvironmentMain.movingcomponentframe.setVisible(false);
                 touched = false;
                 for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
                     component.setVisible(true);
@@ -226,9 +216,7 @@ public class ComponentListener extends MouseInputAdapter{
         return mouseRectangle.intersects(componentRectangle);
     }
     public boolean isTouchedComponent(int dotx, int doty){
-        System.out.println(dotx + ":" + doty);
-        //for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
-        for (Component component : WorkEnvironmentMain.ProjectComponents){
+        for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
             if (isTouchedComponent(Math.round(dotx * WorkEnvironmentMain.Scale), Math.round(doty * WorkEnvironmentMain.Scale), new Rectangle(Math.round((component.getComponentLocation()[0] + component.getbounds().x) * WorkEnvironmentMain.Scale), Math.round((component.getComponentLocation()[1] + component.getbounds().y) * WorkEnvironmentMain.Scale), Math.round(component.getbounds().width * WorkEnvironmentMain.Scale), Math.round(component.getbounds().height * WorkEnvironmentMain.Scale)))){
                 return true;
             }
@@ -236,6 +224,3 @@ public class ComponentListener extends MouseInputAdapter{
         return false;
     }
 }
-/*
-закоментированы for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){, потому что считываться должно с него, ProjectComponents - набор схем вообще, а не схема, которая просматривается на данный момент
-*/
