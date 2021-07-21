@@ -37,7 +37,7 @@ public class Component extends JPanel {
     private List<ComponentAttributes> Attributes = new ArrayList<ComponentAttributes>(Collections.emptyList()); //доделать класс и методы
     private Icon ComponentIcon;
     private String ComponentName;
-    private Rectangle bounds = null;
+    private Rectangle bounds = new Rectangle(0, 0, 0, 0);
     public Component(){
         setComponent("undefind", DEFAULT_ICON, false);
     }

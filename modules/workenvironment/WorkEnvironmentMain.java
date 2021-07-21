@@ -51,6 +51,7 @@ public class WorkEnvironmentMain {
     public static List<Component> ProjectComponents = new ArrayList<>(Collections.emptyList());
     public static List<ComponentShadow> ShadowedComponents = new ArrayList<>(Collections.emptyList());
     public static Component currentSircut = new Component();
+    public static Component newComponent = new Component();
     public JFrame mainframe;
     public JPanel mainworkplace = new JPanel(new BorderLayout());
     public JPanel inframesize = new JPanel(new BorderLayout());
@@ -63,6 +64,8 @@ public class WorkEnvironmentMain {
     public JPanel componentmenu = new JPanel(new BorderLayout());
     public static JPanel incomponentframe = new JPanel(new ComponentLayoutManager());
     public static JPanel movingcomponentframe = new JPanel(new ComponentLayoutManager());
+    public static JPanel newone = new JPanel(new ComponentLayoutManager());
+    public static ComponentShadow newComponentShadow = new ComponentShadow(newComponent);
     public JPanel outcomponentframe = new JPanel(new BorderLayout());
     public static Dots dots = new Dots();
     public static Excretion excretion = new Excretion();
@@ -86,9 +89,9 @@ public class WorkEnvironmentMain {
         ProjectComponents.get(1).setComponentLocation(50, 50); //- проверка относительных координат
         ProjectComponents.add(new power());
         ProjectComponents.get(2).setComponentLocation(200, 200); //- проверка относительных координат
-        incomponentframe.add(ProjectComponents.get(0), incomponentframe.getComponentCount() - 2);
-        incomponentframe.add(ProjectComponents.get(1), incomponentframe.getComponentCount() - 2);
-        incomponentframe.add(ProjectComponents.get(2), incomponentframe.getComponentCount() - 2);
+        incomponentframe.add(ProjectComponents.get(0), incomponentframe.getComponentCount() - 4);
+        incomponentframe.add(ProjectComponents.get(1), incomponentframe.getComponentCount() - 4);
+        incomponentframe.add(ProjectComponents.get(2), incomponentframe.getComponentCount() - 4);
         //конец тестовой закачки ===========================================================================
         mainframe.pack();
         //обновляем компоненты для работы с ними
@@ -169,11 +172,13 @@ public class WorkEnvironmentMain {
         incomponentframe.setOpaque(true);
         incomponentframe.add(excretion);
         incomponentframe.add(movingcomponentframe);
+        incomponentframe.add(newone);
         incomponentframe.add(dots);
         incomponentframe.addMouseListener(new ComponentListener());
         incomponentframe.addMouseMotionListener(new ComponentListener());
         incomponentframe.addMouseWheelListener(new ComponentListener());
         outcomponentframe.add(componentframescrolpane);
+        newone.setOpaque(false);
         componentframescrolpane.addComponentListener(new ComponentAdapter() {
             public final void componentResized(ComponentEvent e) {
                 updateWorkplaceDimensionAndRerenderAll();
