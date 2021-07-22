@@ -64,9 +64,17 @@ public class ComponentListener extends MouseInputAdapter{
     @Override
     public void mouseDragged(MouseEvent e) {
         if (SwingUtilities.isLeftMouseButton(e)){
+            int x = MouseInfo.getPointerInfo().getLocation().x - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().x;
+            int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
+            if (WorkEnvironmentMain.newone.getComponentCount() != 0){
+                Main.workenvironment.addComponent(WorkEnvironmentMain.newComponent, Math.round(x / WorkEnvironmentMain.Scale), Math.round(y / WorkEnvironmentMain.Scale));
+                Main.workenvironment.rerenderAllComponents();
+                WorkEnvironmentMain.newone.removeAll();
+                WorkEnvironmentMain.incomponentframe.revalidate();
+            }
             WorkEnvironmentMain.movingcomponentframe.setVisible(true);
             boolean touched = false;
-            for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
+            for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
                 Rectangle absolutecomponentrect = new Rectangle(Math.round((component.getComponentLocation()[0] + component.getbounds().x) * WorkEnvironmentMain.Scale), Math.round((component.getComponentLocation()[1] + component.getbounds().y) * WorkEnvironmentMain.Scale), Math.round(component.getbounds().width * WorkEnvironmentMain.Scale), Math.round(component.getbounds().height * WorkEnvironmentMain.Scale));
                 if (isTouchedComponent(mousePressedPoint.x, mousePressedPoint.y, absolutecomponentrect)){
                     touched = true;
@@ -85,16 +93,12 @@ public class ComponentListener extends MouseInputAdapter{
                     }
                 }
                 for (ComponentShadow component : WorkEnvironmentMain.ShadowedComponents){
-                    int x = MouseInfo.getPointerInfo().getLocation().x - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().x;
-                    int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
                     int dx = Math.round((x - mousePressedPoint.x) / WorkEnvironmentMain.Scale);
                     int dy = Math.round((y - mousePressedPoint.y) / WorkEnvironmentMain.Scale);
                     component.setComponentLocation(component.getComponentBase()[0] + dx, component.getComponentBase()[1] + dy);
                     component.repaint();
                 }
             } else {
-                int x = MouseInfo.getPointerInfo().getLocation().x - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().x;
-                int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
                 WorkEnvironmentMain.excretion.setChoosingRectangle(new Rectangle(mousePressedPoint.x, mousePressedPoint.y, x - mousePressedPoint.x, y - mousePressedPoint.y));
                 WorkEnvironmentMain.excretion.createExcretion();
                 WorkEnvironmentMain.excretion.removeAllExcretedComponents();
