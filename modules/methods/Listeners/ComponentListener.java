@@ -44,9 +44,13 @@ public class ComponentListener extends MouseInputAdapter{
                 WorkEnvironmentMain.excretion.removeExcretion();
             }
         } else if (SwingUtilities.isRightMouseButton(e)){
-
+            for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
+                component.setVisible(true);
+            }
         } else {
-            //вряд ли понадобится
+            for (Component component : WorkEnvironmentMain.excretion.getExcretedComponents()){
+                component.setVisible(true);
+            }
         }
     }
     @Override
@@ -152,6 +156,7 @@ public class ComponentListener extends MouseInputAdapter{
                     }
                 }
                 if (!touched){
+                    WorkEnvironmentMain.ShadowedComponents = new ArrayList<ComponentShadow>(Collections.emptyList());
                     WorkEnvironmentMain.excretion.removeAllExcretedComponents();
                     WorkEnvironmentMain.excretion.removeExcretion();
                 }
