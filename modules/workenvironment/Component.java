@@ -22,6 +22,7 @@ public class Component extends JPanel {
     private final Icon DEFAULT_ICON =  new ImageIcon("resources/componenticon/noiconforcomponent.png");
     private Dimension Size = new Dimension(500, 500);
     private boolean isSircut = false;
+    private boolean grided = SettingsManager.griding();
     private int Rotation = 0;
     private int[] RotationFlag = {0, 0};
     private int[] ComponentLocation = {0, 0};
@@ -52,6 +53,27 @@ public class Component extends JPanel {
     }
     public Component(String ComponentName, Icon ComponentIcon, boolean isSircut){
         setComponent(ComponentName, ComponentIcon, isSircut);
+    }
+    public Component(Component component){
+        setSize(component.getSize());
+        setisSircut(component.getisSircut());
+        setgrided(component.isgrided());
+        setRotation(component.getRotation());
+        setRotationFlag(component.getRotationFlag()[0], component.getRotationFlag()[1]);
+        setComponentLocation(component.getComponentLocation()[0], component.getComponentLocation()[1]);
+        setPorts(component.getPorts());
+        setintercomponentsandsircuts(component.getintercomponentsandsircuts());
+        setDrawOder(component.getDrawOder());
+        setLineData(component.getLineData());
+        setPolyLine(component.getPolyLine());
+        setRectData(component.getRectData());
+        setOvalData(component.getOvalData());
+        setPolyData(component.getPolyData());
+        setTextData(component.getTextData());
+        setAttributes(component.getAttributes());
+        setComponentIcon(component.getComponentIcon());
+        setComponentName(component.getComponentName());
+        setbounds(component.getbounds());
     }
     private final void setComponent(String ComponentName, Icon ComponentIcon, boolean isSircut){
         this.ComponentName = Language.trnslt(ComponentName);
@@ -84,6 +106,12 @@ public class Component extends JPanel {
     }
     public final void checkisSicut(){
         isSircut = intercomponentsandsircuts.size() != 0;
+    }
+    public final boolean isgrided(){
+        return grided;
+    }
+    public final void setgrided(boolean grided){
+        this.grided = grided;
     }
     public final List<Component> getintercomponentsandsircuts(){
         return intercomponentsandsircuts;

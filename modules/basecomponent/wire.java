@@ -6,6 +6,12 @@ import javax.swing.ImageIcon;
 import modules.workenvironment.Component;
 import modules.workenvironment.Port;
 public class wire extends Component{
+    public wire(){
+        this(0, 0, 0, 0);
+    }
+    public wire(int Xfrom, int Yfrom, int Xto, int Yto){
+        this(new int[]{Xfrom, Yfrom}, new int[]{Xto, Yto});
+    }
     public wire(int[] from, int[] to){
         super("", new ImageIcon("path-to-icon"));
         addPort(new Port(from[0], from[1], this));

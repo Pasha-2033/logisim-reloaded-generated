@@ -7,6 +7,7 @@ public class ComponentShadow extends Component{
         parent = component;
         setSize(component.getSize());
         setisSircut(component.getisSircut());
+        setgrided(component.isgrided());
         setRotation(component.getRotation());
         setRotationFlag(component.getRotationFlag()[0], component.getRotationFlag()[1]);
         setComponentLocation(component.getComponentLocation()[0], component.getComponentLocation()[1]);

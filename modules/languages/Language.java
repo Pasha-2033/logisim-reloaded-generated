@@ -7,7 +7,7 @@ public class Language {
         Properties config = new Properties();
         Properties lang = new Properties();
         try {
-            lang.load(new FileReader(new File("settings.properties")));
+            lang.load(new FileReader(new File("modules/workenvironment/settings.properties")));
             config.load(new FileReader(new File("modules/languages/" + lang.getProperty("language") +  ".properties")));
             return (String) config.getProperty(wordtotranslate, wordtotranslate);
         } catch (Exception e) {

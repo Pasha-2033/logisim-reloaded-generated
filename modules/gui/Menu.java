@@ -86,7 +86,7 @@ public class Menu extends JFrame {
         String[] none = {};
         Properties config = new Properties();
         try {
-            config.load(new FileReader(new File("settings.properties")));
+            config.load(new FileReader(new File("modules/workenvironment/settings.properties")));
             return config.getProperty("recentopened").split("\\*");
         } catch (Exception e) {
             e.printStackTrace();

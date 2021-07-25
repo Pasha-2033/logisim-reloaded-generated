@@ -23,6 +23,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
+import modules.basecomponent.wire;
 import modules.gui.Buttons;
 import modules.gui.Dots;
 import modules.gui.Excretion;
@@ -53,6 +54,8 @@ public class WorkEnvironmentMain {
     public static List<ComponentShadow> ShadowedComponents = new ArrayList<>(Collections.emptyList());
     public static Component currentSircut = new Component();
     public static Component newComponent = new Component();
+    public static Component[] wireShadow = new wire[]{new wire(), new wire()};
+    public static JPanel wireShadowpanel = new JPanel(new ComponentLayoutManager());
     public JFrame mainframe;
     public JPanel mainworkplace = new JPanel(new BorderLayout());
     public JPanel inframesize = new JPanel(new BorderLayout());
@@ -174,6 +177,7 @@ public class WorkEnvironmentMain {
         incomponentframe.setOpaque(true);
         incomponentframe.add(excretion);
         incomponentframe.add(movingcomponentframe);
+        incomponentframe.add(wireShadowpanel);
         incomponentframe.add(newone);
         incomponentframe.add(dots);
         incomponentframe.addMouseListener(new ComponentListener());
@@ -213,6 +217,7 @@ public class WorkEnvironmentMain {
         outframesize.add(inframesize);
         workplace.setPreferredSize(new Dimension(600, 600));
         workplace.setDividerLocation(200);
+        wireShadowpanel.setOpaque(false);
         mainworkplace.add(workplace);
         componentroottree.setCellRenderer(new JTreeNodeRenderer());
         updateJLableScale();
