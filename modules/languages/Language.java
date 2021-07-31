@@ -1,15 +1,9 @@
 package modules.languages;
-import java.io.File;
-import java.io.FileReader;
-import java.util.Properties;
+import modules.workenvironment.SettingsManager;
 public class Language {
     public static String trnslt(String wordtotranslate) {
-        Properties config = new Properties();
-        Properties lang = new Properties();
         try {
-            lang.load(new FileReader(new File("modules/workenvironment/settings.properties")));
-            config.load(new FileReader(new File("modules/languages/" + lang.getProperty("language") +  ".properties")));
-            return (String) config.getProperty(wordtotranslate, wordtotranslate);
+            return (String) SettingsManager.getlangproperies().getProperty(wordtotranslate, wordtotranslate);
         } catch (Exception e) {
             return wordtotranslate;
         }

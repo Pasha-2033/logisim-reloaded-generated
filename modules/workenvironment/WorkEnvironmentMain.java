@@ -41,6 +41,7 @@ import modules.standartcomponent.wires.mainwires;
 import modules.standartcomponent.wires.power;
 import modules.standartcomponent.wires.resistor;
 public class WorkEnvironmentMain {
+    public static boolean wireoder = true;
     public static boolean isStepavaluable = true;
     public String ProjectName;
     public final String DefaultProjectName = Language.trnslt("NewProject");

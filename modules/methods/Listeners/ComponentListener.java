@@ -13,6 +13,7 @@ import modules.workenvironment.Component;
 import modules.workenvironment.ComponentShadow;
 import modules.workenvironment.Port;
 import modules.workenvironment.WorkEnvironmentMain;
+import modules.workenvironment.SettingsManager;
 import mainclassfolder.Main;
 public class ComponentListener extends MouseInputAdapter{
     public static Point mousePressedPoint = new Point(0, 0);
@@ -73,7 +74,7 @@ public class ComponentListener extends MouseInputAdapter{
         if (SwingUtilities.isLeftMouseButton(e)){
             boolean fromport = false;
             int x = MouseInfo.getPointerInfo().getLocation().x - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().x;
-                int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
+            int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
             for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
                 for (Port port : component.getPorts()){
                     //доделать условие
@@ -136,28 +137,71 @@ public class ComponentListener extends MouseInputAdapter{
                 WorkEnvironmentMain.wireShadowpanel.removeAll();
                 int dx = Math.round((x - mousePressedPoint.x) / WorkEnvironmentMain.Scale);
                 int dy = Math.round((y - mousePressedPoint.y) / WorkEnvironmentMain.Scale);
-                if (dx >= 0){
-                    WorkEnvironmentMain.wireShadow[0] = new wire(0, 0, Math.abs(dx), 0);
-                    WorkEnvironmentMain.wireShadow[0].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale), Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale));
-                    WorkEnvironmentMain.wireShadow[0].setVisible(true);
-                } else {
-                    WorkEnvironmentMain.wireShadow[0] = new wire(0, 0, Math.abs(dx), 0);
-                    WorkEnvironmentMain.wireShadow[0].setComponentLocation(Math.round(x / WorkEnvironmentMain.Scale), Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale));
-                    WorkEnvironmentMain.wireShadow[0].setVisible(true);
+                //проверка wireoder
+                if (Math.abs(dx) < 5 & Math.abs(dy) < 5){
+                    double angle = Math.toDegrees(Math.atan2(dy, dx));
+                    if ((angle >= 0 && angle <= 45) || angle <= -135 || angle >= 135 || (angle >= -45 && angle <= 0)){
+                        WorkEnvironmentMain.wireoder = true;
+                    } else {
+                        WorkEnvironmentMain.wireoder = false;
+                    }
                 }
-                if (dy >= 0){
-                    WorkEnvironmentMain.wireShadow[1] = new wire(0, 0, 0, Math.abs(dy));
-                    WorkEnvironmentMain.wireShadow[1].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale) + dx, Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale));
-                    WorkEnvironmentMain.wireShadow[1].setVisible(true);
+                if (SettingsManager.griding()){
+                    if (WorkEnvironmentMain.wireoder){
+                        if (dx >= 0){
+                            WorkEnvironmentMain.wireShadow[0] = new wire(0, 0, dx - dx % 10, 0);
+                            WorkEnvironmentMain.wireShadow[0].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale), Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale));
+                            WorkEnvironmentMain.wireShadow[0].setVisible(true);
+                        } else {
+                            if (dx % 10 != 0){
+                                WorkEnvironmentMain.wireShadow[0] = new wire(0, 0, Math.abs(dx - (10 + dx % 10)), 0);
+                                WorkEnvironmentMain.wireShadow[0].setComponentLocation(Math.round(x / WorkEnvironmentMain.Scale) - Math.round(x / WorkEnvironmentMain.Scale) % 10, Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale));
+                                WorkEnvironmentMain.wireShadow[0].setVisible(true);
+                            } else {
+                                WorkEnvironmentMain.wireShadow[0] = new wire(0, 0, Math.abs(dx), 0);
+                                WorkEnvironmentMain.wireShadow[0].setComponentLocation(Math.round(x / WorkEnvironmentMain.Scale) - Math.round(x / WorkEnvironmentMain.Scale) % 10, Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale));
+                                WorkEnvironmentMain.wireShadow[0].setVisible(true);
+                            }
+                        }
+                        if (dy >= 0){
+                            WorkEnvironmentMain.wireShadow[1] = new wire(0, 0, 0, dy - dy % 10);
+                            WorkEnvironmentMain.wireShadow[1].setComponentLocation(Math.round(x / WorkEnvironmentMain.Scale) - Math.round(x / WorkEnvironmentMain.Scale) % 10, Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale));
+                            WorkEnvironmentMain.wireShadow[1].setVisible(true);
+                        } else {
+                            WorkEnvironmentMain.wireShadow[1] = new wire(0, 0, 0, Math.abs(dy) - Math.abs(dy) % 10);
+                            WorkEnvironmentMain.wireShadow[1].setComponentLocation(Math.round(x / WorkEnvironmentMain.Scale) - Math.round(x / WorkEnvironmentMain.Scale) % 10, Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale) - (Math.abs(dy) - Math.abs(dy) % 10));
+                            WorkEnvironmentMain.wireShadow[1].setVisible(true);
+                        }
+                    } else {
+                        ////////
+                    }
                 } else {
-                    WorkEnvironmentMain.wireShadow[1] = new wire(0, 0, 0, Math.abs(dy));
-                    WorkEnvironmentMain.wireShadow[1].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale) + dx, Math.round(y / WorkEnvironmentMain.Scale));
-                    WorkEnvironmentMain.wireShadow[1].setVisible(true);
+                    if (WorkEnvironmentMain.wireoder){
+                        if (dx >= 0){
+                            WorkEnvironmentMain.wireShadow[0] = new wire(0, 0, Math.abs(dx), 0);
+                            WorkEnvironmentMain.wireShadow[0].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale), Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale));
+                            WorkEnvironmentMain.wireShadow[0].setVisible(true);
+                        } else {
+                            WorkEnvironmentMain.wireShadow[0] = new wire(0, 0, Math.abs(dx), 0);
+                            WorkEnvironmentMain.wireShadow[0].setComponentLocation(Math.round(x / WorkEnvironmentMain.Scale), Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale));
+                            WorkEnvironmentMain.wireShadow[0].setVisible(true);
+                        }
+                        if (dy >= 0){
+                            WorkEnvironmentMain.wireShadow[1] = new wire(0, 0, 0, Math.abs(dy));
+                            WorkEnvironmentMain.wireShadow[1].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale) + dx, Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale));
+                            WorkEnvironmentMain.wireShadow[1].setVisible(true);
+                        } else {
+                            WorkEnvironmentMain.wireShadow[1] = new wire(0, 0, 0, Math.abs(dy));
+                            WorkEnvironmentMain.wireShadow[1].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale) + dx, Math.round(y / WorkEnvironmentMain.Scale));
+                            WorkEnvironmentMain.wireShadow[1].setVisible(true);
+                        }
+                    } else {
+                        /////////
+                    }
                 }
                 WorkEnvironmentMain.wireShadowpanel.add(WorkEnvironmentMain.wireShadow[0]);
                 WorkEnvironmentMain.wireShadowpanel.add(WorkEnvironmentMain.wireShadow[1]);
                 WorkEnvironmentMain.wireShadowpanel.revalidate();
-                //добавить их на панель некоторую, которую нужно сделать
             }
         } else if (SwingUtilities.isRightMouseButton(e)){
             //вряд ли понадобится
