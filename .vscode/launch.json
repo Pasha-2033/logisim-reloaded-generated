@@ -13,12 +13,6 @@
         },
         {
             "type": "java",
-            "name": "Launch Current File",
-            "request": "launch",
-            "mainClass": "mainclassfolder.Main"
-        },
-        {
-            "type": "java",
             "name": "Launch Main",
             "request": "launch",
             "mainClass": "mainclassfolder.Main",

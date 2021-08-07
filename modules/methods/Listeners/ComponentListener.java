@@ -9,6 +9,7 @@ import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.awt.Point;
 import modules.basecomponent.wire;
+import modules.methods.Parsers.PortParser;
 import modules.workenvironment.Component;
 import modules.workenvironment.ComponentShadow;
 import modules.workenvironment.Port;
@@ -130,6 +131,7 @@ public class ComponentListener extends MouseInputAdapter{
                     WorkEnvironmentMain.excretion.removeAllExcretedComponents();
                 }
             } else {
+                //заменить везде mousePressedPoint.x на WorkEnvironmentMain.portforwireshadow.location[0]
                 //рисуем тень провода
                 if (WorkEnvironmentMain.wireShadow.length != 2){
                     WorkEnvironmentMain.wireShadow = new wire[]{new wire(), new wire()};
@@ -145,6 +147,8 @@ public class ComponentListener extends MouseInputAdapter{
                     } else {
                         WorkEnvironmentMain.wireoder = false;
                     }
+                    //переопределяем начала координат для проводов, а именно от ближащего порта
+                    WorkEnvironmentMain.portforwireshadow = PortParser.getnearestPortCS(mousePressedPoint.x, mousePressedPoint.y);
                 }
                 if (SettingsManager.griding()){
                     if (WorkEnvironmentMain.wireoder){
@@ -173,7 +177,36 @@ public class ComponentListener extends MouseInputAdapter{
                             WorkEnvironmentMain.wireShadow[1].setVisible(true);
                         }
                     } else {
-                        ////////
+                        if (dy >= 0){
+                            WorkEnvironmentMain.wireShadow[0] = new wire(0, 0, 0, dy - dy % 10);
+                            WorkEnvironmentMain.wireShadow[0].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale), Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale));
+                            WorkEnvironmentMain.wireShadow[0].setVisible(true);
+                        } else {
+                            WorkEnvironmentMain.wireShadow[0] = new wire(0, 0, 0, Math.abs(dy - dy % 10));
+                            WorkEnvironmentMain.wireShadow[0].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale), Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale) - Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale) % 10 - Math.abs(dy - dy % 10));
+                            WorkEnvironmentMain.wireShadow[0].setVisible(true);
+                        }
+                        if (dx >= 0){
+                            if (dy >= 0){
+                                WorkEnvironmentMain.wireShadow[1] = new wire(0, 0, dx - dx % 10, 0);
+                                WorkEnvironmentMain.wireShadow[1].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale), Math.round(y / WorkEnvironmentMain.Scale) -  Math.round(y / WorkEnvironmentMain.Scale) % 10);
+                                WorkEnvironmentMain.wireShadow[1].setVisible(true);
+                            } else {
+                                WorkEnvironmentMain.wireShadow[1] = new wire(0, 0, dx - dx % 10, 0);
+                                WorkEnvironmentMain.wireShadow[1].setComponentLocation(WorkEnvironmentMain.wireShadow[0].getComponentLocation()[0], WorkEnvironmentMain.wireShadow[0].getComponentLocation()[1]);
+                                WorkEnvironmentMain.wireShadow[1].setVisible(true);
+                            }
+                        } else {
+                            if (dy >= 0){
+                                WorkEnvironmentMain.wireShadow[1] = new wire(0, 0, Math.abs(dx - dx % 10), 0);
+                                WorkEnvironmentMain.wireShadow[1].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale) - Math.abs(dx - dx % 10), Math.round(y / WorkEnvironmentMain.Scale) -  Math.round(y / WorkEnvironmentMain.Scale) % 10);
+                                WorkEnvironmentMain.wireShadow[1].setVisible(true);
+                            } else {
+                                WorkEnvironmentMain.wireShadow[1] = new wire(0, 0, Math.abs(dx - dx % 10), 0);
+                                WorkEnvironmentMain.wireShadow[1].setComponentLocation(WorkEnvironmentMain.wireShadow[0].getComponentLocation()[0] - Math.abs(dx - dx % 10), WorkEnvironmentMain.wireShadow[0].getComponentLocation()[1]);
+                                WorkEnvironmentMain.wireShadow[1].setVisible(true);
+                            }
+                        }
                     }
                 } else {
                     if (WorkEnvironmentMain.wireoder){
@@ -196,7 +229,36 @@ public class ComponentListener extends MouseInputAdapter{
                             WorkEnvironmentMain.wireShadow[1].setVisible(true);
                         }
                     } else {
-                        /////////
+                        if (dy >= 0){
+                            WorkEnvironmentMain.wireShadow[0] = new wire(0, 0, 0, dy);
+                            WorkEnvironmentMain.wireShadow[0].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale), Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale));
+                            WorkEnvironmentMain.wireShadow[0].setVisible(true);
+                        } else {
+                            WorkEnvironmentMain.wireShadow[0] = new wire(0, 0, 0, Math.abs(dy));
+                            WorkEnvironmentMain.wireShadow[0].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale), Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale) - Math.abs(dy));
+                            WorkEnvironmentMain.wireShadow[0].setVisible(true);
+                        }
+                        if (dx >= 0){
+                            if (dy >= 0){
+                                WorkEnvironmentMain.wireShadow[1] = new wire(0, 0, dx, 0);
+                                WorkEnvironmentMain.wireShadow[1].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale), Math.round(y / WorkEnvironmentMain.Scale));
+                                WorkEnvironmentMain.wireShadow[1].setVisible(true);
+                            } else {
+                                WorkEnvironmentMain.wireShadow[1] = new wire(0, 0, dx, 0);
+                                WorkEnvironmentMain.wireShadow[1].setComponentLocation(WorkEnvironmentMain.wireShadow[0].getComponentLocation()[0], WorkEnvironmentMain.wireShadow[0].getComponentLocation()[1]);
+                                WorkEnvironmentMain.wireShadow[1].setVisible(true);
+                            }
+                        } else {
+                            if (dy >= 0){
+                                WorkEnvironmentMain.wireShadow[1] = new wire(0, 0, Math.abs(dx), 0);
+                                WorkEnvironmentMain.wireShadow[1].setComponentLocation(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale) - Math.abs(dx), Math.round(y / WorkEnvironmentMain.Scale));
+                                WorkEnvironmentMain.wireShadow[1].setVisible(true);
+                            } else {
+                                WorkEnvironmentMain.wireShadow[1] = new wire(0, 0, Math.abs(dx), 0);
+                                WorkEnvironmentMain.wireShadow[1].setComponentLocation(WorkEnvironmentMain.wireShadow[0].getComponentLocation()[0] - Math.abs(dx), WorkEnvironmentMain.wireShadow[0].getComponentLocation()[1]);
+                                WorkEnvironmentMain.wireShadow[1].setVisible(true);
+                            }
+                        }
                     }
                 }
                 WorkEnvironmentMain.wireShadowpanel.add(WorkEnvironmentMain.wireShadow[0]);

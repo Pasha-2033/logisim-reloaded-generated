@@ -1,4 +1,4 @@
-package modules.methods;
+package modules.methods.Parsers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

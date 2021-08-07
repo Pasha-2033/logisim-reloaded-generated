@@ -29,13 +29,13 @@ import modules.gui.Dots;
 import modules.gui.Excretion;
 import modules.gui.MainAppWindow;
 import modules.languages.Language;
-import modules.methods.ExcitationParser;
 import modules.methods.JTreeNodeRenderer;
 import modules.methods.LayoutManagers.ComponentLayoutManager;
 import modules.methods.LayoutManagers.FrameScaleLayout;
 import modules.methods.LayoutManagers.ScaleFrameButtonsLayout;
 import modules.methods.Listeners.ComponentListener;
 import modules.methods.Listeners.ComponentTreeListener;
+import modules.methods.Parsers.ExcitationParser;
 import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.mainwires;
 import modules.standartcomponent.wires.power;
@@ -43,12 +43,12 @@ import modules.standartcomponent.wires.resistor;
 public class WorkEnvironmentMain {
     public static boolean wireoder = true;
     public static boolean isStepavaluable = true;
-    public String ProjectName;
-    public final String DefaultProjectName = Language.trnslt("NewProject");
+    public static String ProjectName;
+    public static final String DefaultProjectName = Language.trnslt("NewProject");
     public static ExcitationParser excitationparser = new ExcitationParser();
     public static float Scale = 1.0F;
     public static boolean DotsThere = true;
-    public static final List<MainComponentcCass> ComponentDefaultLibraries = Arrays.asList(new mainwires());
+    public static final List<MainComponentcCass> ComponentDefaultLibraries = Arrays.asList(new mainwires()); //добавлять классы
     public static List<MainComponentcCass> ComponentImportedLibraries = new ArrayList<>(Collections.emptyList());
     public static List<Component> AvaluableComponents = new ArrayList<>(Collections.emptyList());
     public static List<Component> ProjectComponents = new ArrayList<>(Collections.emptyList());
@@ -57,6 +57,7 @@ public class WorkEnvironmentMain {
     public static Component newComponent = new Component();
     public static Component[] wireShadow = new wire[]{new wire(), new wire()};
     public static JPanel wireShadowpanel = new JPanel(new ComponentLayoutManager());
+    public static Port portforwireshadow = new Port();
     public JFrame mainframe;
     public JPanel mainworkplace = new JPanel(new BorderLayout());
     public JPanel inframesize = new JPanel(new BorderLayout());

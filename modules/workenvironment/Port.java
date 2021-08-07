@@ -12,6 +12,12 @@ public class Port {
     public Color color;
     public Component belongsto;
     public List<Port> portsourse = new ArrayList<Port>(Collections.emptyList());
+    public Port(){
+        this(0, 0, WorkEnvironmentMain.currentSircut);
+    }
+    public Port(int x, int y){
+        this (x, y, WorkEnvironmentMain.currentSircut);
+    }
     public Port(int x, int y, Component belongsto){
         SetPort(x, y, "", false, false, belongsto);
     }

@@ -21,6 +21,10 @@ import java.awt.BorderLayout;
 public class sample3 {
 
     public static void main(String[] args) {
+        int x = -1;
+        int y;
+        y = (x == 0) ? 1 : 2;
+        System.out.println(y);
         new sample3();
     }
 
