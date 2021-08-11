@@ -15,7 +15,7 @@
             "type": "java",
             "name": "Launch Main",
             "request": "launch",
-            "mainClass": "mainclassfolder.Main",
+            "mainClass": "mainclassfolder.Main"
         }
     ]
 }
