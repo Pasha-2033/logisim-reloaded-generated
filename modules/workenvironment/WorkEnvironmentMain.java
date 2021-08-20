@@ -5,6 +5,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,6 +59,7 @@ public class WorkEnvironmentMain {
     public static Component[] wireShadow = new wire[]{new wire(), new wire()};
     public static JPanel wireShadowpanel = new JPanel(new ComponentLayoutManager());
     public static Port portforwireshadow = new Port();
+    public static Point absolutemousePressedPoint = new Point(0, 0);
     public JFrame mainframe;
     public JPanel mainworkplace = new JPanel(new BorderLayout());
     public JPanel inframesize = new JPanel(new BorderLayout());
@@ -89,7 +91,7 @@ public class WorkEnvironmentMain {
         mainframe.setMinimumSize(new Dimension(100, 100));
         //закачка компонентов - для тестов =================================================================
         currentSircut.addintercomponentsandsircuts(new resistor());
-        currentSircut.getintercomponentsandsircuts().get(0).setComponentLocation(100, 100); //- проверка относительных координат
+        currentSircut.getintercomponentsandsircuts().get(0).setComponentLocation(105, 105); //- проверка относительных координат
         //currentSircut.getintercomponentsandsircuts().get(0).setRotation(0); //- проверка поворота
         currentSircut.addintercomponentsandsircuts(new ground());
         currentSircut.getintercomponentsandsircuts().get(1).setComponentLocation(50, 50); //- проверка относительных координат

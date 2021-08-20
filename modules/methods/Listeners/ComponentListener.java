@@ -63,6 +63,7 @@ public class ComponentListener extends MouseInputAdapter{
         int x = MouseInfo.getPointerInfo().getLocation().x - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().x;
         int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
         mousePressedPoint = new Point(x, y);
+        WorkEnvironmentMain.absolutemousePressedPoint = new Point(Math.round(mousePressedPoint.x / WorkEnvironmentMain.Scale), Math.round(mousePressedPoint.y / WorkEnvironmentMain.Scale));
         if (WorkEnvironmentMain.newone.getComponentCount() != 0){
             Main.workenvironment.addComponent(WorkEnvironmentMain.newComponent, Math.round(x / WorkEnvironmentMain.Scale), Math.round(y / WorkEnvironmentMain.Scale));
             Main.workenvironment.rerenderAllComponents();
@@ -79,7 +80,7 @@ public class ComponentListener extends MouseInputAdapter{
             for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
                 for (Port port : component.getPorts()){
                     //доделать условие
-                    if (Math.abs(mousePressedPoint.x / WorkEnvironmentMain.Scale + port.location[0] - component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 && Math.abs(mousePressedPoint.y / WorkEnvironmentMain.Scale + port.location[1] - component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5) {
+                    if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x + port.location[0] - component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y + port.location[1] - component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5) {
                         fromport = true;
                         break;
                     }
@@ -114,8 +115,8 @@ public class ComponentListener extends MouseInputAdapter{
                         }
                     }
                     for (ComponentShadow component : WorkEnvironmentMain.ShadowedComponents){
-                        int dx = Math.round((x - mousePressedPoint.x) / WorkEnvironmentMain.Scale);
-                        int dy = Math.round((y - mousePressedPoint.y) / WorkEnvironmentMain.Scale);
+                        int dx = x - mousePressedPoint.x;
+                        int dy = y - mousePressedPoint.y;
                         if (component.isgrided()){
                             int xx = component.getComponentBase()[0] + dx;
                             int yy = component.getComponentBase()[1] + dy;
@@ -130,14 +131,14 @@ public class ComponentListener extends MouseInputAdapter{
                     WorkEnvironmentMain.excretion.createExcretion();
                     WorkEnvironmentMain.excretion.removeAllExcretedComponents();
                 }
-            } else {
+            } else if (!(x < 0 || y < 0)) {
                 //рисуем тень провода
                 if (WorkEnvironmentMain.wireShadow.length != 2){
                     WorkEnvironmentMain.wireShadow = new wire[]{new wire(), new wire()};
                 }
                 WorkEnvironmentMain.wireShadowpanel.removeAll();
-                int dx = Math.round((x - mousePressedPoint.x) / WorkEnvironmentMain.Scale);
-                int dy = Math.round((y - mousePressedPoint.y) / WorkEnvironmentMain.Scale);
+                int dx = Math.round(x / WorkEnvironmentMain.Scale - WorkEnvironmentMain.absolutemousePressedPoint.x);
+                int dy = Math.round(y / WorkEnvironmentMain.Scale - WorkEnvironmentMain.absolutemousePressedPoint.y);
                 //проверка wireoder
                 if (Math.abs(dx) < 5 & Math.abs(dy) < 5){
                     double angle = Math.toDegrees(Math.atan2(dy, dx));
@@ -262,6 +263,9 @@ public class ComponentListener extends MouseInputAdapter{
                 WorkEnvironmentMain.wireShadowpanel.add(WorkEnvironmentMain.wireShadow[0]);
                 WorkEnvironmentMain.wireShadowpanel.add(WorkEnvironmentMain.wireShadow[1]);
                 WorkEnvironmentMain.wireShadowpanel.revalidate();
+            } else {
+                WorkEnvironmentMain.wireShadow[0].setVisible(false);
+                WorkEnvironmentMain.wireShadow[1].setVisible(false);
             }
         } else if (SwingUtilities.isRightMouseButton(e)){
             //вряд ли понадобится
