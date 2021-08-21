@@ -2,6 +2,7 @@ package modules.workenvironment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import modules.basecomponent.wire;
 import java.awt.Color;
 public class Port {
     public boolean isbasicsender;
@@ -12,6 +13,7 @@ public class Port {
     public Color color;
     public Component belongsto;
     public List<Port> portsourse = new ArrayList<Port>(Collections.emptyList());
+    public Port portsender = null;
     public Port(){
         this(0, 0, WorkEnvironmentMain.currentSircut);
     }
@@ -37,7 +39,7 @@ public class Port {
         this.lable = lable;
         updateColor();
     }
-    public void updateColor(){
+    public final void updateColor(){
         if (Data.size() == 1) {
             if (Data.get(0).size() == 1){
                 if (Data.get(0).get(0) instanceof Integer){
@@ -76,15 +78,19 @@ public class Port {
             color = ColorList.GRAY[1];
         }
     }
-    public void setdata(List<List<Object>> Data){
+    public final void setdata(List<List<Object>> Data){
         this.Data = Data;
         updateColor();
     }
-    public void setotherportdata(){
+    public final void setotherportdata(){
         if (!isbasicgetter){
             for (Port port : portsourse){
-                if (!port.isbasicsender){
+                if (!port.isbasicsender && port != portsender){
                     port.setdata(Data);
+                    port.portsender = this;
+                    if (port.belongsto instanceof wire){
+                        ((wire) port.belongsto).setselfcolor(color);
+                    }
                 } else {
                     if (port.Data != Data){
                         Data = createnewData(port.Data);
@@ -99,7 +105,7 @@ public class Port {
             WorkEnvironmentMain.excitationparser.addActivePort(this);
         }
     }
-    public List<List<Object>> createnewData(List<List<Object>> otherportData){
+    public final List<List<Object>> createnewData(List<List<Object>> otherportData){
         List<List<Object>> newData = Data;
         if (Data.size() < otherportData.size()){
             for (int i = Data.size(); i > otherportData.size(); i++){
@@ -129,7 +135,7 @@ public class Port {
         }
         return newData;
     }
-    public boolean containE(){
+    public final boolean containE(){
         for (List<Object> list : Data){
             for (Object object : list){
                 if (object.equals("E")){
@@ -139,7 +145,7 @@ public class Port {
         }
         return false;
     }
-    public boolean containX(){
+    public final boolean containX(){
         for (List<Object> list : Data){
             for (Object object : list){
                 if (object.equals("X")){
@@ -149,7 +155,7 @@ public class Port {
         }
         return false;
     }
-    public boolean isallX(){
+    public final boolean isallX(){
         boolean allX = true;
         for (List<Object> list : Data){
             for (Object object : list){
@@ -159,5 +165,31 @@ public class Port {
             }
         }
         return allX;
+    }
+    public final void addportsourse(Port port){
+        portsourse.add(port);
+        if (!port.isbasicsender){
+            port.setdata(Data);
+            port.portsender = this;
+        }
+        if (port.belongsto instanceof wire){
+            ((wire) port.belongsto).setselfcolor(color);
+        }
+        port.belongsto.prestep();
+        port.belongsto.repaint();
+    }
+    public final void removeportsourse(Port port){
+        try {
+            portsourse.remove(port);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public final void removeportsourse(int index){
+        try {
+            portsourse.remove(index);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
