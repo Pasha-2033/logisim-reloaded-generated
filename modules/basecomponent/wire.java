@@ -16,7 +16,7 @@ public class wire extends Component {
         super("", new ImageIcon("path-to-icon"));
         addPort(new Port(from[0], from[1], this));
         addPort(new Port(to[0], to[1], this));
-        addLineData(from[0], from[1], to[0], to[1], Color.BLACK, new BasicStroke(2.0F, 1, 1));
+        addLineData(from[0], from[1], to[0], to[1], Color.BLACK, new BasicStroke(1.5F, 1, 1));
         start();
     }
     public final void setselfcolor(Color color){

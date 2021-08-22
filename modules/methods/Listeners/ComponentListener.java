@@ -80,7 +80,8 @@ public class ComponentListener extends MouseInputAdapter{
             for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
                 for (Port port : component.getPorts()){
                     //доделать условие
-                    if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x + port.location[0] - component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y + port.location[1] - component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5) {
+                    //if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x + port.location[0] - component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y + port.location[1] - component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5) {
+                    if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x - port.location[0] + component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y - port.location[1] + component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5) {
                         fromport = true;
                         break;
                     }
@@ -185,8 +186,8 @@ public class ComponentListener extends MouseInputAdapter{
             boolean fromport = false;
             for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
                 for (Port port : component.getPorts()){
-                    //if (Math.abs(mousePressedPoint.x + port.location[0] - component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 * WorkEnvironmentMain.Scale && Math.abs(mousePressedPoint.y + port.location[1] - component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5 * WorkEnvironmentMain.Scale) {
-                    if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x + port.location[0] - component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y + port.location[1] - component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5){
+                    //if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x + port.location[0] - component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y + port.location[1] - component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5){
+                    if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x - port.location[0] + component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y - port.location[1] + component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5){
                         fromport = true;
                         break;
                     }
@@ -275,6 +276,10 @@ public class ComponentListener extends MouseInputAdapter{
                         e1.printStackTrace();
                     }
                 }
+                ///////////////////////
+                //доделать!!!
+                //PortParser.connectports(component);
+                ///////////////////////
                 WorkEnvironmentMain.wireShadow[0].setVisible(false);
                 WorkEnvironmentMain.wireShadow[0] = new wire();
                 WorkEnvironmentMain.wireShadow[1].setVisible(false);
