@@ -167,6 +167,7 @@ public class Port {
         return allX;
     }
     public final void addportsourse(Port port){
+        if (portsourse.indexOf(port) != -1) return;
         portsourse.add(port);
         if (!port.isbasicsender){
             port.setdata(Data);

@@ -1,4 +1,8 @@
 package modules.methods.Parsers;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import modules.workenvironment.Component;
 import modules.workenvironment.Port;
 import modules.workenvironment.WorkEnvironmentMain;
@@ -66,5 +70,76 @@ public class PortParser {
             }
         }
         return new Port();
+    }
+    public static final void connectports(){
+        List<Port> portlist;
+        List<Port> portlist2;
+        for(Component parentcomponent : WorkEnvironmentMain.ProjectComponents){
+            portlist = new ArrayList<Port>(Collections.emptyList());
+            portlist2 = new ArrayList<Port>(Collections.emptyList());
+            for (Component component : parentcomponent.getintercomponentsandsircuts()){
+                portlist.addAll(component.getPorts());
+                portlist2.addAll(component.getPorts());
+            }
+            for (Port port : portlist){
+                port.portsourse = new ArrayList<Port>(Collections.emptyList());
+                port.portsender = null;
+            }
+            for (Port portfrom : portlist){
+                for (Port portto : portlist){
+                    if (portfrom != portto && portfrom.location[0] == portto.location[0] && portfrom.location[1] == portto.location[1]){
+                        portfrom.addportsourse(portto);
+                        portto.addportsourse(portfrom);
+                        portfrom.portsender = null;
+                        portto.portsender = null;
+                    }
+                }
+            }
+            for (Port port : portlist2){
+                if (port.isbasicsender){
+                    port.setotherportdata();
+                }
+            }
+        }
+    }
+    public static final void connectports(Component component){
+        for (Port port : component.getPorts()){
+            unlinkport(port);
+        }
+        Rectangle rectangle = new Rectangle(component.getComponentLocation()[0] + component.getbounds().x, component.getComponentLocation()[1] + component.getbounds().y, component.getbounds().width, component.getbounds().height);
+        for (Component othercomponent : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
+            if (othercomponent != component && rectangle.intersects(new Rectangle(othercomponent.getComponentLocation()[0] + othercomponent.getbounds().x, othercomponent.getComponentLocation()[1] + othercomponent.getbounds().y, othercomponent.getbounds().width, othercomponent.getbounds().height))){
+                for (Port otherport : othercomponent.getPorts()){
+                    for (Port port : component.getPorts()){
+                        if (otherport.location[0] == port.location[0] && otherport.location[1] == port.location[1]){
+                            otherport.addportsourse(port);
+                            port.addportsourse(otherport);
+                            otherport.portsender = null;
+                            port.portsender = null;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public static final void unlinkport(Port port){
+        for (Port inport : port.portsourse){
+            port.portsender = null;
+            port.removeportsourse(inport);
+            inport.removeportsourse(port);
+            if (inport.portsender == port) inport.portsender = null;
+        }
+    }
+    public static final void unlinkport(Port port, List<Port> ports){
+        for (Port unport : ports){
+            for (Port unportsourse : unport.portsourse){
+                if (unportsourse == port){
+                    port.portsender = null;
+                    port.removeportsourse(unport);
+                    unport.removeportsourse(port);
+                    if (unport.portsender == port) unport.portsender = null;
+                }
+            }
+        }
     }
 }

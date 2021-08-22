@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import modules.languages.Language;
 import modules.methods.ComponentAttributes;
 import modules.methods.Daemons.ComponentStream;
-
 import java.awt.Rectangle;
 import java.awt.Graphics;
 import java.awt.Dimension;
@@ -18,7 +17,7 @@ import java.awt.Font;
 import java.awt.Shape;
 import java.awt.FontMetrics;
 import java.awt.geom.AffineTransform;
-public class Component extends JPanel {
+public class Component extends JPanel implements Cloneable {
     private final Icon DEFAULT_ICON =  new ImageIcon("resources/componenticon/noiconforcomponent.png");
     private Dimension Size = new Dimension(500, 500);
     private boolean isSircut = false;
@@ -540,7 +539,16 @@ public class Component extends JPanel {
         AffineTransform AT = new AffineTransform();
         AT.rotate(-Math.toRadians(Rotation));
         Shape newRect = AT.createTransformedShape(new Rectangle((int) (bounds.getX() - RotationFlag[0]), (int) (bounds.getY() - RotationFlag[1]), (int) bounds.getWidth(), (int) bounds.getHeight()));
-        return newRect.getBounds();
+        Rectangle r = newRect.getBounds();
+        if (r.width == 0){
+            r.x -= 2;
+            r.width = 4;
+        }
+        if (r.height == 0){
+            r.y -= 2;
+            r.height = 4;
+        }
+        return r;
     }
     public final void setbounds(Rectangle bounds){
         this.bounds = bounds;
@@ -664,5 +672,9 @@ public class Component extends JPanel {
     }
     public final void init(){
         updatebounds(null);
+    }
+    @Override
+    public Component clone() throws CloneNotSupportedException{
+        return (Component) super.clone();
     }
 }

@@ -1,6 +1,5 @@
 package modules.workenvironment;
 import java.awt.event.ComponentEvent;
-import java.lang.reflect.InvocationTargetException;
 import java.awt.event.ComponentAdapter;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -90,19 +89,10 @@ public class WorkEnvironmentMain {
         mainframe.add(mainworkplace);
         mainframe.setMinimumSize(new Dimension(100, 100));
         //закачка компонентов - для тестов =================================================================
-        currentSircut.addintercomponentsandsircuts(new resistor());
-        currentSircut.getintercomponentsandsircuts().get(0).setComponentLocation(105, 105); //- проверка относительных координат
-        //currentSircut.getintercomponentsandsircuts().get(0).setRotation(0); //- проверка поворота
-        currentSircut.addintercomponentsandsircuts(new ground());
-        currentSircut.getintercomponentsandsircuts().get(1).setComponentLocation(50, 50); //- проверка относительных координат
-        currentSircut.addintercomponentsandsircuts(new power());
-        currentSircut.getintercomponentsandsircuts().get(2).setComponentLocation(200, 200); //- проверка относительных координат
-        currentSircut.addintercomponentsandsircuts(new resistor());
-        currentSircut.getintercomponentsandsircuts().get(3).setComponentLocation(300, 300); //- проверка относительных координат
-        incomponentframe.add(currentSircut.getintercomponentsandsircuts().get(0), 1);
-        incomponentframe.add(currentSircut.getintercomponentsandsircuts().get(1), 1);
-        incomponentframe.add(currentSircut.getintercomponentsandsircuts().get(2), 1);
-        incomponentframe.add(currentSircut.getintercomponentsandsircuts().get(3), 1);
+        addComponent(new resistor(), 105, 105);
+        addComponent(new ground(), 50, 50);
+        addComponent(new power(), 200, 200);
+        addComponent(new resistor(), 300, 300);
         //конец тестовой закачки ===========================================================================
         mainframe.pack();
         //обновляем компоненты для работы с ними
@@ -250,12 +240,11 @@ public class WorkEnvironmentMain {
         excretion.repaint();
         updateJLableScale();
     }
+    public void addComponent(Component component){
+        addComponent(component, component.getComponentLocation()[0], component.getComponentLocation()[1]);
+    }
     public void addComponent(Component component, int x, int y){
-        try {
-            currentSircut.addintercomponentsandsircuts(component.getClass().getDeclaredConstructor().newInstance());
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            e.printStackTrace();
-        }
+        currentSircut.addintercomponentsandsircuts(component);
         currentSircut.getintercomponentsandsircuts().get(currentSircut.getintercomponentsandsircuts().size() - 1).setComponentLocation(x, y);
         incomponentframe.add(currentSircut.getintercomponentsandsircuts().get(currentSircut.getintercomponentsandsircuts().size() - 1), 1);
     }

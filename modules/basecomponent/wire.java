@@ -5,7 +5,7 @@ import java.awt.BasicStroke;
 import javax.swing.ImageIcon;
 import modules.workenvironment.Component;
 import modules.workenvironment.Port;
-public class wire extends Component{
+public class wire extends Component {
     public wire(){
         this(0, 0, 0, 0);
     }
