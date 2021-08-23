@@ -73,13 +73,10 @@ public class PortParser {
     }
     public static final void connectports(){
         List<Port> portlist;
-        List<Port> portlist2;
         for(Component parentcomponent : WorkEnvironmentMain.ProjectComponents){
             portlist = new ArrayList<Port>(Collections.emptyList());
-            portlist2 = new ArrayList<Port>(Collections.emptyList());
             for (Component component : parentcomponent.getintercomponentsandsircuts()){
                 portlist.addAll(component.getPorts());
-                portlist2.addAll(component.getPorts());
             }
             for (Port port : portlist){
                 port.portsourse = new ArrayList<Port>(Collections.emptyList());
@@ -87,7 +84,7 @@ public class PortParser {
             }
             for (Port portfrom : portlist){
                 for (Port portto : portlist){
-                    if (portfrom != portto && portfrom.location[0] == portto.location[0] && portfrom.location[1] == portto.location[1]){
+                    if (portfrom != portto && portfrom.location[0] == portto.location[0] && portfrom.location[1] == portto.location[1] && portfrom.portsourse.indexOf(portto) == -1){
                         portfrom.addportsourse(portto);
                         portto.addportsourse(portfrom);
                         portfrom.portsender = null;
@@ -95,7 +92,7 @@ public class PortParser {
                     }
                 }
             }
-            for (Port port : portlist2){
+            for (Port port : portlist){
                 if (port.isbasicsender){
                     port.setotherportdata();
                 }
@@ -122,22 +119,29 @@ public class PortParser {
             }
         }
     }
-    public static final void unlinkport(Port port){
-        for (Port inport : port.portsourse){
-            port.portsender = null;
-            port.removeportsourse(inport);
-            inport.removeportsourse(port);
-            if (inport.portsender == port) inport.portsender = null;
+    public static final void unlinkport(Port porttounlink){
+        for (int i = 0; i < porttounlink.portsourse.size(); i++){
+            Port inport = porttounlink.portsourse.get(i);
+            porttounlink.portsender = null;
+            porttounlink.removeportsourse(inport);
+            inport.removeportsourse(porttounlink);
+            if (inport.portsender == porttounlink) {
+                inport.portsender = null;
+                inport.setdata(Port.NData);
+            }
         }
     }
-    public static final void unlinkport(Port port, List<Port> ports){
+    public static final void unlinkport(Port porttounlink, List<Port> ports){
         for (Port unport : ports){
-            for (Port unportsourse : unport.portsourse){
-                if (unportsourse == port){
-                    port.portsender = null;
-                    port.removeportsourse(unport);
-                    unport.removeportsourse(port);
-                    if (unport.portsender == port) unport.portsender = null;
+            for (int i = 0; i < unport.portsourse.size(); i++){
+                if (unport.portsourse.get(i) == porttounlink){
+                    porttounlink.portsender = null;
+                    porttounlink.removeportsourse(unport);
+                    unport.removeportsourse(porttounlink);
+                    if (unport.portsender == porttounlink) {
+                        unport.portsender = null;
+                        unport.setdata(Port.NData);
+                    }
                 }
             }
         }

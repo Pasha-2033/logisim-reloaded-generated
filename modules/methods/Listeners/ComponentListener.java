@@ -249,10 +249,7 @@ public class ComponentListener extends MouseInputAdapter{
                                 component.setComponentLocation(component.getComponentLocation()[0] + dx, component.getComponentLocation()[1] + dy);
                             }
                             component.setVisible(true);
-                            ///////////////////////
-                            //доделать!!!
-                            //PortParser.connectports(component);
-                            ///////////////////////
+                            PortParser.connectports(component);
                         }
                     }
                     WorkEnvironmentMain.ShadowedComponents = new ArrayList<ComponentShadow>(Collections.emptyList());
@@ -264,22 +261,22 @@ public class ComponentListener extends MouseInputAdapter{
                 //создать провод, удалить тень
                 if (Math.abs((int) WorkEnvironmentMain.wireShadow[0].getLineData().get(0)[0] - (int) WorkEnvironmentMain.wireShadow[0].getLineData().get(0)[2]) > 5 || Math.abs((int) WorkEnvironmentMain.wireShadow[0].getLineData().get(0)[1] - (int) WorkEnvironmentMain.wireShadow[0].getLineData().get(0)[3]) > 5){
                     try {
-                        Main.workenvironment.addComponent(WorkEnvironmentMain.wireShadow[0].clone());
+                        Component component = WorkEnvironmentMain.wireShadow[0].clone();
+                        Main.workenvironment.addComponent(component);
+                        PortParser.connectports(component);
                     } catch (CloneNotSupportedException e1) {
                         e1.printStackTrace();
                     }
                 }
                 if (Math.abs((int) WorkEnvironmentMain.wireShadow[1].getLineData().get(0)[0] - (int) WorkEnvironmentMain.wireShadow[1].getLineData().get(0)[2]) > 5 || Math.abs((int) WorkEnvironmentMain.wireShadow[1].getLineData().get(0)[1] - (int) WorkEnvironmentMain.wireShadow[1].getLineData().get(0)[3]) > 5){
                     try {
-                        Main.workenvironment.addComponent(WorkEnvironmentMain.wireShadow[1].clone());
+                        Component component = WorkEnvironmentMain.wireShadow[1].clone();
+                        Main.workenvironment.addComponent(component);
+                        PortParser.connectports(component);
                     } catch (CloneNotSupportedException e1) {
                         e1.printStackTrace();
                     }
                 }
-                ///////////////////////
-                //доделать!!!
-                //PortParser.connectports(component);
-                ///////////////////////
                 WorkEnvironmentMain.wireShadow[0].setVisible(false);
                 WorkEnvironmentMain.wireShadow[0] = new wire();
                 WorkEnvironmentMain.wireShadow[1].setVisible(false);

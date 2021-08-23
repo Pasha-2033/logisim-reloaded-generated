@@ -1,10 +1,26 @@
 package modules.workenvironment;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import modules.basecomponent.wire;
 import java.awt.Color;
 public class Port {
+    public static final List<List<Object>> NData = Arrays.asList(Arrays.asList());
+    public static final List<List<Object>> XData(int size){
+        List<List<Object>> data = Arrays.asList(Arrays.asList());
+        for (int i = 0; i < size; i++){
+            data.get(0).add("X");
+        }
+        return data;
+    }
+    public static final List<List<Object>> EData(int size){
+        List<List<Object>> data = Arrays.asList(Arrays.asList());
+        for (int i = 0; i < size; i++){
+            data.get(0).add("E");
+        }
+        return data;
+    }
     public boolean isbasicsender;
     public boolean isbasicgetter;
     public int[] location;
@@ -86,6 +102,12 @@ public class Port {
         if (!isbasicgetter){
             for (Port port : portsourse){
                 if (!port.isbasicsender && port != portsender){
+                    port.setdata(Data);
+                    port.portsender = this;
+                    if (port.belongsto instanceof wire){
+                        ((wire) port.belongsto).setselfcolor(color);
+                    }
+                }else if (!port.isbasicsender && port == portsender && (portsender.Data == NData || (portsender.Data != Data && (portsender.containX() || portsender.containE())))){
                     port.setdata(Data);
                     port.portsender = this;
                     if (port.belongsto instanceof wire){
