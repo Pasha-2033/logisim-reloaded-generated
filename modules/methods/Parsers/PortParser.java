@@ -1,5 +1,4 @@
 package modules.methods.Parsers;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -81,6 +80,7 @@ public class PortParser {
             for (Port port : portlist){
                 port.portsourse = new ArrayList<Port>(Collections.emptyList());
                 port.portsender = null;
+                port.setdata(Port.NData);
             }
             for (Port portfrom : portlist){
                 for (Port portto : portlist){
@@ -103,18 +103,22 @@ public class PortParser {
         for (Port port : component.getPorts()){
             unlinkport(port);
         }
-        Rectangle rectangle = new Rectangle(component.getComponentLocation()[0] + component.getbounds().x, component.getComponentLocation()[1] + component.getbounds().y, component.getbounds().width, component.getbounds().height);
         for (Component othercomponent : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
-            if (othercomponent != component && rectangle.intersects(new Rectangle(othercomponent.getComponentLocation()[0] + othercomponent.getbounds().x, othercomponent.getComponentLocation()[1] + othercomponent.getbounds().y, othercomponent.getbounds().width, othercomponent.getbounds().height))){
-                for (Port otherport : othercomponent.getPorts()){
-                    for (Port port : component.getPorts()){
-                        if (otherport.location[0] == port.location[0] && otherport.location[1] == port.location[1]){
-                            otherport.addportsourse(port);
-                            port.addportsourse(otherport);
-                            otherport.portsender = null;
-                            port.portsender = null;
-                        }
+            for (Port otherport : othercomponent.getPorts()){
+                for (Port port : component.getPorts()){
+                    int[] px = new int[]{port.location[0] + component.getComponentLocation()[0] - component.getRotationFlag()[0], otherport.location[0] + othercomponent.getComponentLocation()[0] - othercomponent.getRotationFlag()[0]};
+                    int[] py = new int[]{port.location[1] + component.getComponentLocation()[1] - component.getRotationFlag()[1], otherport.location[1] + othercomponent.getComponentLocation()[1] - othercomponent.getRotationFlag()[1]};
+                    if (px[0] == px[1] && py[0] == py[1] && !othercomponent.equals(component)){
+                        otherport.addportsourse(port);
+                        port.addportsourse(otherport);
                     }
+                }
+            }
+        }
+        for (Component c : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
+            for (Port port : c.getPorts()){
+                if (port.isbasicsender){
+                    port.setotherportdata();
                 }
             }
         }
@@ -122,12 +126,25 @@ public class PortParser {
     public static final void unlinkport(Port porttounlink){
         for (int i = 0; i < porttounlink.portsourse.size(); i++){
             Port inport = porttounlink.portsourse.get(i);
-            porttounlink.portsender = null;
-            porttounlink.removeportsourse(inport);
-            inport.removeportsourse(porttounlink);
-            if (inport.portsender == porttounlink) {
-                inport.portsender = null;
-                inport.setdata(Port.NData);
+            if (inport.belongsto != porttounlink.belongsto){
+                porttounlink.portsender = null;
+                porttounlink.removeportsourse(inport);
+                inport.removeportsourse(porttounlink);
+                if (inport.portsender == porttounlink || (inport.portsourse.isEmpty() && inport.isbasicgetter)) {
+                    inport.portsender = null;
+                    inport.setdata(Port.NData);
+                }
+                if (porttounlink.portsender == porttounlink || (porttounlink.portsourse.isEmpty() && porttounlink.isbasicgetter)){
+                    porttounlink.portsender = null;
+                    porttounlink.setdata(Port.NData);
+                }
+            }
+        }
+        for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
+            for (Port port : component.getPorts()){
+                if (port.isbasicsender){
+                    port.setotherportdata();
+                }
             }
         }
     }
@@ -142,6 +159,13 @@ public class PortParser {
                         unport.portsender = null;
                         unport.setdata(Port.NData);
                     }
+                }
+            }
+        }
+        for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
+            for (Port port : component.getPorts()){
+                if (port.isbasicsender){
+                    port.setotherportdata();
                 }
             }
         }

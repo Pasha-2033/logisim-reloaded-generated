@@ -263,7 +263,11 @@ public class ComponentListener extends MouseInputAdapter{
                     try {
                         Component component = WorkEnvironmentMain.wireShadow[0].clone();
                         Main.workenvironment.addComponent(component);
-                        PortParser.connectports(component);
+                        new Thread(new Runnable() {
+                            public void run() {
+                                PortParser.connectports(component);
+                            }
+                        }).start();
                     } catch (CloneNotSupportedException e1) {
                         e1.printStackTrace();
                     }
@@ -272,7 +276,11 @@ public class ComponentListener extends MouseInputAdapter{
                     try {
                         Component component = WorkEnvironmentMain.wireShadow[1].clone();
                         Main.workenvironment.addComponent(component);
-                        PortParser.connectports(component);
+                        new Thread(new Runnable() {
+                            public void run() {
+                                PortParser.connectports(component);
+                            }
+                        }).start();
                     } catch (CloneNotSupportedException e1) {
                         e1.printStackTrace();
                     }

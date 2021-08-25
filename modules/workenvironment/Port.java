@@ -97,32 +97,37 @@ public class Port {
     public final void setdata(List<List<Object>> Data){
         this.Data = Data;
         updateColor();
+        if (belongsto instanceof wire){
+            ((wire) belongsto).setselfcolor(color);
+        }
     }
     public final void setotherportdata(){
         if (!isbasicgetter){
+            List<Port> activeports = new ArrayList<>(Collections.emptyList());
+            boolean retry = false;
+            Port portretried = null;
             for (Port port : portsourse){
-                if (!port.isbasicsender && port != portsender){
-                    port.setdata(Data);
-                    port.portsender = this;
-                    if (port.belongsto instanceof wire){
-                        ((wire) port.belongsto).setselfcolor(color);
+                if (!port.isbasicsender){
+                    if ((port != portsender || (port == portsender && Data != port.Data)) && port.portsender != portsender){
+                        activeports.add(port);
+                        port.portsender = this;
+                        port.setdata(Data);
+                        port.belongsto.prestep();
+                        port.belongsto.repaint();
                     }
-                }else if (!port.isbasicsender && port == portsender && (portsender.Data == NData || (portsender.Data != Data && (portsender.containX() || portsender.containE())))){
-                    port.setdata(Data);
-                    port.portsender = this;
-                    if (port.belongsto instanceof wire){
-                        ((wire) port.belongsto).setselfcolor(color);
-                    }
-                } else {
-                    if (port.Data != Data){
-                        Data = createnewData(port.Data);
-                        updateColor();
-                        setotherportdata();
-                        break;
-                    }
+                } else if (port.Data != Data){
+                    portretried = port;
+                    retry = true;
+                    break;
                 }
-                port.belongsto.prestep();
-                port.belongsto.repaint();
+            }
+            for (Port port : activeports){
+                port.setotherportdata();
+            }
+            if (retry){
+                Data = createnewData(portretried.Data);
+                updateColor();
+                //setotherportdata();
             }
             WorkEnvironmentMain.excitationparser.addActivePort(this);
         }
@@ -169,31 +174,29 @@ public class Port {
     }
     public final boolean containX(){
         for (List<Object> list : Data){
-            for (Object object : list){
-                if (object.equals("X")){
-                    return true;
-                }
+            if (list.indexOf("X") != -1){
+                return true;
             }
         }
         return false;
     }
     public final boolean isallX(){
-        boolean allX = true;
         for (List<Object> list : Data){
             for (Object object : list){
                 if (!object.equals("X")){
-                    allX = false;
+                    return false;
                 }
             }
         }
-        return allX;
+        return true;
     }
     public final void addportsourse(Port port){
         if (portsourse.indexOf(port) != -1) return;
         portsourse.add(port);
         if (!port.isbasicsender){
-            port.setdata(Data);
             port.portsender = this;
+            port.setdata(Data);
+            port.setotherportdata();
         }
         if (port.belongsto instanceof wire){
             ((wire) port.belongsto).setselfcolor(color);

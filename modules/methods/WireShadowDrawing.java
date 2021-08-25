@@ -111,12 +111,12 @@ public class WireShadowDrawing {
                 }
             }
         }
-        ((wire) WorkEnvironmentMain.wireShadow[0]).setselfcolor(WorkEnvironmentMain.portforwireshadow.color);
+        /*((wire) WorkEnvironmentMain.wireShadow[0]).setselfcolor(WorkEnvironmentMain.portforwireshadow.color);
         ((wire) WorkEnvironmentMain.wireShadow[0]).getPorts().get(0).setdata(WorkEnvironmentMain.portforwireshadow.Data);
         ((wire) WorkEnvironmentMain.wireShadow[0]).getPorts().get(1).setdata(WorkEnvironmentMain.portforwireshadow.Data);
         ((wire) WorkEnvironmentMain.wireShadow[1]).setselfcolor(WorkEnvironmentMain.portforwireshadow.color);
         ((wire) WorkEnvironmentMain.wireShadow[1]).getPorts().get(0).setdata(WorkEnvironmentMain.portforwireshadow.Data);
-        ((wire) WorkEnvironmentMain.wireShadow[1]).getPorts().get(1).setdata(WorkEnvironmentMain.portforwireshadow.Data);
+        ((wire) WorkEnvironmentMain.wireShadow[1]).getPorts().get(1).setdata(WorkEnvironmentMain.portforwireshadow.Data);*/
         //WorkEnvironmentMain.portforwireshadow.addportsourse(WorkEnvironmentMain.wireShadow[0].getPorts().get(0)); //- проверка того, что сязь между портами дает цвет, но сами порты нужно совмещать через координаты
     }
 }

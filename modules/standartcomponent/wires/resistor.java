@@ -29,6 +29,6 @@ public class resistor extends Component{
     public void step(){
         getPorts().get(0).Data.equals(Arrays.asList(Arrays.asList("X")));
         //создать атрибуты
-        getPorts().get(0).setdata(Arrays.asList(Arrays.asList(1)));
+        //getPorts().get(0).setdata(Arrays.asList(Arrays.asList(1)));
     }
 }
