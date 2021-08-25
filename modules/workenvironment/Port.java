@@ -112,8 +112,6 @@ public class Port {
                         activeports.add(port);
                         port.portsender = this;
                         port.setdata(Data);
-                        port.belongsto.prestep();
-                        port.belongsto.repaint();
                     }
                 } else if (port.Data != Data){
                     portretried = port;
@@ -123,6 +121,8 @@ public class Port {
             }
             for (Port port : activeports){
                 port.setotherportdata();
+                port.belongsto.prestep();
+                port.belongsto.repaint();
             }
             if (retry){
                 Data = createnewData(portretried.Data);
@@ -193,8 +193,12 @@ public class Port {
     public final void addportsourse(Port port){
         if (portsourse.indexOf(port) != -1) return;
         portsourse.add(port);
-        if (!port.isbasicsender){
-            port.portsender = this;
+        if (!port.isbasicsender && (Data != NData || isbasicsender)){
+            if (WorkEnvironmentMain.portsamelocation(portsender, port)){
+                port.portsender = portsender;
+            } else {
+                port.portsender = this;
+            }
             port.setdata(Data);
             port.setotherportdata();
         }

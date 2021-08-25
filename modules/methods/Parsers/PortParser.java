@@ -106,9 +106,7 @@ public class PortParser {
         for (Component othercomponent : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
             for (Port otherport : othercomponent.getPorts()){
                 for (Port port : component.getPorts()){
-                    int[] px = new int[]{port.location[0] + component.getComponentLocation()[0] - component.getRotationFlag()[0], otherport.location[0] + othercomponent.getComponentLocation()[0] - othercomponent.getRotationFlag()[0]};
-                    int[] py = new int[]{port.location[1] + component.getComponentLocation()[1] - component.getRotationFlag()[1], otherport.location[1] + othercomponent.getComponentLocation()[1] - othercomponent.getRotationFlag()[1]};
-                    if (px[0] == px[1] && py[0] == py[1] && !othercomponent.equals(component)){
+                    if (WorkEnvironmentMain.portsamelocation(port, otherport) && component != othercomponent){
                         otherport.addportsourse(port);
                         port.addportsourse(otherport);
                     }

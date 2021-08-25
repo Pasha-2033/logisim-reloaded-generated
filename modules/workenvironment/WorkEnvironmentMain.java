@@ -274,6 +274,16 @@ public class WorkEnvironmentMain {
             incomponentframe.add(component, 1);
         }
     }
+    public static boolean portsamelocation(Port port1, Port port2){
+        try {
+            int[] px = new int[]{port1.location[0] + port1.belongsto.getComponentLocation()[0] - port1.belongsto.getRotationFlag()[0], port2.location[0] + port2.belongsto.getComponentLocation()[0] - port2.belongsto.getRotationFlag()[0]};
+            int[] py = new int[]{port1.location[1] + port1.belongsto.getComponentLocation()[1] - port1.belongsto.getRotationFlag()[1], port2.location[1] + port2.belongsto.getComponentLocation()[1] - port2.belongsto.getRotationFlag()[1]};
+            return px[0] == px[1] && py[0] == py[1];
+        } catch (Exception e){
+            return false;
+        }
+        
+    }
 }
 /*
 Чтобы изменить положение компонента - надо сделать так:
