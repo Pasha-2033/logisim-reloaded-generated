@@ -108,7 +108,7 @@ public class Port {
             Port portretried = null;
             for (Port port : portsourse){
                 if (!port.isbasicsender){
-                    if ((port != portsender || (port == portsender && Data != port.Data)) && port.portsender != portsender){
+                    if ((port.portsender != portsender && Data != port.Data)){
                         activeports.add(port);
                         port.portsender = this;
                         port.setdata(Data);

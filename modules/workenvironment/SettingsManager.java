@@ -51,8 +51,6 @@ public class SettingsManager {
         int y = 0;
         int w = 600;
         int h = 600;
-        System.out.println(dx);
-        System.out.println(dy);
         try {
             config.load(new FileReader(new File("modules/workenvironment/settings.properties")));
             xyMAW = config.getProperty("xyMAW");

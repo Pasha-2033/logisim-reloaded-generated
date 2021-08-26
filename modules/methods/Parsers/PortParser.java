@@ -122,6 +122,7 @@ public class PortParser {
         }
     }
     public static final void unlinkport(Port porttounlink){
+        List<Port> ports = new ArrayList<Port>(Collections.emptyList());
         for (int i = 0; i < porttounlink.portsourse.size(); i++){
             Port inport = porttounlink.portsourse.get(i);
             if (inport.belongsto != porttounlink.belongsto){
@@ -140,8 +141,11 @@ public class PortParser {
                 if (!porttounlink.isbasicsender){
                     porttounlink.setdata(Port.NData);
                 }
-                porttounlink.setotherportdata();
+                ports.add(porttounlink);
             }
+        }
+        for (Port port : ports){
+            port.setotherportdata();
         }
         for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
             for (Port port : component.getPorts()){
@@ -151,7 +155,7 @@ public class PortParser {
             }
         }
     }
-    public static final void unlinkport(Port porttounlink, List<Port> ports){
+    /*public static final void unlinkport(Port porttounlink, List<Port> ports){
         for (Port unport : ports){
             for (int i = 0; i < unport.portsourse.size(); i++){
                 if (unport.portsourse.get(i) == porttounlink){
@@ -173,5 +177,5 @@ public class PortParser {
                 }
             }
         }
-    }
+    }*/
 }
