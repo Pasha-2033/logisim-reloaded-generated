@@ -85,7 +85,8 @@ public class WorkEnvironmentMain {
         //подготовка панелей
         initgui();
         //подготовка экрана
-        mainframe = new MainAppWindow(0, 0, 600, 600);
+        int[] xywh = SettingsManager.getXYWHMAW();
+        mainframe = new MainAppWindow(xywh[0], xywh[1], xywh[2], xywh[3]);
         mainframe.add(mainworkplace);
         mainframe.setMinimumSize(new Dimension(100, 100));
         //закачка компонентов - для тестов =================================================================
