@@ -263,11 +263,11 @@ public class ComponentListener extends MouseInputAdapter{
                     try {
                         Component component = WorkEnvironmentMain.wireShadow[0].clone();
                         Main.workenvironment.addComponent(component);
-                        new Thread(new Runnable() {
-                            public void run() {
+                        //new Thread(new Runnable() {
+                            //public void run() {
                                 PortParser.connectports(component);
-                            }
-                        }).start();
+                            //}
+                        //}).start();
                     } catch (CloneNotSupportedException e1) {
                         e1.printStackTrace();
                     }
@@ -276,11 +276,11 @@ public class ComponentListener extends MouseInputAdapter{
                     try {
                         Component component = WorkEnvironmentMain.wireShadow[1].clone();
                         Main.workenvironment.addComponent(component);
-                        new Thread(new Runnable() {
-                            public void run() {
+                        //new Thread(new Runnable() {
+                            //public void run() {
                                 PortParser.connectports(component);
-                            }
-                        }).start();
+                            //}
+                        //}).start();
                     } catch (CloneNotSupportedException e1) {
                         e1.printStackTrace();
                     }
@@ -302,7 +302,7 @@ public class ComponentListener extends MouseInputAdapter{
         if (e.getWheelRotation() < 0){
             if (WorkEnvironmentMain.Scale < 10.0F) WorkEnvironmentMain.Scale += 0.1F;
         } else {
-            if (WorkEnvironmentMain.Scale > 0.1F) WorkEnvironmentMain.Scale -= 0.1F;
+            if (WorkEnvironmentMain.Scale > 0.2F) WorkEnvironmentMain.Scale -= 0.1F;
         }
         Main.workenvironment.updateWorkplaceDimensionAndRerenderAll();
     }

@@ -125,17 +125,22 @@ public class PortParser {
         for (int i = 0; i < porttounlink.portsourse.size(); i++){
             Port inport = porttounlink.portsourse.get(i);
             if (inport.belongsto != porttounlink.belongsto){
-                porttounlink.portsender = null;
                 porttounlink.removeportsourse(inport);
                 inport.removeportsourse(porttounlink);
                 if (inport.portsender == porttounlink || (inport.portsourse.isEmpty() && inport.isbasicgetter)) {
                     inport.portsender = null;
+                }
+                if (!inport.isbasicsender){
                     inport.setdata(Port.NData);
                 }
+                inport.setotherportdata();
                 if (porttounlink.portsender == porttounlink || (porttounlink.portsourse.isEmpty() && porttounlink.isbasicgetter)){
                     porttounlink.portsender = null;
+                }
+                if (!porttounlink.isbasicsender){
                     porttounlink.setdata(Port.NData);
                 }
+                porttounlink.setotherportdata();
             }
         }
         for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
@@ -156,6 +161,7 @@ public class PortParser {
                     if (unport.portsender == porttounlink) {
                         unport.portsender = null;
                         unport.setdata(Port.NData);
+                        unport.setotherportdata();
                     }
                 }
             }

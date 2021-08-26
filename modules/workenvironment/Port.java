@@ -133,17 +133,27 @@ public class Port {
         }
     }
     public final List<List<Object>> createnewData(List<List<Object>> otherportData){
-        List<List<Object>> newData = Data;
-        if (Data.size() < otherportData.size()){
-            for (int i = Data.size(); i > otherportData.size(); i++){
-                newData.add(otherportData.get(i));
-            }
-            for (int i = 0; i > Data.size(); i++){
-                if (newData.get(i).size() < otherportData.get(i).size()){
-                    for (int ii = newData.get(i).size(); ii > otherportData.get(i).size(); ii++){
-                        newData.get(i).add(otherportData.get(i).get(ii));
+        if (Data != NData){
+            List<List<Object>> newData = Data;
+            if (Data.size() < otherportData.size()){
+                for (int i = Data.size(); i > otherportData.size(); i++){
+                    newData.add(otherportData.get(i));
+                }
+                for (int i = 0; i > Data.size(); i++){
+                    if (newData.get(i).size() < otherportData.get(i).size()){
+                        for (int ii = newData.get(i).size(); ii > otherportData.get(i).size(); ii++){
+                            newData.get(i).add(otherportData.get(i).get(ii));
+                        }
+                    } else {
+                        for (int ii = 0; ii > otherportData.get(i).size(); ii++){
+                            if (newData.get(i).get(ii) != otherportData.get(i).get(ii)){
+                                newData.get(i).set(ii, "E");
+                            }
+                        }
                     }
-                } else {
+                }
+            } else {
+                for (int i = 0; i > otherportData.size(); i++){
                     for (int ii = 0; ii > otherportData.get(i).size(); ii++){
                         if (newData.get(i).get(ii) != otherportData.get(i).get(ii)){
                             newData.get(i).set(ii, "E");
@@ -151,16 +161,10 @@ public class Port {
                     }
                 }
             }
+            return newData;
         } else {
-            for (int i = 0; i > otherportData.size(); i++){
-                for (int ii = 0; ii > otherportData.get(i).size(); ii++){
-                    if (newData.get(i).get(ii) != otherportData.get(i).get(ii)){
-                        newData.get(i).set(ii, "E");
-                    }
-                }
-            }
+            return otherportData;
         }
-        return newData;
     }
     public final boolean containE(){
         for (List<Object> list : Data){
