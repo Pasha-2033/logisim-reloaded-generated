@@ -249,7 +249,7 @@ public class ComponentListener extends MouseInputAdapter{
                                 component.setComponentLocation(component.getComponentLocation()[0] + dx, component.getComponentLocation()[1] + dy);
                             }
                             component.setVisible(true);
-                            PortParser.connectports(component);
+                            PortParser.reconnectComponent(component);
                         }
                     }
                     WorkEnvironmentMain.ShadowedComponents = new ArrayList<ComponentShadow>(Collections.emptyList());
@@ -263,11 +263,7 @@ public class ComponentListener extends MouseInputAdapter{
                     try {
                         Component component = WorkEnvironmentMain.wireShadow[0].clone();
                         Main.workenvironment.addComponent(component);
-                        //new Thread(new Runnable() {
-                            //public void run() {
-                                PortParser.connectports(component);
-                            //}
-                        //}).start();
+                        PortParser.reconnectComponent(component);
                     } catch (CloneNotSupportedException e1) {
                         e1.printStackTrace();
                     }
@@ -276,11 +272,7 @@ public class ComponentListener extends MouseInputAdapter{
                     try {
                         Component component = WorkEnvironmentMain.wireShadow[1].clone();
                         Main.workenvironment.addComponent(component);
-                        //new Thread(new Runnable() {
-                            //public void run() {
-                                PortParser.connectports(component);
-                            //}
-                        //}).start();
+                        PortParser.reconnectComponent(component);
                     } catch (CloneNotSupportedException e1) {
                         e1.printStackTrace();
                     }

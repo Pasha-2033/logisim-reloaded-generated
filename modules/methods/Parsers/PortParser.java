@@ -1,8 +1,8 @@
 package modules.methods.Parsers;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
+import modules.basecomponent.wire;
 import modules.workenvironment.Component;
+import modules.workenvironment.Connection;
 import modules.workenvironment.Port;
 import modules.workenvironment.WorkEnvironmentMain;
 public class PortParser {
@@ -70,112 +70,42 @@ public class PortParser {
         }
         return new Port();
     }
-    public static final void connectports(){
-        List<Port> portlist;
-        for(Component parentcomponent : WorkEnvironmentMain.ProjectComponents){
-            portlist = new ArrayList<Port>(Collections.emptyList());
-            for (Component component : parentcomponent.getintercomponentsandsircuts()){
-                portlist.addAll(component.getPorts());
-            }
-            for (Port port : portlist){
-                port.portsourse = new ArrayList<Port>(Collections.emptyList());
-                port.portsender = null;
-                port.setdata(Port.NData);
-            }
-            for (Port portfrom : portlist){
-                for (Port portto : portlist){
-                    if (portfrom != portto && portfrom.location[0] == portto.location[0] && portfrom.location[1] == portto.location[1] && portfrom.portsourse.indexOf(portto) == -1){
-                        portfrom.addportsourse(portto);
-                        portto.addportsourse(portfrom);
-                        portfrom.portsender = null;
-                        portto.portsender = null;
-                    }
-                }
-            }
-            for (Port port : portlist){
-                if (port.isbasicsender){
-                    port.setotherportdata();
-                }
-            }
-        }
+    public static final void connectAll(){
+        //потом доделать
     }
-    public static final void connectports(Component component){
+    public static final void reconnectComponent(Component component){
         for (Port port : component.getPorts()){
-            unlinkport(port);
+            if (port.portconnection != null) {
+                Connection.divideConnection(port.portconnection, Arrays.asList(component));
+            } else {
+                Connection con = new Connection();
+                con.addPort(port);
+            }
         }
         for (Component othercomponent : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
-            for (Port otherport : othercomponent.getPorts()){
-                for (Port port : component.getPorts()){
-                    if (WorkEnvironmentMain.portsamelocation(port, otherport) && component != othercomponent){
-                        otherport.addportsourse(port);
-                        port.addportsourse(otherport);
+            if (component != othercomponent){
+                for (Port inport : component.getPorts()){
+                    for (Port outport : othercomponent.getPorts()){
+                        int[] x = new int[]{inport.location[0] - inport.belongsto.getRotationFlag()[0] + inport.belongsto.getComponentLocation()[0], outport.location[0] - outport.belongsto.getRotationFlag()[0] + outport.belongsto.getComponentLocation()[0]};
+                        int[] y = new int[]{inport.location[1] - inport.belongsto.getRotationFlag()[1] + inport.belongsto.getComponentLocation()[1], outport.location[1] - outport.belongsto.getRotationFlag()[1] + outport.belongsto.getComponentLocation()[1]};
+                        if (x[0] == x[1] && y[0] == y[1]){
+                            if (outport.portconnection == null){
+                                Connection con = new Connection();
+                                outport.portconnection = con;
+                                con.addPort(outport);
+                            }
+                            if (othercomponent instanceof wire){
+                                ((wire) othercomponent).connection.addPort(inport);
+                            } else {
+                                outport.portconnection.addPort(inport);
+                            }
+                        }
                     }
                 }
             }
         }
-        for (Component c : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
-            for (Port port : c.getPorts()){
-                if (port.isbasicsender){
-                    port.setotherportdata();
-                }
-            }
+        for (Connection con : WorkEnvironmentMain.currentSircut.intercomponentconnections){
+            con.refreshData();
         }
     }
-    public static final void unlinkport(Port porttounlink){
-        List<Port> ports = new ArrayList<Port>(Collections.emptyList());
-        for (int i = 0; i < porttounlink.portsourse.size(); i++){
-            Port inport = porttounlink.portsourse.get(i);
-            if (inport.belongsto != porttounlink.belongsto){
-                porttounlink.removeportsourse(inport);
-                inport.removeportsourse(porttounlink);
-                if (inport.portsender == porttounlink || (inport.portsourse.isEmpty() && inport.isbasicgetter)) {
-                    inport.portsender = null;
-                }
-                if (!inport.isbasicsender){
-                    inport.setdata(Port.NData);
-                }
-                inport.setotherportdata();
-                if (porttounlink.portsender == porttounlink || (porttounlink.portsourse.isEmpty() && porttounlink.isbasicgetter)){
-                    porttounlink.portsender = null;
-                }
-                if (!porttounlink.isbasicsender){
-                    porttounlink.setdata(Port.NData);
-                }
-                ports.add(porttounlink);
-            }
-        }
-        for (Port port : ports){
-            port.setotherportdata();
-        }
-        for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
-            for (Port port : component.getPorts()){
-                if (port.isbasicsender){
-                    port.setotherportdata();
-                }
-            }
-        }
-    }
-    /*public static final void unlinkport(Port porttounlink, List<Port> ports){
-        for (Port unport : ports){
-            for (int i = 0; i < unport.portsourse.size(); i++){
-                if (unport.portsourse.get(i) == porttounlink){
-                    porttounlink.portsender = null;
-                    porttounlink.removeportsourse(unport);
-                    unport.removeportsourse(porttounlink);
-                    if (unport.portsender == porttounlink) {
-                        unport.portsender = null;
-                        unport.setdata(Port.NData);
-                        unport.setotherportdata();
-                    }
-                }
-            }
-        }
-        for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
-            for (Port port : component.getPorts()){
-                if (port.isbasicsender){
-                    port.setotherportdata();
-                }
-            }
-        }
-    }*/
 }

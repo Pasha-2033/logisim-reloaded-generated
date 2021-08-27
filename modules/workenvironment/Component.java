@@ -38,6 +38,8 @@ public class Component extends JPanel implements Cloneable {
     private Icon ComponentIcon;
     private String ComponentName;
     private Rectangle bounds = new Rectangle(0, 0, 0, 0);
+    public Component belongsto = WorkEnvironmentMain.currentSircut;
+    public List<Connection> intercomponentconnections = new ArrayList<Connection>(Collections.emptyList());
     public Component(){
         setComponent("undefind", DEFAULT_ICON, false);
     }
