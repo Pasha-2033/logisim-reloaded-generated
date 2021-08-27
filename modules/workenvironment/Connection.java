@@ -37,7 +37,7 @@ public class Connection {
             w.setselfcolor(randomColor);
             System.out.println("x");
         }
-        System.out.println("////");
+        System.out.println(r + "/" + g + "/" + b);
     }
     public final void addPort(Port port){
         if (port.belongsto instanceof wire){
@@ -51,12 +51,9 @@ public class Connection {
             }
         } else {
             if (connectionports.indexOf(port) == -1){
-                if (port.portconnection != null){
-                    connectionports.add(port);
-                    port.portconnection = this;
-                } else {
-                    mergeConnections(this, port.portconnection);
-                } 
+                connectionports.add(port);
+                port.portconnection = this;
+                mergeConnections(this, port.portconnection);
             }
         }
         refreshData();
