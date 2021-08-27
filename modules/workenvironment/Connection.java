@@ -3,55 +3,28 @@ import java.util.ArrayList;
 import java.util.List;
 import modules.basecomponent.wire;
 import java.util.Collections;
-import java.util.Random;
-import java.awt.Color;
 public class Connection {
     public List<List<Object>> Data = Port.NData;
     public List<Port> connectionports = new ArrayList<Port>(Collections.emptyList());
-    public List<wire> connectioncomponents = new ArrayList<wire>(Collections.emptyList());
     public Connection(){}
     public void refreshData(){
         Data = newData();
-        System.out.println(connectionports.size());
-        System.out.println(connectioncomponents.size());
-        if (connectionports.isEmpty()){
-            Data = Port.NData;
-            System.out.println("+");
-        }
-        System.out.println(Data + "%");
+        //System.out.println(connectionports.size());
+        //System.out.println(connectioncomponents.size());
+        //System.out.println(Data + "%");
         for (Port port : connectionports){
             if (!port.isbasicsender || (port.isbasicsender && port.isbasicgetter)){
                 port.setdata(Data);
                 port.belongsto.prestep();
             }
         }
-        Random rand = new Random();
-        float r = rand.nextFloat();
-        float g = rand.nextFloat();
-        float b = rand.nextFloat();
-        Color randomColor = new Color(r, g, b);
-        for (wire w : connectioncomponents){
-            w.getPorts().get(0).setdata(Data);
-            w.getPorts().get(1).setdata(Data);
-            //w.setselfcolor(w.getPorts().get(0).color);
-            w.setselfcolor(randomColor);
-            System.out.println("x");
-        }
-        System.out.println(r + "/" + g + "/" + b);
+        System.out.println("/");
     }
     public final void addPort(Port port){
-        if (port.belongsto instanceof wire){
-            wire w = (wire) port.belongsto;
-            if (connectioncomponents.indexOf(w) == -1){
-                connectioncomponents.add(w);
-                w.connection = this;
-            }
-        } else {
-            if (connectionports.indexOf(port) == -1){
-                connectionports.add(port);
-                port.portconnection = this;
-                mergeConnections(this, port.portconnection);
-            }
+        if (connectionports.indexOf(port) == -1){
+            connectionports.add(port);
+            port.portconnection = this;
+            mergeConnections(this, port.portconnection);
         }
         refreshData();
     }
@@ -123,8 +96,6 @@ public class Connection {
             Connection newone = new Connection();
             newone.connectionports = connection1.connectionports;
             newone.connectionports.addAll(connection2.connectionports);
-            newone.connectioncomponents = connection1.connectioncomponents;
-            newone.connectioncomponents.addAll(connection2.connectioncomponents);
             for (Port port : newone.connectionports){
                 port.portconnection = newone;
             }
@@ -134,20 +105,14 @@ public class Connection {
             newone.refreshData();
         }
     }
-    public static final void divideConnection(Connection connection, List<Component> tounlink){
+    public static final void divideConnection(Connection connection, Component component){
         Connection newone = new Connection();
-        for (Component component : tounlink){
-            if (component instanceof wire){
-                newone.connectioncomponents.add((wire) component);
-                ((wire) component).connection = newone;
-            } else {
-                for (Port port : component.getPorts()){
-                    if (port.portconnection == connection) newone.connectionports.add(port);
-                }
+        if (component instanceof wire){
+            ((wire) component).connection = newone;
+        } else {
+            for (Port port : component.getPorts()){
+                if (port.portconnection == connection) newone.connectionports.add(port);
             }
-        }
-        for (Component component : newone.connectioncomponents){
-            connection.connectioncomponents.remove(component);
         }
         for (Port port : newone.connectionports){
             connection.connectionports.remove(port);
@@ -159,10 +124,7 @@ public class Connection {
     }
     public final void selfdestruct(){
         for (Port port : connectionports){
-            port.portconnection = null;
-        }
-        for (wire w : connectioncomponents){
-            w.connection = new Connection();
+            port.portconnection = new Connection();
         }
         WorkEnvironmentMain.currentSircut.intercomponentconnections.remove(this);
     }

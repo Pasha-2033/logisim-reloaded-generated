@@ -1,5 +1,4 @@
 package modules.methods.Parsers;
-import java.util.Arrays;
 import modules.basecomponent.wire;
 import modules.workenvironment.Component;
 import modules.workenvironment.Connection;
@@ -74,11 +73,6 @@ public class PortParser {
         //потом доделать
     }
     public static final void reconnectComponent(Component component){
-        for (Port port : component.getPorts()){
-            if (port.portconnection != null) {
-                Connection.divideConnection(port.portconnection, Arrays.asList(component));
-            }
-        }
         for (Component othercomponent : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
             if (component != othercomponent){
                 for (Port inport : component.getPorts()){
