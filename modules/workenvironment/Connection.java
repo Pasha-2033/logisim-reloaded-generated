@@ -45,9 +45,6 @@ public class Connection {
             if (connectioncomponents.indexOf(w) == -1){
                 connectioncomponents.add(w);
                 w.connection = this;
-                w.getPorts().get(0).setdata(Data);
-                w.getPorts().get(1).setdata(Data);
-                w.setselfcolor(w.getPorts().get(0).color);
             }
         } else {
             if (connectionports.indexOf(port) == -1){
