@@ -1,7 +1,6 @@
 package modules.workenvironment;
 import java.util.ArrayList;
 import java.util.List;
-import modules.basecomponent.wire;
 import java.util.Collections;
 public class Connection {
     public List<List<Object>> Data = Port.NData;
@@ -18,7 +17,7 @@ public class Connection {
                 port.belongsto.prestep();
             }
         }
-        System.out.println("/");
+        //System.out.println("/");
     }
     public final void addPort(Port port){
         if (connectionports.indexOf(port) == -1){
@@ -107,16 +106,12 @@ public class Connection {
     }
     public static final void divideConnection(Connection connection, Component component){
         Connection newone = new Connection();
-        if (component instanceof wire){
-            ((wire) component).connection = newone;
-        } else {
-            for (Port port : component.getPorts()){
-                if (port.portconnection == connection) newone.connectionports.add(port);
-            }
+        for (Port port : component.getPorts()){
+            if (port.portconnection == connection) newone.addPort(port);
         }
         for (Port port : newone.connectionports){
             connection.connectionports.remove(port);
-            port.portconnection = newone;
+            //port.portconnection = newone;
         }
         WorkEnvironmentMain.currentSircut.intercomponentconnections.add(newone);
         connection.refreshData();

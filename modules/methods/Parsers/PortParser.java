@@ -1,5 +1,4 @@
 package modules.methods.Parsers;
-import modules.basecomponent.wire;
 import modules.workenvironment.Component;
 import modules.workenvironment.Connection;
 import modules.workenvironment.Port;
@@ -73,6 +72,9 @@ public class PortParser {
         //потом доделать
     }
     public static final void reconnectComponent(Component component){
+        for (Port port : component.getPorts()){
+            Connection.divideConnection(port.portconnection, component);
+        }
         for (Component othercomponent : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
             if (component != othercomponent){
                 for (Port inport : component.getPorts()){
@@ -81,11 +83,7 @@ public class PortParser {
                         int[] y = new int[]{inport.location[1] - inport.belongsto.getRotationFlag()[1] + inport.belongsto.getComponentLocation()[1], outport.location[1] - outport.belongsto.getRotationFlag()[1] + outport.belongsto.getComponentLocation()[1]};
                         if (x[0] == x[1] && y[0] == y[1]){
                             outport.portconnection.addPort(outport);
-                            if (othercomponent instanceof wire){
-                                ((wire) othercomponent).connection.addPort(inport);
-                            } else {
-                                outport.portconnection.addPort(inport);
-                            }
+                            outport.portconnection.addPort(inport);
                         }
                     }
                 }
