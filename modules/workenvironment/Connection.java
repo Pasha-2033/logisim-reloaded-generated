@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.List;
 import modules.basecomponent.wire;
 import java.util.Collections;
+import java.util.Random;
+import java.awt.Color;
 public class Connection {
     public List<List<Object>> Data = Port.NData;
     public List<Port> connectionports = new ArrayList<Port>(Collections.emptyList());
@@ -10,28 +12,45 @@ public class Connection {
     public Connection(){}
     public void refreshData(){
         Data = newData();
+        System.out.println(connectionports.size());
+        System.out.println(connectioncomponents.size());
         if (connectionports.isEmpty()){
             Data = Port.NData;
+            System.out.println("+");
         }
+        System.out.println(Data + "%");
         for (Port port : connectionports){
             if (!port.isbasicsender || (port.isbasicsender && port.isbasicgetter)){
                 port.setdata(Data);
-                if (port.belongsto instanceof wire){
-                    ((wire) port.belongsto).setselfcolor(port.color);
-                }
                 port.belongsto.prestep();
             }
         }
+        Random rand = new Random();
+        float r = rand.nextFloat();
+        float g = rand.nextFloat();
+        float b = rand.nextFloat();
+        Color randomColor = new Color(r, g, b);
+        for (wire w : connectioncomponents){
+            w.getPorts().get(0).setdata(Data);
+            w.getPorts().get(1).setdata(Data);
+            //w.setselfcolor(w.getPorts().get(0).color);
+            w.setselfcolor(randomColor);
+            System.out.println("x");
+        }
+        System.out.println("////");
     }
     public final void addPort(Port port){
-        if (connectionports.indexOf(port) == -1){
-            if (port.belongsto instanceof wire){
-                wire w = (wire) port.belongsto;
+        if (port.belongsto instanceof wire){
+            wire w = (wire) port.belongsto;
+            if (connectioncomponents.indexOf(w) == -1){
+                connectioncomponents.add(w);
                 w.connection = this;
                 w.getPorts().get(0).setdata(Data);
                 w.getPorts().get(1).setdata(Data);
                 w.setselfcolor(w.getPorts().get(0).color);
-            } else {
+            }
+        } else {
+            if (connectionports.indexOf(port) == -1){
                 if (port.portconnection != null){
                     connectionports.add(port);
                     port.portconnection = this;
@@ -95,7 +114,7 @@ public class Connection {
         }
         for (int i = 0; i < data1.size(); i++){
             for (int ii = 0; ii < data1.get(i).size(); ii++){
-                System.out.println(data1.get(i).get(ii) + " % " + data2.get(i).get(ii));
+                //System.out.println(data1.get(i).get(ii) + " % " + data2.get(i).get(ii));
                 if (data1.get(i).get(ii).equals("X")){
                     data1.get(i).set(ii, data2.get(i).get(ii));
                 } else if (data1.get(i).get(ii) != data2.get(i).get(ii)){
@@ -126,6 +145,7 @@ public class Connection {
         for (Component component : tounlink){
             if (component instanceof wire){
                 newone.connectioncomponents.add((wire) component);
+                ((wire) component).connection = newone;
             } else {
                 for (Port port : component.getPorts()){
                     if (port.portconnection == connection) newone.connectionports.add(port);
@@ -136,8 +156,8 @@ public class Connection {
             connection.connectioncomponents.remove(component);
         }
         for (Port port : newone.connectionports){
-            port.portconnection = newone;
             connection.connectionports.remove(port);
+            port.portconnection = newone;
         }
         WorkEnvironmentMain.currentSircut.intercomponentconnections.add(newone);
         connection.refreshData();
@@ -146,6 +166,9 @@ public class Connection {
     public final void selfdestruct(){
         for (Port port : connectionports){
             port.portconnection = null;
+        }
+        for (wire w : connectioncomponents){
+            w.connection = new Connection();
         }
         WorkEnvironmentMain.currentSircut.intercomponentconnections.remove(this);
     }

@@ -28,7 +28,7 @@ public class Port {
     public List<List<Object>> Data = new ArrayList<>(Collections.emptyList());
     public Color color;
     public Component belongsto;
-    public Connection portconnection = null;
+    public Connection portconnection = new Connection();
     public Port(){
         this(0, 0, WorkEnvironmentMain.currentSircut);
     }

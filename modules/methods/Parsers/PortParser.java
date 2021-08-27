@@ -77,9 +77,6 @@ public class PortParser {
         for (Port port : component.getPorts()){
             if (port.portconnection != null) {
                 Connection.divideConnection(port.portconnection, Arrays.asList(component));
-            } else {
-                Connection con = new Connection();
-                con.addPort(port);
             }
         }
         for (Component othercomponent : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
@@ -89,11 +86,7 @@ public class PortParser {
                         int[] x = new int[]{inport.location[0] - inport.belongsto.getRotationFlag()[0] + inport.belongsto.getComponentLocation()[0], outport.location[0] - outport.belongsto.getRotationFlag()[0] + outport.belongsto.getComponentLocation()[0]};
                         int[] y = new int[]{inport.location[1] - inport.belongsto.getRotationFlag()[1] + inport.belongsto.getComponentLocation()[1], outport.location[1] - outport.belongsto.getRotationFlag()[1] + outport.belongsto.getComponentLocation()[1]};
                         if (x[0] == x[1] && y[0] == y[1]){
-                            if (outport.portconnection == null){
-                                Connection con = new Connection();
-                                outport.portconnection = con;
-                                con.addPort(outport);
-                            }
+                            outport.portconnection.addPort(outport);
                             if (othercomponent instanceof wire){
                                 ((wire) othercomponent).connection.addPort(inport);
                             } else {
