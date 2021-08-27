@@ -68,13 +68,65 @@ public class PortParser {
         }
         return new Port();
     }
-    public static final void connectAll(){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*public static final void connectAll(){
         //потом доделать
     }
     public static final void reconnectComponent(Component component){
-        //System.out.println(WorkEnvironmentMain.currentSircut.intercomponentconnections.size());
+        System.out.println(WorkEnvironmentMain.currentSircut.intercomponentconnections.size());
         for (Port port : component.getPorts()){
-            //Connection.divideConnection(port.portconnection, port);
+            port.portconnection.connectionports.remove(port);
+            port.portconnection = new Connection();
         }
         for (Component othercomponent : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
             if (component != othercomponent){
@@ -93,5 +145,5 @@ public class PortParser {
         for (Connection con : WorkEnvironmentMain.currentSircut.intercomponentconnections){
             con.refreshData();
         }
-    }
+    }*/
 }
