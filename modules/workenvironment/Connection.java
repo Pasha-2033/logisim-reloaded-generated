@@ -20,7 +20,8 @@ public class Connection {
         refreshData();
     }
     public void removePort(Port port){
-        port.portconnection.ports.remove(port);
+        ports.remove(port);
+        refreshData();
     }
     public void refreshData(){
 
