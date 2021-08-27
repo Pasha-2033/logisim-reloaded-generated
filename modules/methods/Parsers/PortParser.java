@@ -69,6 +69,10 @@ public class PortParser {
         return new Port();
     }
     public static final void reconnectComponent(Component component){
+        for (Port port : component.getPorts()){
+            port.portconnection.removePort(port);
+            port.portconnection = new Connection(port);
+        }
         for (Component othercomponent : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
             if (component != othercomponent){
                 for (Port inport : component.getPorts()){
@@ -76,7 +80,8 @@ public class PortParser {
                         int[] x = new int[]{inport.location[0] - inport.belongsto.getRotationFlag()[0] + inport.belongsto.getComponentLocation()[0], outport.location[0] - outport.belongsto.getRotationFlag()[0] + outport.belongsto.getComponentLocation()[0]};
                         int[] y = new int[]{inport.location[1] - inport.belongsto.getRotationFlag()[1] + inport.belongsto.getComponentLocation()[1], outport.location[1] - outport.belongsto.getRotationFlag()[1] + outport.belongsto.getComponentLocation()[1]};
                         if (x[0] == x[1] && y[0] == y[1]){
-                            outport.portconnection.addPort(inport);
+                            Connection.mergeConnection(inport.portconnection, outport.portconnection);
+                            System.out.println("x");
                         }
                     }
                 }

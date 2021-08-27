@@ -2,30 +2,44 @@ package modules.workenvironment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import modules.basecomponent.wire;
 public class Connection {
     public List<List<Object>> Data = new ArrayList<>(Collections.emptyList());
     public List<Port> ports = new ArrayList<Port>(Collections.emptyList());
     public Connection(){}
     public Connection(Port port){
-        addPort(port);
-    }
-    public void addPort(Port port){
-        if (ports.indexOf(port) == -1){
-            try {
-                port.portconnection.removePort(port);
-            } catch (Exception e){}
-            ports.add(port);
-            port.portconnection = this;
-        }
-        refreshData();
+        ports.add(port);
+        port.portconnection = this;
     }
     public void removePort(Port port){
         ports.remove(port);
+        port.portconnection = new Connection(port);
         refreshData();
+        System.out.println(ports.size());
+    }
+    public static final void mergeConnection(Connection connection1, Connection connection2){
+        Connection newconnection = new Connection();
+        try {
+            newconnection.ports.addAll(connection1.ports);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            newconnection.ports.addAll(connection2.ports);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        for (Port port : newconnection.ports){
+            port.portconnection = newconnection;
+        }
+        newconnection.refreshData();
+        System.out.println(newconnection.ports.size());
     }
     public void refreshData(){
+        Data = newData();
         for (Port port : ports){
-            if (!port.isbasicsender){
+            if (!port.isbasicsender || (port.isbasicgetter && port.isbasicsender)){
                 port.setdata(Data);
                 port.belongsto.prestep();
             }
@@ -75,7 +89,6 @@ public class Connection {
         }
         for (int i = 0; i < data1.size(); i++){
             for (int ii = 0; ii < data1.get(i).size(); ii++){
-                //System.out.println(data1.get(i).get(ii) + " % " + data2.get(i).get(ii));
                 if (data1.get(i).get(ii).equals("X")){
                     data1.get(i).set(ii, data2.get(i).get(ii));
                 } else if (data1.get(i).get(ii) != data2.get(i).get(ii)){

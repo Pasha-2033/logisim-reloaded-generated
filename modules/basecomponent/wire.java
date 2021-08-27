@@ -25,7 +25,9 @@ public class wire extends Component {
         setLineData((int) getLineData().get(0)[0], (int) getLineData().get(0)[1], (int) getLineData().get(0)[2], (int) getLineData().get(0)[3], color, (Stroke) getLineData().get(0)[5], 0);
     }
     @Override
-    public void startcode(){}
+    public void startcode(){
+        Connection.mergeConnection(getPorts().get(0).portconnection, getPorts().get(1).portconnection);
+    }
     @Override
     public void step(){}
 }
