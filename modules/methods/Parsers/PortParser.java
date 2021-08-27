@@ -72,8 +72,9 @@ public class PortParser {
         //потом доделать
     }
     public static final void reconnectComponent(Component component){
+        //System.out.println(WorkEnvironmentMain.currentSircut.intercomponentconnections.size());
         for (Port port : component.getPorts()){
-            Connection.divideConnection(port.portconnection, component);
+            //Connection.divideConnection(port.portconnection, port);
         }
         for (Component othercomponent : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
             if (component != othercomponent){

@@ -7,6 +7,10 @@ public class Connection {
     public List<Port> connectionports = new ArrayList<Port>(Collections.emptyList());
     public Connection(){}
     public void refreshData(){
+        if (connectionports.isEmpty()){
+            selfdestruct();
+            return;
+        }
         Data = newData();
         //System.out.println(connectionports.size());
         //System.out.println(connectioncomponents.size());
@@ -104,18 +108,13 @@ public class Connection {
             newone.refreshData();
         }
     }
-    public static final void divideConnection(Connection connection, Component component){
+    public static final void divideConnection(Connection connection, Port port){
         Connection newone = new Connection();
-        for (Port port : component.getPorts()){
-            if (port.portconnection == connection) newone.addPort(port);
-        }
-        for (Port port : newone.connectionports){
-            connection.connectionports.remove(port);
-            //port.portconnection = newone;
-        }
+        newone.addPort(port);
+        connection.connectionports.remove(port);
+        newone.refreshData();
         WorkEnvironmentMain.currentSircut.intercomponentconnections.add(newone);
         connection.refreshData();
-        newone.refreshData();
     }
     public final void selfdestruct(){
         for (Port port : connectionports){
