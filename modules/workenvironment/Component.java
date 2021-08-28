@@ -17,7 +17,7 @@ import java.awt.Font;
 import java.awt.Shape;
 import java.awt.FontMetrics;
 import java.awt.geom.AffineTransform;
-public class Component extends JPanel implements Cloneable {
+public class Component extends JPanel {
     private final Icon DEFAULT_ICON =  new ImageIcon("resources/componenticon/noiconforcomponent.png");
     private Dimension Size = new Dimension(500, 500);
     private boolean isSircut = false;
@@ -674,9 +674,5 @@ public class Component extends JPanel implements Cloneable {
     }
     public final void init(){
         updatebounds(null);
-    }
-    @Override
-    public Component clone() throws CloneNotSupportedException{
-        return (Component) super.clone();
     }
 }

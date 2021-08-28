@@ -27,6 +27,6 @@ public class resistor extends Component{
     public void startcode(){}
     @Override
     public void step(){
-        getPorts().get(0).Data.equals(Arrays.asList(Arrays.asList("X")));
+        getPorts().get(0).Data = Arrays.asList(Arrays.asList("X"));
     }
 }

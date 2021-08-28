@@ -1,13 +1,13 @@
 package modules.basecomponent;
 import java.awt.Color;
 import java.awt.Stroke;
+import java.util.Arrays;
 import java.awt.BasicStroke;
 import javax.swing.ImageIcon;
 import modules.workenvironment.Component;
 import modules.workenvironment.Connection;
 import modules.workenvironment.Port;
 public class wire extends Component {
-    public Connection connection = new Connection();
     public wire(){
         this(0, 0, 0, 0);
     }
@@ -21,13 +21,20 @@ public class wire extends Component {
         addLineData(from[0], from[1], to[0], to[1], Color.BLACK, new BasicStroke(1.5F, 1, 1));
         start();
     }
+    public wire(wire otherwire){
+        this(otherwire.getComponentLocation()[0] + (int) otherwire.getLineData().get(0)[0], otherwire.getComponentLocation()[1] + (int) otherwire.getLineData().get(0)[1], otherwire.getComponentLocation()[0] + (int) otherwire.getLineData().get(0)[2], otherwire.getComponentLocation()[1] + (int) otherwire.getLineData().get(0)[3]);
+    }
     public final void setselfcolor(Color color){
         setLineData((int) getLineData().get(0)[0], (int) getLineData().get(0)[1], (int) getLineData().get(0)[2], (int) getLineData().get(0)[3], color, (Stroke) getLineData().get(0)[5], 0);
     }
     @Override
     public void startcode(){
-        Connection.mergeConnection(getPorts().get(0).portconnection, getPorts().get(1).portconnection);
+        new Connection(Arrays.asList(getPorts().get(0), getPorts().get(1)));
     }
     @Override
     public void step(){}
+    @Override
+    public wire clone() throws CloneNotSupportedException {
+        return (wire) super.clone();
+    }
 }

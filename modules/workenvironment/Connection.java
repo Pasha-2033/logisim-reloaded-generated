@@ -2,64 +2,79 @@ package modules.workenvironment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import modules.basecomponent.wire;
 public class Connection {
-    public List<List<Object>> Data = new ArrayList<>(Collections.emptyList());
-    public List<Port> ports = new ArrayList<Port>(Collections.emptyList());
     public Connection(){}
     public Connection(Port port){
-        ports.add(port);
-        port.portconnection = this;
+        addPort(port);
     }
-    public void removePort(Port port){
+    public Connection(List<Port> ports){
+        for (Port port : ports){
+            addPort(port);
+        }
+    }
+    public List<List<Object>> Data = new ArrayList<>(Collections.emptyList());
+    public List<Port> ports = new ArrayList<Port>(Collections.emptyList());
+    public final void addPort(Port port){
+        if (ports.indexOf(port) == -1){
+            if (port.connection != null && port.connection != this){
+                mergeConnection(this, port.connection);
+            } else {
+                ports.add(port);
+                port.connection = this;
+                refreshData();
+            }
+        }
+    }
+    public final void removePort(Port port){
         ports.remove(port);
-        port.portconnection = new Connection(port);
+        port.connection = null;
+        new Connection(port);
         refreshData();
-        System.out.println(ports.size());
     }
     public static final void mergeConnection(Connection connection1, Connection connection2){
-        Connection newconnection = new Connection();
-        try {
-            newconnection.ports.addAll(connection1.ports);
-        } catch (Exception e){
-            e.printStackTrace();
+        connection1.ports.addAll(connection2.ports);
+        for (Port port : connection1.ports){
+            port.connection = connection1;
         }
-        try {
-            newconnection.ports.addAll(connection2.ports);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        for (Port port : newconnection.ports){
-            port.portconnection = newconnection;
-        }
-        newconnection.refreshData();
-        System.out.println(newconnection.ports.size());
+        connection1.refreshData();
+        connection2.destruct();
+    }
+    public static final void divideConnection(Connection connection, Port port){
+        connection.removePort(port);
     }
     public void refreshData(){
+        if (ports.isEmpty()){
+            destruct();
+            return;
+        }
         Data = newData();
         for (Port port : ports){
-            if (!port.isbasicsender || (port.isbasicgetter && port.isbasicsender)){
-                port.setdata(Data);
-                port.belongsto.prestep();
+            if (!port.isbasicsender || (port.isbasicsender && port.isbasicgetter)){
+                try {
+                    port.setdata(Data);
+                    port.belongsto.prestep();
+                } catch (Exception e){}
             }
         }
     }
-    public List<List<Object>> newData(){
-        List<List<Object>> data = Port.NData;
-        for (Port port : ports){
-            if (port.isbasicsender && !port.isbasicgetter){
-                data = mergeData(data, port.Data);
+    public final List<List<Object>> newData(){
+        if (ports.isEmpty()){
+            return Port.NData;
+        } else {
+            List<List<Object>> data = Port.NData;
+            for (Port port : ports){
+                if (port.isbasicsender && !port.isbasicgetter){
+                    data = mergeData(data, port.Data);
+                }
             }
-        }
-        if (data == Port.NData){
+            if (data != Port.NData) return data;
             for (Port port : ports){
                 if (port.isbasicsender && port.isbasicgetter){
                     data = mergeData(data, port.Data);
                 }
             }
+            return data;
         }
-        return data;
     }
     public static final List<List<Object>> mergeData(List<List<Object>> data1, List<List<Object>> data2){
         if (data1.size() == data2.size() && data1.size() == 0) return Port.NData;
@@ -97,5 +112,19 @@ public class Connection {
             }
         }
         return data1;
+    }
+    public final void destruct(){
+        destruct(this);
+    }
+    public static final void destruct(Connection connection){
+        if (connection.ports.size() > 0){
+            for (int i = 0; i < connection.ports.size(); i++){
+                connection.removePort(connection.ports.get(i));
+            }
+        }
+        connection.SYSgc();
+    }
+    public final void SYSgc(){
+        System.gc();
     }
 }

@@ -1,6 +1,7 @@
 package modules.methods.Listeners;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.awt.MouseInfo;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,13 +29,17 @@ public class ComponentTreeListener extends MouseAdapter{
         if (node.getUserObject() instanceof Component){
             Component component = (Component) node.getUserObject();
             if (e.getClickCount() == 1 && WorkEnvironmentMain.newone.getComponentCount() == 0) {
-                WorkEnvironmentMain.newComponent = component;
+                try {
+                    WorkEnvironmentMain.newComponent = component.getClass().getDeclaredConstructor().newInstance();
+                } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1) {}
                 WorkEnvironmentMain.newComponentShadow = new ComponentShadow(WorkEnvironmentMain.newComponent);
                 WorkEnvironmentMain.newComponentShadow.setComponentBase(0, 0);
                 WorkEnvironmentMain.newComponentShadow.setComponentLocation(MouseInfo.getPointerInfo().getLocation().x - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().x, MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y);
                 WorkEnvironmentMain.newone.add(WorkEnvironmentMain.newComponentShadow);
             } else if (e.getClickCount() == 1 && WorkEnvironmentMain.newone.getComponentCount() == 1){
-                WorkEnvironmentMain.newComponent = component;
+                try {
+                    WorkEnvironmentMain.newComponent = component.getClass().getDeclaredConstructor().newInstance();
+                } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1) {}
                 WorkEnvironmentMain.newComponentShadow = new ComponentShadow(WorkEnvironmentMain.newComponent);
                 WorkEnvironmentMain.newComponentShadow.setComponentBase(0, 0);
                 WorkEnvironmentMain.newone.removeAll();

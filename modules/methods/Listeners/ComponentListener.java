@@ -2,6 +2,8 @@ package modules.methods.Listeners;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.event.MouseWheelEvent;
+import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.awt.event.MouseEvent;
@@ -260,27 +262,36 @@ public class ComponentListener extends MouseInputAdapter{
             } else {
                 //создать провод, удалить тень
                 if (Math.abs((int) WorkEnvironmentMain.wireShadow[0].getLineData().get(0)[0] - (int) WorkEnvironmentMain.wireShadow[0].getLineData().get(0)[2]) > 5 || Math.abs((int) WorkEnvironmentMain.wireShadow[0].getLineData().get(0)[1] - (int) WorkEnvironmentMain.wireShadow[0].getLineData().get(0)[3]) > 5){
+                    //try {
+                        //Component component = new wire((wire) WorkEnvironmentMain.wireShadow[0]);
+                        //Main.workenvironment.addComponent(component);
+                        //PortParser.reconnectComponent(component);
+                    //} catch (CloneNotSupportedException e1) {
+                        //e1.printStackTrace();
+                    //}
                     try {
-                        Component component = WorkEnvironmentMain.wireShadow[0].clone();
+                        Component component = ((wire) WorkEnvironmentMain.wireShadow[1]).getClass().getDeclaredConstructor(wire.class).newInstance((wire) WorkEnvironmentMain.wireShadow[0]);
                         Main.workenvironment.addComponent(component);
                         PortParser.reconnectComponent(component);
-                    } catch (CloneNotSupportedException e1) {
+                    } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1) {
                         e1.printStackTrace();
                     }
                 }
                 if (Math.abs((int) WorkEnvironmentMain.wireShadow[1].getLineData().get(0)[0] - (int) WorkEnvironmentMain.wireShadow[1].getLineData().get(0)[2]) > 5 || Math.abs((int) WorkEnvironmentMain.wireShadow[1].getLineData().get(0)[1] - (int) WorkEnvironmentMain.wireShadow[1].getLineData().get(0)[3]) > 5){
                     try {
-                        Component component = WorkEnvironmentMain.wireShadow[1].clone();
+                        Component component = ((wire) WorkEnvironmentMain.wireShadow[1]).getClass().getDeclaredConstructor(wire.class).newInstance((wire) WorkEnvironmentMain.wireShadow[1]);
                         Main.workenvironment.addComponent(component);
                         PortParser.reconnectComponent(component);
-                    } catch (CloneNotSupportedException e1) {
+                    } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1) {
                         e1.printStackTrace();
                     }
                 }
+                //System.out.println(WorkEnvironmentMain.wireShadow[1].getPorts().get(0).Data);
                 WorkEnvironmentMain.wireShadow[0].setVisible(false);
                 WorkEnvironmentMain.wireShadow[0] = new wire();
                 WorkEnvironmentMain.wireShadow[1].setVisible(false);
                 WorkEnvironmentMain.wireShadow[1] = new wire();
+                //System.out.println(WorkEnvironmentMain.wireShadow[1].getPorts().get(0).Data);
             }
         }
         Main.workenvironment.updateWorkplaceDimensionAndRerenderAll();
