@@ -33,7 +33,7 @@ public class Connection {
     }
     public static final void mergeConnection(Connection connection1, Connection connection2){
         connection1.ports.addAll(connection2.ports);
-        for (Port port : connection1.ports){
+        for (Port port : connection2.ports){
             port.connection = connection1;
         }
         connection1.refreshData();
@@ -117,14 +117,6 @@ public class Connection {
         destruct(this);
     }
     public static final void destruct(Connection connection){
-        if (connection.ports.size() > 0){
-            for (int i = 0; i < connection.ports.size(); i++){
-                connection.removePort(connection.ports.get(i));
-            }
-        }
-        connection.SYSgc();
-    }
-    public final void SYSgc(){
-        System.gc();
+        connection = null;
     }
 }

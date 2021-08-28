@@ -1,7 +1,6 @@
 package modules.basecomponent;
 import java.awt.Color;
 import java.awt.Stroke;
-import java.util.Arrays;
 import java.awt.BasicStroke;
 import javax.swing.ImageIcon;
 import modules.workenvironment.Component;
@@ -29,12 +28,8 @@ public class wire extends Component {
     }
     @Override
     public void startcode(){
-        new Connection(Arrays.asList(getPorts().get(0), getPorts().get(1)));
+        Connection.mergeConnection(getPorts().get(0).connection, getPorts().get(1).connection);
     }
     @Override
     public void step(){}
-    @Override
-    public wire clone() throws CloneNotSupportedException {
-        return (wire) super.clone();
-    }
 }
