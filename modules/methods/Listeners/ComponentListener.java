@@ -261,15 +261,8 @@ public class ComponentListener extends MouseInputAdapter{
             } else {
                 //создать провод, удалить тень
                 if (Math.abs((int) WorkEnvironmentMain.wireShadow[0].getLineData().get(0)[0] - (int) WorkEnvironmentMain.wireShadow[0].getLineData().get(0)[2]) > 5 || Math.abs((int) WorkEnvironmentMain.wireShadow[0].getLineData().get(0)[1] - (int) WorkEnvironmentMain.wireShadow[0].getLineData().get(0)[3]) > 5){
-                    //try {
-                        //Component component = new wire((wire) WorkEnvironmentMain.wireShadow[0]);
-                        //Main.workenvironment.addComponent(component);
-                        //PortParser.reconnectComponent(component);
-                    //} catch (CloneNotSupportedException e1) {
-                        //e1.printStackTrace();
-                    //}
                     try {
-                        Component component = ((wire) WorkEnvironmentMain.wireShadow[1]).getClass().getDeclaredConstructor(wire.class).newInstance((wire) WorkEnvironmentMain.wireShadow[0]);
+                        Component component = ((wire) WorkEnvironmentMain.wireShadow[1]).getClass().getDeclaredConstructor(wire.class, boolean.class).newInstance((wire) WorkEnvironmentMain.wireShadow[0], true);
                         Main.workenvironment.addComponent(component);
                         PortParser.reconnectComponent(component);
                     } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1) {
@@ -278,7 +271,7 @@ public class ComponentListener extends MouseInputAdapter{
                 }
                 if (Math.abs((int) WorkEnvironmentMain.wireShadow[1].getLineData().get(0)[0] - (int) WorkEnvironmentMain.wireShadow[1].getLineData().get(0)[2]) > 5 || Math.abs((int) WorkEnvironmentMain.wireShadow[1].getLineData().get(0)[1] - (int) WorkEnvironmentMain.wireShadow[1].getLineData().get(0)[3]) > 5){
                     try {
-                        Component component = ((wire) WorkEnvironmentMain.wireShadow[1]).getClass().getDeclaredConstructor(wire.class).newInstance((wire) WorkEnvironmentMain.wireShadow[1]);
+                        Component component = ((wire) WorkEnvironmentMain.wireShadow[1]).getClass().getDeclaredConstructor(wire.class, boolean.class).newInstance((wire) WorkEnvironmentMain.wireShadow[1], true);
                         Main.workenvironment.addComponent(component);
                         PortParser.reconnectComponent(component);
                     } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1) {

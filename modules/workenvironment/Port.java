@@ -1,12 +1,10 @@
 package modules.workenvironment;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import modules.basecomponent.wire;
 import java.awt.Color;
 public class Port implements Cloneable{
-    public static final List<List<Object>> NData = new ArrayList<>(Collections.emptyList());
+    public static final List<List<Object>> NData = Arrays.asList(Arrays.asList());
     public static final List<List<Object>> XData(int size){
         List<List<Object>> data = Arrays.asList(Arrays.asList());
         for (int i = 0; i < size; i++){
@@ -53,7 +51,7 @@ public class Port implements Cloneable{
         this.location = new int[] {x, y};
         this.lable = lable;
         updateColor();
-        new Connection(this);
+        if (belongsto.isconnectable()) new Connection(this);
     }
     public final void updateColor(){
         if (Data.size() == 1) {

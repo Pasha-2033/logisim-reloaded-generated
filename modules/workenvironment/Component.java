@@ -22,6 +22,7 @@ public class Component extends JPanel {
     private Dimension Size = new Dimension(500, 500);
     private boolean isSircut = false;
     private boolean grided = SettingsManager.griding();
+    private boolean connectable;
     private int Rotation = 0;
     private int[] RotationFlag = {0, 0};
     private int[] ComponentLocation = {0, 0};
@@ -41,24 +42,34 @@ public class Component extends JPanel {
     public Component belongsto = WorkEnvironmentMain.currentSircut;
     public List<Connection> intercomponentconnections = new ArrayList<Connection>(Collections.emptyList());
     public Component(){
-        setComponent("undefind", DEFAULT_ICON, false);
+        setComponent("undefind", DEFAULT_ICON, false, true);
+    }
+    public Component(boolean connectable){
+        setComponent("undefind", DEFAULT_ICON, false, connectable);
     }
     public Component(String ComponentName){
-        setComponent(ComponentName, DEFAULT_ICON, false);
+        setComponent(ComponentName, DEFAULT_ICON, false, true);
     }
-    public Component(String ComponentName, boolean isSircut){
-        setComponent(ComponentName, DEFAULT_ICON, isSircut);
+    public Component(String ComponentName, boolean connectable){
+        setComponent(ComponentName, DEFAULT_ICON, false, connectable);
+    }
+    public Component(String ComponentName, boolean isSircut, boolean connectable){
+        setComponent(ComponentName, DEFAULT_ICON, isSircut, connectable);
     }
     public Component(String ComponentName, Icon ComponentIcon){
-        setComponent(ComponentName, ComponentIcon, false);
+        setComponent(ComponentName, ComponentIcon, false, true);
     }
-    public Component(String ComponentName, Icon ComponentIcon, boolean isSircut){
-        setComponent(ComponentName, ComponentIcon, isSircut);
+    public Component(String ComponentName, Icon ComponentIcon, boolean connectable){
+        setComponent(ComponentName, ComponentIcon, false, connectable);
+    }
+    public Component(String ComponentName, Icon ComponentIcon, boolean isSircut, boolean connectable){
+        setComponent(ComponentName, ComponentIcon, isSircut, connectable);
     }
     public Component(Component component){
         setSize(component.getSize());
         setisSircut(component.getisSircut());
         setgrided(component.isgrided());
+        setconnectable(component.isconnectable());
         setRotation(component.getRotation());
         setRotationFlag(component.getRotationFlag()[0], component.getRotationFlag()[1]);
         setComponentLocation(component.getComponentLocation()[0], component.getComponentLocation()[1]);
@@ -76,8 +87,9 @@ public class Component extends JPanel {
         setComponentName(component.getComponentName());
         setbounds(component.getbounds());
     }
-    private final void setComponent(String ComponentName, Icon ComponentIcon, boolean isSircut){
+    private final void setComponent(String ComponentName, Icon ComponentIcon, boolean isSircut, boolean connectable){
         this.ComponentName = Language.trnslt(ComponentName);
+        this.connectable = connectable;
         if (ComponentIcon.getIconWidth() > 0 && ComponentIcon.getIconHeight() > 0){
             this.ComponentIcon = ComponentIcon;
         } else {
@@ -113,6 +125,12 @@ public class Component extends JPanel {
     }
     public final void setgrided(boolean grided){
         this.grided = grided;
+    }
+    public final boolean isconnectable(){
+        return connectable;
+    }
+    public final void setconnectable(boolean connectable){
+        this.connectable = connectable;
     }
     public final List<Component> getintercomponentsandsircuts(){
         return intercomponentsandsircuts;

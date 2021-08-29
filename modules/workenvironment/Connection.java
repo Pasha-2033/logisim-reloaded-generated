@@ -1,5 +1,6 @@
 package modules.workenvironment;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 public class Connection {
@@ -15,23 +16,26 @@ public class Connection {
     public List<List<Object>> Data = new ArrayList<>(Collections.emptyList());
     public List<Port> ports = new ArrayList<Port>(Collections.emptyList());
     public final void addPort(Port port){
-        if (ports.indexOf(port) == -1){
-            if (port.connection != null && port.connection != this){
-                mergeConnection(this, port.connection);
+        if (ports.indexOf(port) == -1 && port.belongsto.isconnectable()){
+            if (port.connection != null){
+                if (port.connection != this) mergeConnection(this, port.connection);
             } else {
                 ports.add(port);
                 port.connection = this;
-                refreshData();
             }
         }
-    }
-    public final void removePort(Port port){
-        ports.remove(port);
-        port.connection = null;
-        new Connection(port);
         refreshData();
     }
+    public final void removePort(Port port){
+        if (port.connection != null){
+            ports.remove(port);
+            port.connection = null;
+            new Connection(port);
+            port.connection.refreshData();
+        }
+    }
     public static final void mergeConnection(Connection connection1, Connection connection2){
+        if (connection1 == null || connection2 == null) return;
         connection1.ports.addAll(connection2.ports);
         for (Port port : connection2.ports){
             port.connection = connection1;
@@ -40,18 +44,21 @@ public class Connection {
         connection2.destruct();
     }
     public static final void divideConnection(Connection connection, Port port){
-        connection.removePort(port);
+        if (connection != null){
+            connection.removePort(port);
+            connection.refreshData();
+        }
     }
     public void refreshData(){
         if (ports.isEmpty()){
             destruct();
             return;
         }
-        Data = newData();
+        this.Data = newData();
         for (Port port : ports){
             if (!port.isbasicsender || (port.isbasicsender && port.isbasicgetter)){
                 try {
-                    port.setdata(Data);
+                    port.setdata(this.Data);
                     port.belongsto.prestep();
                 } catch (Exception e){}
             }
@@ -64,20 +71,21 @@ public class Connection {
             List<List<Object>> data = Port.NData;
             for (Port port : ports){
                 if (port.isbasicsender && !port.isbasicgetter){
-                    data = mergeData(data, port.Data);
+                    //data = mergeData(data, port.Data);
+                    data = port.Data;
                 }
             }
             if (data != Port.NData) return data;
             for (Port port : ports){
                 if (port.isbasicsender && port.isbasicgetter){
-                    data = mergeData(data, port.Data);
+                    //data = mergeData(data, port.Data);
                 }
             }
             return data;
         }
     }
     public static final List<List<Object>> mergeData(List<List<Object>> data1, List<List<Object>> data2){
-        if (data1.size() == data2.size() && data1.size() == 0) return Port.NData;
+        /*if (data1.size() == data2.size() && data1.size() == 0) return Port.NData;
         if (data1.size() < data2.size()){
             for (int i = data1.size(); i < data2.size(); i++){
                 data1.add(data2.get(i));
@@ -111,12 +119,28 @@ public class Connection {
                 }
             }
         }
-        return data1;
+        return data1;*/
+        return Arrays.asList(Arrays.asList(0));
     }
     public final void destruct(){
         destruct(this);
     }
     public static final void destruct(Connection connection){
         connection = null;
+        WorkEnvironmentMain.iii--;
+    }
+    public static void refreshAll(){
+        List<Port> p = new ArrayList<Port>(Collections.emptyList());
+        List<Connection> c = new ArrayList<Connection>(Collections.emptyList());
+        //заменить на все схемы проекта
+        for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
+            p.addAll(component.getPorts());
+        }
+        for (Port port : p){
+            if (c.indexOf(port.connection) == -1 && port.connection != null) {
+                c.add(port.connection);
+                port.connection.refreshData();
+            }
+        }
     }
 }
