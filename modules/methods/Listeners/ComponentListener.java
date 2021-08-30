@@ -218,7 +218,6 @@ public class ComponentListener extends MouseInputAdapter{
                             WorkEnvironmentMain.ShadowedComponents.add(new ComponentShadow(component));
                             WorkEnvironmentMain.excretion.createExcretion();
                             touched = true;
-                            System.out.println(component.getComponentLocation()[0]);
                         }
                     }
                     if (!touched){
