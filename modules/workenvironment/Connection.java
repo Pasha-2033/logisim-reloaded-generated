@@ -34,7 +34,7 @@ public class Connection {
         }
     }
     public static final void mergeConnection(Connection connection1, Connection connection2){
-        if (connection1 == null || connection2 == null) return;
+        if (connection1 == null || connection2 == null || connection1.equals(connection2)) return;
         connection1.ports.addAll(connection2.ports);
         for (Port port : connection2.ports){
             port.connection = connection1;
@@ -58,9 +58,11 @@ public class Connection {
             if (!port.isbasicsender || (port.isbasicsender && port.isbasicgetter)){
                 try {
                     port.setdata(this.Data);
-                    port.belongsto.prestep();
                 } catch (Exception e){}
             }
+            try {
+                port.belongsto.prestep();
+            } catch (Exception e){}
         }
     }
     public final List<List<Object>> newData(){
