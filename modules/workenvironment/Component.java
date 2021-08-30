@@ -148,12 +148,12 @@ public class Component extends JPanel {
         }
     }
     public final void addintercomponentsandsircuts(Component component){
-        if (component != this && component != null){
+        if (component != this && component != null && !intercomponentsandsircuts.contains(component)){
             intercomponentsandsircuts.add(component);
         }
     }
     public final void addintercomponentsandsircuts(Component component, int index){
-        if (component != this && component != null){
+        if (component != this && component != null && !intercomponentsandsircuts.contains(component)){
             try {
                 intercomponentsandsircuts.add(index, component);
             } catch (Exception e) {

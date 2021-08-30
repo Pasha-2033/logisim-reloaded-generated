@@ -101,19 +101,13 @@ public class Port implements Cloneable{
     }
     public final boolean containE(){
         for (List<Object> list : Data){
-            for (Object object : list){
-                if (object.equals("E")){
-                    return true;
-                }
-            }
+            if (list.contains("E")) return true;
         }
         return false;
     }
     public final boolean containX(){
         for (List<Object> list : Data){
-            if (list.indexOf("X") != -1){
-                return true;
-            }
+            if (list.contains("X")) return true;
         }
         return false;
     }

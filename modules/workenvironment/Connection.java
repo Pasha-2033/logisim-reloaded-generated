@@ -1,6 +1,5 @@
 package modules.workenvironment;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 public class Connection {
@@ -16,7 +15,7 @@ public class Connection {
     public List<List<Object>> Data = new ArrayList<>(Collections.emptyList());
     public List<Port> ports = new ArrayList<Port>(Collections.emptyList());
     public final void addPort(Port port){
-        if (ports.indexOf(port) == -1 && port.belongsto.isconnectable()){
+        if (!ports.contains(port) && port.belongsto.isconnectable()){
             if (port.connection != null){
                 if (port.connection != this) mergeConnection(this, port.connection);
             } else {
@@ -71,56 +70,55 @@ public class Connection {
             List<List<Object>> data = Port.NData;
             for (Port port : ports){
                 if (port.isbasicsender && !port.isbasicgetter){
-                    //data = mergeData(data, port.Data);
-                    data = port.Data;
+                    data = mergeData(data, port.Data);
                 }
             }
-            if (data != Port.NData) return data;
+            if (data.equals(Port.NData)) return data;
             for (Port port : ports){
                 if (port.isbasicsender && port.isbasicgetter){
-                    //data = mergeData(data, port.Data);
+                    data = mergeData(data, port.Data);
                 }
             }
             return data;
         }
     }
     public static final List<List<Object>> mergeData(List<List<Object>> data1, List<List<Object>> data2){
-        /*if (data1.size() == data2.size() && data1.size() == 0) return Port.NData;
-        if (data1.size() < data2.size()){
-            for (int i = data1.size(); i < data2.size(); i++){
-                data1.add(data2.get(i));
-            }
-        } else if (data1.size() > data2.size()){
+        if (containNData(data1) && containNData(data2)){
+            return Port.NData;
+        } else if (containNData(data1)){
+            return data2;
+        } else if (containNData(data2)){
+            return data1;
+        }
+        if (data1.size() > data2.size()){
             for (int i = data2.size(); i < data1.size(); i++){
                 data2.add(data1.get(i));
             }
+        } else if (data1.size() < data2.size()){
+            for (int i = data1.size(); i < data2.size(); i++){
+                data2.add(data2.get(i));
+            }
         }
         for (int i = 0; i < data1.size(); i++){
-            if (data1.get(i).size() < data2.get(i).size() && data1.get(i).size() > 0){
-                for (int ii = data1.get(i).size(); ii < data2.get(i).size(); ii++){
-                    data1.get(i).add(data2.get(i).get(ii));
-                }
-            } else if (data1.get(i).size() > data2.get(i).size() && data2.get(i).size() > 0){
+            if (data1.get(i).size() > data2.get(i).size()){
                 for (int ii = data2.get(i).size(); ii < data1.get(i).size(); ii++){
                     data2.get(i).add(data1.get(i).get(ii));
                 }
-            } else if (data1.get(i).size() < data2.get(i).size() && data1.get(i).size() == 0){
-                data1.set(i, data2.get(i));
-            } else if (data1.get(i).size() > data2.get(i).size() && data2.get(i).size() == 0){
-                data2.set(i, data1.get(i));
+            } else if (data1.get(i).size() < data2.get(i).size()){
+                for (int ii = data1.get(i).size(); ii < data2.get(i).size(); ii++){
+                    data1.get(i).add(data2.get(i).get(ii));
+                }
             }
         }
         for (int i = 0; i < data1.size(); i++){
             for (int ii = 0; ii < data1.get(i).size(); ii++){
-                if (data1.get(i).get(ii).equals("X")){
-                    data1.get(i).set(ii, data2.get(i).get(ii));
-                } else if (data1.get(i).get(ii) != data2.get(i).get(ii)){
-                    data1.get(i).set(ii, "E");
-                }
+                if (data1.get(i).get(ii).equals("X")) data1.get(i).set(ii, data2.get(i).get(ii));
+                if (data2.get(i).get(ii).equals("E")) data1.get(i).set(ii, "E");
+                if (!data1.get(i).get(ii).equals(data2.get(i).get(ii)) && !data2.get(i).get(ii).equals("X")) data1.get(i).set(ii, "E");
             }
         }
-        return data1;*/
-        return Arrays.asList(Arrays.asList(0));
+        //перебор данных и проверка совместимости
+        return data1;
     }
     public final void destruct(){
         destruct(this);
@@ -129,7 +127,7 @@ public class Connection {
         connection = null;
         WorkEnvironmentMain.iii--;
     }
-    public static void refreshAll(){
+    public static final void refreshAll(){
         List<Port> p = new ArrayList<Port>(Collections.emptyList());
         List<Connection> c = new ArrayList<Connection>(Collections.emptyList());
         //заменить на все схемы проекта
@@ -137,10 +135,17 @@ public class Connection {
             p.addAll(component.getPorts());
         }
         for (Port port : p){
-            if (c.indexOf(port.connection) == -1 && port.connection != null) {
+            if (!c.contains(port.connection) && port.connection != null) {
                 c.add(port.connection);
                 port.connection.refreshData();
             }
         }
+    }
+    public static final boolean containNData(List<List<Object>> Data){
+        if (Data.isEmpty()) return true;
+        for (List<Object> list : Data){
+            if (!list.isEmpty()) return false;
+        }
+        return true;
     }
 }
