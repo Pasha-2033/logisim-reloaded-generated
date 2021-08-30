@@ -21,9 +21,10 @@ public class wire extends Component {
     }
     public wire(int[] from, int[] to, boolean connectable){
         super("", new ImageIcon("path-to-icon"), connectable);
-        addPort(new Port(from[0], from[1], this));
-        addPort(new Port(to[0], to[1], this));
-        addLineData(from[0], from[1], to[0], to[1], Color.BLACK, new BasicStroke(1.5F, 1, 1));
+        addPort(new Port(0, 0, this));
+        addPort(new Port(to[0] - from[0], to[1] - from[1], this));
+        addLineData(0, 0, to[0] - from[0], to[1] - from[1], Color.BLACK, new BasicStroke(1.5F, 1, 1));
+        setComponentLocation(from[0], from[1]);
         start();
     }
     public wire(wire otherwire){

@@ -122,7 +122,7 @@ public class ComponentListener extends MouseInputAdapter{
                         if (component.isgrided()){
                             int xx = component.getComponentBase()[0] + dx;
                             int yy = component.getComponentBase()[1] + dy;
-                            component.setComponentLocation(xx - (xx % 10), yy - (yy % 10));
+                            component.setComponentLocation(xx - xx % 10, yy - yy % 10);
                         } else {
                             component.setComponentLocation(component.getComponentBase()[0] + dx, component.getComponentBase()[1] + dy);
                         }
@@ -187,7 +187,6 @@ public class ComponentListener extends MouseInputAdapter{
             boolean fromport = false;
             for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
                 for (Port port : component.getPorts()){
-                    //if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x + port.location[0] - component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y + port.location[1] - component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5){
                     if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x - port.location[0] + component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y - port.location[1] + component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5){
                         fromport = true;
                         break;
@@ -219,6 +218,7 @@ public class ComponentListener extends MouseInputAdapter{
                             WorkEnvironmentMain.ShadowedComponents.add(new ComponentShadow(component));
                             WorkEnvironmentMain.excretion.createExcretion();
                             touched = true;
+                            System.out.println(component.getComponentLocation()[0]);
                         }
                     }
                     if (!touched){
