@@ -77,16 +77,24 @@ public class PortParser {
     }
     public static final void reconnectComponent(Component component, boolean reconnectionofconnection){
         if (component.isconnectable()){
-            List<Connection> connections = new ArrayList<>(Collections.emptyList());
+            List<Connection> connections = new ArrayList<Connection>(Collections.emptyList());
+            List<Component> components = new ArrayList<Component>(Collections.emptyList());
             for (Port port : component.getPorts()){
-                Connection connection = port.connection;
-                Connection.divideConnection(connection, port);
-                if (!connections.contains(connection) && reconnectionofconnection) connections.add(connection);
+                if (!connections.contains(port.connection) && reconnectionofconnection && port.connection != null) connections.add(port.connection);
+                Connection.divideConnection(port.connection, port);
             }
             for (Connection connection : connections){
-                for (int i = 0; i < connection.ports.size(); i++){
-                    reconnectComponent(connection.ports.get(i).belongsto, false);
+                for (Port port : connection.ports){
+                    if (!components.contains(port.belongsto)) components.add(port.belongsto);
                 }
+            }
+            for (Component c : components){
+                for (Port port : c.getPorts()){
+                    Connection.divideConnection(port.connection, port);
+                }
+            }
+            for (Component c : components){
+                reconnectComponent(c, false);
             }
             if (component instanceof wire){
                 Connection.mergeConnection(component.getPorts().get(0).connection, component.getPorts().get(1).connection);

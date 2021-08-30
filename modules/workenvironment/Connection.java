@@ -40,7 +40,6 @@ public class Connection {
             port.connection = connection1;
         }
         connection1.refreshData();
-        connection2.destruct();
     }
     public static final void divideConnection(Connection connection, Port port){
         if (connection != null){
@@ -49,10 +48,6 @@ public class Connection {
         }
     }
     public void refreshData(){
-        if (ports.isEmpty()){
-            destruct();
-            return;
-        }
         this.Data = newData();
         for (Port port : ports){
             if (!port.isbasicsender || (port.isbasicsender && port.isbasicgetter)){
@@ -121,13 +116,6 @@ public class Connection {
         }
         //перебор данных и проверка совместимости
         return data1;
-    }
-    public final void destruct(){
-        destruct(this);
-    }
-    public static final void destruct(Connection connection){
-        connection = null;
-        WorkEnvironmentMain.iii--;
     }
     public static final void refreshAll(){
         List<Port> p = new ArrayList<Port>(Collections.emptyList());
