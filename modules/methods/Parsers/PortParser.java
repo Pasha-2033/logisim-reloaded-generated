@@ -1,4 +1,7 @@
 package modules.methods.Parsers;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import modules.basecomponent.wire;
 import modules.workenvironment.Component;
 import modules.workenvironment.Connection;
@@ -70,9 +73,20 @@ public class PortParser {
         return new Port();
     }
     public static final void reconnectComponent(Component component){
+        reconnectComponent(component, true);
+    }
+    public static final void reconnectComponent(Component component, boolean reconnectionofconnection){
         if (component.isconnectable()){
+            List<Connection> connections = new ArrayList<>(Collections.emptyList());
             for (Port port : component.getPorts()){
-                Connection.divideConnection(port.connection, port);
+                Connection connection = port.connection;
+                Connection.divideConnection(connection, port);
+                if (!connections.contains(connection) && reconnectionofconnection) connections.add(connection);
+            }
+            for (Connection connection : connections){
+                for (int i = 0; i < connection.ports.size(); i++){
+                    reconnectComponent(connection.ports.get(i).belongsto, false);
+                }
             }
             if (component instanceof wire){
                 Connection.mergeConnection(component.getPorts().get(0).connection, component.getPorts().get(1).connection);
@@ -93,81 +107,4 @@ public class PortParser {
             Connection.refreshAll();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*public static final void connectAll(){
-        //потом доделать
-    }
-    public static final void reconnectComponent(Component component){
-        System.out.println(WorkEnvironmentMain.currentSircut.intercomponentconnections.size());
-        for (Port port : component.getPorts()){
-            port.portconnection.connectionports.remove(port);
-            port.portconnection = new Connection();
-        }
-        for (Component othercomponent : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
-            if (component != othercomponent){
-                for (Port inport : component.getPorts()){
-                    for (Port outport : othercomponent.getPorts()){
-                        int[] x = new int[]{inport.location[0] - inport.belongsto.getRotationFlag()[0] + inport.belongsto.getComponentLocation()[0], outport.location[0] - outport.belongsto.getRotationFlag()[0] + outport.belongsto.getComponentLocation()[0]};
-                        int[] y = new int[]{inport.location[1] - inport.belongsto.getRotationFlag()[1] + inport.belongsto.getComponentLocation()[1], outport.location[1] - outport.belongsto.getRotationFlag()[1] + outport.belongsto.getComponentLocation()[1]};
-                        if (x[0] == x[1] && y[0] == y[1]){
-                            outport.portconnection.addPort(outport);
-                            outport.portconnection.addPort(inport);
-                        }
-                    }
-                }
-            }
-        }
-        for (Connection con : WorkEnvironmentMain.currentSircut.intercomponentconnections){
-            con.refreshData();
-        }
-    }*/
 }
