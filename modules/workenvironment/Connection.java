@@ -74,7 +74,6 @@ public class Connection {
             if (!Port.containNData(data) && !Port.containX(data)) return data;
             for (Port port : ports){
                 if (port.isbasicsender && port.isbasicgetter){
-                    if (port.belongsto instanceof modules.standartcomponent.wires.resistor) System.out.println("x");
                     if(!Port.containNData(port.ForceData)){
                         forcedata = Port.mergeData(forcedata, port.ForceData);
                     } else {
