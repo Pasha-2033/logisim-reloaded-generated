@@ -8,7 +8,7 @@ public class MainAppWindow extends JFrame {
         super("Logisim Reloaded");
         setBounds(x, y, width, height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setIconImage(new ImageIcon("resources/programicon.png").getImage());
+        setIconImage(new ImageIcon("resources/logisim.png").getImage());
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         setJMenuBar(Menu.upmenubar());
