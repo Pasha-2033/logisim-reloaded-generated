@@ -48,11 +48,11 @@ public class Connection {
         }
     }
     public void refreshData(){
-        this.Data = newData();
+        Data = newData();
         for (Port port : ports){
             if (!port.isbasicsender || (port.isbasicsender && port.isbasicgetter)){
                 try {
-                    port.setdata(this.Data);
+                    port.setdata(Data);
                 } catch (Exception e){}
             }
             try {
@@ -65,77 +65,42 @@ public class Connection {
             return Port.NData;
         } else {
             List<List<Object>> data = Port.NData;
+            List<List<Object>> forcedata = Port.NData;
             for (Port port : ports){
                 if (port.isbasicsender && !port.isbasicgetter){
-                    data = mergeData(data, port.Data);
+                    data = Port.mergeData(data, port.Data);
                 }
             }
-            if (data.equals(Port.NData)) return data;
+            if (!Port.containNData(data) && !Port.containX(data)) return data;
             for (Port port : ports){
                 if (port.isbasicsender && port.isbasicgetter){
-                    data = mergeData(data, port.Data);
+                    if (port.belongsto instanceof modules.standartcomponent.wires.resistor) System.out.println("x");
+                    if(!Port.containNData(port.ForceData)){
+                        forcedata = Port.mergeData(forcedata, port.ForceData);
+                    } else {
+                        if (Port.containNData(data)){
+                            forcedata = Port.mergeData(forcedata, Port.multyData(1, port.SubData));
+                        } else {
+                            forcedata = Port.mergeData(forcedata, Port.multyData(Port.maxintersize(data), port.SubData));
+                        }
+                    }
                 }
             }
+            //в mergeDataWithForced(data, forcedata); недоверять функции (могут быть ошибки)
+            data = Port.mergeDataWithForced(data, forcedata);
             return data;
         }
     }
-    public static final List<List<Object>> mergeData(List<List<Object>> data1, List<List<Object>> data2){
-        if (containNData(data1) && containNData(data2)){
-            return Port.NData;
-        } else if (containNData(data1)){
-            return data2;
-        } else if (containNData(data2)){
-            return data1;
-        }
-        if (data1.size() > data2.size()){
-            for (int i = data2.size(); i < data1.size(); i++){
-                data2.add(data1.get(i));
-            }
-        } else if (data1.size() < data2.size()){
-            for (int i = data1.size(); i < data2.size(); i++){
-                data2.add(data2.get(i));
-            }
-        }
-        for (int i = 0; i < data1.size(); i++){
-            if (data1.get(i).size() > data2.get(i).size()){
-                for (int ii = data2.get(i).size(); ii < data1.get(i).size(); ii++){
-                    data2.get(i).add(data1.get(i).get(ii));
-                }
-            } else if (data1.get(i).size() < data2.get(i).size()){
-                for (int ii = data1.get(i).size(); ii < data2.get(i).size(); ii++){
-                    data1.get(i).add(data2.get(i).get(ii));
-                }
-            }
-        }
-        for (int i = 0; i < data1.size(); i++){
-            for (int ii = 0; ii < data1.get(i).size(); ii++){
-                if (data1.get(i).get(ii).equals("X")) data1.get(i).set(ii, data2.get(i).get(ii));
-                if (data2.get(i).get(ii).equals("E")) data1.get(i).set(ii, "E");
-                if (!data1.get(i).get(ii).equals(data2.get(i).get(ii)) && !data2.get(i).get(ii).equals("X")) data1.get(i).set(ii, "E");
-            }
-        }
-        //перебор данных и проверка совместимости
-        return data1;
-    }
     public static final void refreshAll(){
-        List<Port> p = new ArrayList<Port>(Collections.emptyList());
-        List<Connection> c = new ArrayList<Connection>(Collections.emptyList());
+        List<Connection> con = new ArrayList<>(Collections.emptyList());
         //заменить на все схемы проекта
         for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
-            p.addAll(component.getPorts());
-        }
-        for (Port port : p){
-            if (!c.contains(port.connection) && port.connection != null) {
-                c.add(port.connection);
-                port.connection.refreshData();
+            for (Port port : component.getPorts()){
+                if (!con.contains(port.connection)){
+                    con.add(port.connection);
+                    port.connection.refreshData();
+                }
             }
         }
-    }
-    public static final boolean containNData(List<List<Object>> Data){
-        if (Data.isEmpty()) return true;
-        for (List<Object> list : Data){
-            if (!list.isEmpty()) return false;
-        }
-        return true;
     }
 }

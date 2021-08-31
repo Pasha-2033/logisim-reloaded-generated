@@ -1,7 +1,9 @@
 package modules.standartcomponent.wires;
 import javax.swing.ImageIcon;
 import java.awt.BasicStroke;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import modules.workenvironment.ColorList;
 import modules.workenvironment.Component;
 import modules.workenvironment.Port;
@@ -23,10 +25,10 @@ public class power extends Component {
     }
     @Override
     public void startcode(){
-        getPorts().get(0).setdata(Arrays.asList(Arrays.asList(1)));
+        getPorts().get(0).setdata(new ArrayList<List<Object>>(Arrays.asList(new ArrayList<Object>(Arrays.asList(1)))));
     }
     @Override
     public void step(){
-        getPorts().get(0).setdata(Arrays.asList(Arrays.asList(1)));
+        getPorts().get(0).setdata(new ArrayList<List<Object>>(Arrays.asList(new ArrayList<Object>(Arrays.asList(1)))));
     }
 }

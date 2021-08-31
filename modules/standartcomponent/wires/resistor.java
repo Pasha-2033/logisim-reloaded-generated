@@ -2,7 +2,6 @@ package modules.standartcomponent.wires;
 import java.awt.BasicStroke;
 import java.awt.Font;
 import javax.swing.ImageIcon;
-import java.util.Arrays;
 import modules.workenvironment.ColorList;
 import modules.workenvironment.Component;
 import modules.workenvironment.Port;
@@ -24,9 +23,9 @@ public class resistor extends Component{
     }
     //вот эти два метода доделывать
     @Override
-    public void startcode(){}
-    @Override
-    public void step(){
-        getPorts().get(0).Data = Arrays.asList(Arrays.asList("X"));
+    public void startcode(){
+        getPorts().get(0).SubData = (Object) 1;
     }
+    @Override
+    public void step(){}
 }

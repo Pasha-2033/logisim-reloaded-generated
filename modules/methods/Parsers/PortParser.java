@@ -114,5 +114,19 @@ public class PortParser {
             }
             Connection.refreshAll();
         }
+        //проверка связей на порты
+        /*List<Connection> con = new ArrayList<>(Collections.emptyList());
+        for (Component c : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
+            for (Port p : c.getPorts()){
+                if (!con.contains(p.connection)){
+                    con.add(p.connection);
+                    System.out.println("------------------------------------");
+                    for (Port pp : p.connection.ports){
+                        System.out.println(pp.belongsto.getClass().getName());
+                        //if (pp.belongsto instanceof modules.standartcomponent.wires.resistor) System.out.println(pp.isbasicgetter && pp.isbasicsender);
+                    }
+                }
+            }
+        }*/
     }
 }
