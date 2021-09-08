@@ -39,4 +39,7 @@
 https://vk.com/communistic_sistema - для написания сообщений отправьте запрос в друзья, сразу указав причину (вопросы по logisim-reloaded)
 https://vk.com/logisim - группа с открытым чатом, где есть @communistic_sistema
 
-<p>![Image alt](resources/logisim-reloaded.png)</p>
+![Image alt](resources/logisim-reloaded.png)
+<p align="center">
+  <img src="resources/logisim-reloaded.png">
+</p>
