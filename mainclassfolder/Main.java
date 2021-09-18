@@ -8,3 +8,4 @@ public class Main {
     public static WorkEnvironmentMain workenvironment;
 }
 //для оптимизации методов необходимо заменить .indexOf(...) == -1 на .contains(...)
+//везде заменить int на Integer

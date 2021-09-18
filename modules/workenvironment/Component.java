@@ -6,7 +6,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import modules.languages.Language;
-import modules.methods.ComponentAttributes;
+import modules.methods.ComponentAttribute;
 import modules.methods.Daemons.ComponentStream;
 import java.awt.Rectangle;
 import java.awt.Graphics;
@@ -35,7 +35,7 @@ public class Component extends JPanel {
     private List<Object[]> OvalData = new ArrayList<Object[]>(Collections.emptyList());
     private List<Object[]> PolyData = new ArrayList<Object[]>(Collections.emptyList());
     private List<Object[]> TextData = new ArrayList<Object[]>(Collections.emptyList());
-    private List<ComponentAttributes> Attributes = new ArrayList<ComponentAttributes>(Collections.emptyList()); //доделать класс и методы
+    private List<ComponentAttribute> Attributes = new ArrayList<ComponentAttribute>(Collections.emptyList());
     private Icon ComponentIcon;
     private String ComponentName;
     private Rectangle bounds = new Rectangle(0, 0, 0, 0);
@@ -536,13 +536,46 @@ public class Component extends JPanel {
     public final void removeAllTextData(){
         TextData = new ArrayList<Object[]>(Collections.emptyList());
     }
-    public final List<ComponentAttributes> getAttributes(){
+    public final List<ComponentAttribute> getAttributes(){
         return Attributes;
     }
-    public final void setAttributes(List<ComponentAttributes> Attributes){
+    public final void setAttributes(List<ComponentAttribute> Attributes){
         this.Attributes = Attributes;
     }
-    //доделать методы для атрибутов
+    public final void setAttribute(ComponentAttribute Attribute, int index){
+        try {
+            Attributes.set(index, Attribute);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public final void addAttribute(ComponentAttribute Attribute) {
+        Attributes.add(Attribute);
+    }
+    public final void addAttribute(ComponentAttribute Attribute, int index) {
+        try {
+            Attributes.add(index, Attribute);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public final void removeAttribute(ComponentAttribute Attribute){
+        try {
+            Attributes.remove(Attribute);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public final void removeAttribute(int index){
+        try {
+            Attributes.remove(index);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public final void removeAllAttribute(){
+        Attributes = new ArrayList<ComponentAttribute>(Collections.emptyList());
+    }
     public final Icon getComponentIcon(){
         return ComponentIcon;
     }
