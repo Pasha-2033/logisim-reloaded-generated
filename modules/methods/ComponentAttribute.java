@@ -1,6 +1,9 @@
 package modules.methods;
+
 import java.util.List;
+
 import modules.workenvironment.Port;
+
 public class ComponentAttribute {
     private String Name = "Attribute";
     private Object Attribute = null;

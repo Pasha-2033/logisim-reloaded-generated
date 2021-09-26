@@ -6,6 +6,7 @@
     "configurations": [
         {
             "type": "java",
+<<<<<<< HEAD
             "name": "Launch sample5",
             "request": "launch",
             "mainClass": "sample5",
@@ -41,5 +42,35 @@
             "request": "launch",
             "mainClass": "sample4"
         }
+=======
+            "name": "Launch Java Program",
+            "request": "launch",
+            "mainClass": "mainclassfolder.Main"
+        },
+        {
+            "type": "java",
+            "name": "Launch sample1",
+            "request": "launch",
+            "mainClass": "sample1",
+        },
+        {
+            "type": "java",
+            "name": "Launch sample2",
+            "request": "launch",
+            "mainClass": "sample2",
+        },
+        {
+            "type": "java",
+            "name": "Launch sample3",
+            "request": "launch",
+            "mainClass": "sample3",
+        },
+        {
+            "type": "java",
+            "name": "Launch sample4",
+            "request": "launch",
+            "mainClass": "sample4",
+        },
+>>>>>>> e240ce54ab19446707e7e7c40beddfdbdea2cc6a
     ]
 }
