@@ -11,7 +11,7 @@
         <dd>-being finalized class of env work (stopped, 90% is ready)</dd>
         <dd>-GUI interface (stopped, 5-10% is ready)</dd>
         <dd>-finding ways to import external modules (stopped, have not complete)</dd>
-        <dd>-JFrame plan for a combining background awt and swing (stopped, 80-90% is ready)</dd>
+        <dd>-JFrame plan for a combining background awpavel.ru#4882t and swing (stopped, 80-90% is ready)</dd>
         <dd>-half finished classes of ports and components (stopped, 80-90% is ready)</dd>
         <dd>-working on components interactions (stopped, 50-60% is ready)</dd>
         <dd>-working on ports parser (stopped, ~100% is ready)</dd>
@@ -63,6 +63,6 @@
     </dl>
 </div>
 <div align="center">
-  <img src="resources/logisim-reloaded.png">
+  <img src="../resources/logisim-reloaded.png">
   <p>New icon</p>
 </div>
