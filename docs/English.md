@@ -1,4 +1,4 @@
-(Russian | Русский)[./README.md]
+[Russian | Русский](../README.md)
 # logisim-reloaded-generated
 <div>
     <h1>What is logisim-reloaded?</h1>
