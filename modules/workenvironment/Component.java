@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
 import java.awt.FontMetrics;
+import java.awt.geom.Arc2D;
 import java.awt.geom.AffineTransform;
 public class Component extends JPanel {
     private final Icon DEFAULT_ICON =  new ImageIcon("resources/componenticon/noiconforcomponent.png");
@@ -35,6 +36,8 @@ public class Component extends JPanel {
     private List<Object[]> OvalData = new ArrayList<Object[]>(Collections.emptyList());
     private List<Object[]> PolyData = new ArrayList<Object[]>(Collections.emptyList());
     private List<Object[]> TextData = new ArrayList<Object[]>(Collections.emptyList());
+    private List<Object[]> ArcData = new ArrayList<Object[]>(Collections.emptyList());
+    private List<Object[]> ShapeData = new ArrayList<Object[]>(Collections.emptyList());
     private List<ComponentAttribute> Attributes = new ArrayList<ComponentAttribute>(Collections.emptyList());
     private Icon ComponentIcon;
     private String ComponentName;
@@ -82,6 +85,8 @@ public class Component extends JPanel {
         setOvalData(component.getOvalData());
         setPolyData(component.getPolyData());
         setTextData(component.getTextData());
+        setArcData(component.getArcData());
+        setShapeData(component.getShapeData());
         setAttributes(component.getAttributes());
         setComponentIcon(component.getComponentIcon());
         setComponentName(component.getComponentName());
@@ -536,6 +541,86 @@ public class Component extends JPanel {
     public final void removeAllTextData(){
         TextData = new ArrayList<Object[]>(Collections.emptyList());
     }
+    public final List<Object[]> getArcData(){
+        return ArcData;
+    }
+    public final void setArcData(List<Object[]> ArcData){
+        this.ArcData = ArcData;
+    }
+    public final void setArcData(int x, int y, int w, int h, int startAngle, int arcAngle, Color color, Stroke strk, int index){
+        try {
+            ArcData.set(index, new Object[]{x, y, w, h, startAngle, arcAngle, color, strk});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public final void addArcData(int x, int y, int w, int h, int startAngle, int arcAngle, Color color, Stroke strk){
+        ArcData.add(new Object[]{x, y, w, h, startAngle, arcAngle, color, strk});
+    }
+    public final void addArcData(int x, int y, int w, int h, int startAngle, int arcAngle, Color color, Stroke strk, int index){
+        try {
+            ArcData.add(new Object[]{x, y, w, h, startAngle, arcAngle, color, strk});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public final void removeArcData(int index){
+        try {
+            ArcData.remove(index);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public final void removeArcData(int x, int y, int w, int h, int startAngle, int arcAngle, Color color, Stroke strk){
+        try {
+            ArcData.remove(new Object[]{x, y, w, h, startAngle, arcAngle, color, strk});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public final void removeAllArcData() {
+        ArcData = new ArrayList<>(Collections.emptyList());
+    }
+    public final List<Object[]> getShapeData(){
+        return ShapeData;
+    }
+    public final void setShapeData(List<Object[]> ShapeData){
+        this.ShapeData = ShapeData;
+    }
+    public final void setShapeData(Shape shape, Color color, Stroke strk, int index){
+        try {
+            ShapeData.set(index, new Object[]{shape, color, strk});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public final void addShapeData(Shape shape, Color color, Stroke strk){
+        ShapeData.add(new Object[]{shape, color, strk});
+    }
+    public final void addShapeData(Shape shape, Color color, Stroke strk, int index){
+        try {
+            ShapeData.add(index, new Object[]{shape, color, strk});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public final void removeShapeData(int index){
+        try {
+            ShapeData.remove(index);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public final void removeShapeData(Shape shape, Color color, Stroke strk){
+        try {
+            ShapeData.remove(new Object[]{shape, color, strk});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public final void removeAllShapeData(){
+        ShapeData = new ArrayList<Object[]>(Collections.emptyList());
+    }
     public final List<ComponentAttribute> getAttributes(){
         return Attributes;
     }
@@ -692,6 +777,13 @@ public class Component extends JPanel {
                     tmp.add(new Rectangle(metrics.stringWidth((String) object[2]), metrics.getHeight()));
                 }
             }
+        }
+        for(Object[] object : ArcData){
+            Shape transformed = new AffineTransform().createTransformedShape(new Arc2D.Float((float)(int) object[0], (float)(int) object[1], (float)(int) object[2], (float)(int) object[3], (float)(int) object[4], (float)(int) object[5], Arc2D.OPEN));
+            tmp.add(transformed.getBounds());
+        }
+        for(Object[] object : ShapeData){
+            tmp.add(((Shape) object[0]).getBounds());
         }
         if (!tmp.isEmpty()){
             Rectangle rect = tmp.get(0);

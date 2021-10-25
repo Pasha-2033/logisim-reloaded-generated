@@ -1,13 +1,13 @@
-package modules.standartcomponent.wires;
+package modules.standartcomponent.elements;
 import java.util.Arrays;
 import modules.workenvironment.Component;
 import modules.workenvironment.MainComponentcCass;
-public class mainwires extends MainComponentcCass {
-    public mainwires(){
+public class mainelements extends MainComponentcCass{
+    public mainelements(){
         super();
-        this.libraryname = "Wires";
+        this.libraryname = "Elements";
         this.componentlist = Arrays.asList(new Component[]{
-            new power(), new ground(), new resistor()
+            new AND()
         });
     }
 }

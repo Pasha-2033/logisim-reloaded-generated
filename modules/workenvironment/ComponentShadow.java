@@ -21,6 +21,8 @@ public class ComponentShadow extends Component{
         setOvalData(component.getOvalData());
         setPolyData(component.getPolyData());
         setTextData(component.getTextData());
+        setArcData(component.getArcData());
+        setShapeData(component.getShapeData());
         setAttributes(component.getAttributes());
         setComponentIcon(component.getComponentIcon());
         setComponentName(component.getComponentName());

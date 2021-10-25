@@ -36,6 +36,7 @@ import modules.methods.LayoutManagers.ScaleFrameButtonsLayout;
 import modules.methods.Listeners.ComponentListener;
 import modules.methods.Listeners.ComponentTreeListener;
 import modules.methods.Parsers.ExcitationParser;
+import modules.standartcomponent.elements.mainelements;
 import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.mainwires;
 import modules.standartcomponent.wires.power;
@@ -48,7 +49,7 @@ public class WorkEnvironmentMain {
     public static ExcitationParser excitationparser = new ExcitationParser();
     public static float Scale = 1.0F;
     public static boolean DotsThere = true;
-    public static final List<MainComponentcCass> ComponentDefaultLibraries = Arrays.asList(new mainwires()); //добавлять классы
+    public static final List<MainComponentcCass> ComponentDefaultLibraries = Arrays.asList(new mainwires(), new mainelements()); //добавлять классы
     public static List<MainComponentcCass> ComponentImportedLibraries = new ArrayList<>(Collections.emptyList());
     public static List<Component> AvaluableComponents = new ArrayList<>(Collections.emptyList());
     public static List<Component> ProjectComponents = new ArrayList<>(Collections.emptyList());
