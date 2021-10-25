@@ -1,3 +1,5 @@
+# Non-Russian languages
+[English](docs/English.md)
 # logisim-reloaded-generated
 <div>
     <h1>Что такое logisim-reloaded?</h1>
