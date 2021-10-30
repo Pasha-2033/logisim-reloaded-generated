@@ -184,7 +184,7 @@ public class DrawComponent {
     private void DrawComponentPort(Component component, Graphics graphics){
         int[] location = new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)};
         for (Port port : component.getPorts()){
-            int[] portlocation = new int[] {Math.round(((port.location[0] - component.getRotationFlag()[0])/* * (float) Math.cos(-Math.toRadians(component.getRotation())) - (port.location[1] - component.getRotationFlag()[0]) * (float) Math.sin(-Math.toRadians(component.getRotation()))*/) * WorkEnvironmentMain.Scale - WorkEnvironmentMain.Scale * 1.5F), Math.round((/*port.location[0] * (float) Math.sin(-Math.toRadians(component.getRotation()))*/ + (port.location[1] - component.getRotationFlag()[1]) * (float) Math.cos(-Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale - WorkEnvironmentMain.Scale * 1.5F)};
+            int[] portlocation = new int[] {Math.round(((port.location[0] - component.getRotationFlag()[0]) * (float) Math.cos(-Math.toRadians(component.getRotation())) - (port.location[1] - component.getRotationFlag()[0]) * (float) Math.sin(-Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale - WorkEnvironmentMain.Scale * 1.5F), Math.round((port.location[0] * (float) Math.sin(-Math.toRadians(component.getRotation())) + (port.location[1] - component.getRotationFlag()[1]) * (float) Math.cos(-Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale - WorkEnvironmentMain.Scale * 1.5F)};
             int radius = Math.round(3 * WorkEnvironmentMain.Scale);
             fillport(graphics, location, portlocation, radius, port.color);
         }
