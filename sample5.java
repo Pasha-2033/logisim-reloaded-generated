@@ -40,6 +40,7 @@ public class sample5 {
                 p2d.curveTo(60, 90, 70, 90, 80, 50);
                 Shape s = (Shape) p2d;
                 g2d.draw(s);
+                g2d.drawArc(0, 0, 50, 50, -90, 90);
                 g2d.drawRect(x, y, w, h);
                 g2d.dispose();
             }

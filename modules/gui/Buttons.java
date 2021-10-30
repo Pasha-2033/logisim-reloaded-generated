@@ -48,6 +48,7 @@ public class Buttons {
         public class DoteButtonAction extends AbstractAction {
             @Override
             public void actionPerformed(ActionEvent e) {
+                WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts().get(4).setRotation(WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts().get(4).getRotation() - 5);
                 if (!WorkEnvironmentMain.DotsThere){
                     WorkEnvironmentMain.dots.setVisible(true);
                     WorkEnvironmentMain.DotsThere = true;

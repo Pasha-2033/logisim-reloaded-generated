@@ -75,6 +75,7 @@ public class PortParser {
     public static final void reconnectComponent(Component component){
         reconnectComponent(component, true);
     }
+    //пересчитать координаты порта в зависимости от поворота компонента
     public static final void reconnectComponent(Component component, boolean reconnectionofconnection){
         if (component.isconnectable()){
             List<Connection> connections = new ArrayList<Connection>(Collections.emptyList());

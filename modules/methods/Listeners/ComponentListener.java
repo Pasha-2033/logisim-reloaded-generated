@@ -80,8 +80,7 @@ public class ComponentListener extends MouseInputAdapter{
             int y = MouseInfo.getPointerInfo().getLocation().y - WorkEnvironmentMain.incomponentframe.getLocationOnScreen().y;
             for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
                 for (Port port : component.getPorts()){
-                    //доделать условие
-                    //if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x + port.location[0] - component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y + port.location[1] - component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5) {
+                    //доделать условие, чтобы при повороте менялись координаты порта
                     if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x - port.location[0] + component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y - port.location[1] + component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5) {
                         fromport = true;
                         break;

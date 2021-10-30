@@ -61,7 +61,14 @@ public class DrawComponent {
                 drawstring(component, graphics, textdata);
             }
             for (Object[] arcdata : component.getArcData()){
-                drawarc(component, graphics, arcdata);
+                if (arcdata[0].equals("in-out")){
+                    fillarc(component, graphics, arcdata);
+                    drawarc(component, graphics, arcdata);
+                } else if (arcdata[0] == "in"){
+                    fillarc(component, graphics, arcdata);
+                } else {
+                    drawarc(component, graphics, arcdata);
+                }
             }
             for (Object[] shapedata : component.getShapeData()){
                 draw(component, graphics, shapedata);
@@ -81,7 +88,7 @@ public class DrawComponent {
                         drawline(component, graphics, component.getLineData().get(line));
                         line++;
                     } else if (data.equals("RectData")){
-                        Object[] tmp = component.getLineData().get(rect);
+                        Object[] tmp = component.getRectData().get(rect);
                         if (tmp[0].equals("in-out")){
                             fillrect(component, graphics, tmp);
                             drawrect(component, graphics, tmp);
@@ -120,7 +127,15 @@ public class DrawComponent {
                         drawpolyline(component, graphics, component.getPolyLine().get(curve));
                         curve++;
                     } else if (data.equals("ArcData")){
-                        drawarc(component, graphics, component.getArcData().get(arc));
+                        Object[] tmp = component.getArcData().get(arc);
+                        if (tmp[0].equals("in-out")){
+                            fillarc(component, graphics, component.getArcData().get(arc));
+                            drawarc(component, graphics, component.getArcData().get(arc));
+                        } else if (tmp[0].equals("in")){
+                            fillarc(component, graphics, component.getArcData().get(arc));
+                        } else {
+                            drawarc(component, graphics, component.getArcData().get(arc));
+                        }
                         arc++;
                     } else if (data.equals("ShapeData")){
                         draw(component, graphics, component.getShapeData().get(shape));
@@ -139,43 +154,22 @@ public class DrawComponent {
             drawline(component, graphics, linedata);
         }
         for (Object[] rectdata : component.getRectData()){
-            if (rectdata[0].equals("in-out")){
-                fillrect(component, graphics, rectdata);
-                drawrect(component, graphics, rectdata);
-            } else if (rectdata[0].equals("in")){
-                fillrect(component, graphics, rectdata);
-            } else{
-                drawrect(component, graphics, rectdata);
-            }
+            if (!rectdata[0].equals("in")) drawrect(component, graphics, rectdata);
         }
         for (Object[] ovaldata : component.getOvalData()){
-            if (ovaldata[0].equals("in-out")){
-                filloval(component, graphics, ovaldata);
-                drawoval(component, graphics, ovaldata);
-            } else if (ovaldata[0].equals("in")){
-                filloval(component, graphics, ovaldata);
-            } else{
-                drawoval(component, graphics, ovaldata); 
-            }
+            if (!ovaldata[0].equals("in")) drawoval(component, graphics, ovaldata);
         }
         for (Object[] polydata : component.getPolyData()){
-            if (polydata[0].equals("in-out")){
-                fillpoly(component, graphics, polydata);
-                drawpoly(component, graphics, polydata);
-            } else if (polydata[0].equals("in")){
-                fillpoly(component, graphics, polydata);
-            } else {
-                drawpoly(component, graphics, polydata);
-            }
+                if(!polydata[0].equals("in")) drawpoly(component, graphics, polydata);
         }
         for (Object[] polyline : component.getPolyLine()){
-            drawpolyline(component, graphics, polyline);
+            if(!polyline[0].equals("in")) drawpolyline(component, graphics, polyline);
         }
         for (Object[] textdata : component.getTextData()){
             drawstring(component, graphics, textdata);
         }
         for (Object[] arcdata : component.getArcData()){
-            drawarc(component, graphics, arcdata);
+            if(!arcdata[0].equals("in")) drawarc(component, graphics, arcdata);
         }
         for (Object[] shapedata : component.getShapeData()){
             draw(component, graphics, shapedata);
@@ -184,9 +178,9 @@ public class DrawComponent {
     private void DrawComponentPort(Component component, Graphics graphics){
         int[] location = new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)};
         for (Port port : component.getPorts()){
-            int[] portlocation = new int[] {Math.round(((port.location[0] - component.getRotationFlag()[0]) * (float) Math.cos(-Math.toRadians(component.getRotation())) - (port.location[1] - component.getRotationFlag()[0]) * (float) Math.sin(-Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale - WorkEnvironmentMain.Scale * 1.5F), Math.round((port.location[0] * (float) Math.sin(-Math.toRadians(component.getRotation())) + (port.location[1] - component.getRotationFlag()[1]) * (float) Math.cos(-Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale - WorkEnvironmentMain.Scale * 1.5F)};
+            int[] portlocation = new int[] {Math.round(((port.location[0] - component.getRotationFlag()[0])/* * (float) Math.cos(-Math.toRadians(component.getRotation())) - (port.location[0] - component.getRotationFlag()[1]) * (float) Math.sin(-Math.toRadians(component.getRotation()))*/) * WorkEnvironmentMain.Scale - WorkEnvironmentMain.Scale * 1.5F), Math.round((/*port.location[0] * (float) Math.sin(-Math.toRadians(component.getRotation()))*/ + (port.location[1] - component.getRotationFlag()[1]) * (float) Math.cos(-Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale - WorkEnvironmentMain.Scale * 1.5F)};
             int radius = Math.round(3 * WorkEnvironmentMain.Scale);
-            fillport(graphics, location, portlocation, radius, port.color);
+            fillport(graphics, location, portlocation, radius, port.color, component.getRotation());
         }
     }
     private void DrawComponentPort(ComponentShadow component, Graphics graphics){
@@ -194,7 +188,7 @@ public class DrawComponent {
         for (Port port : component.getPorts()){
             int[] portlocation = new int[] {Math.round(((port.location[0] - component.getRotationFlag()[0])/* * (float) Math.cos(-Math.toRadians(component.getRotation())) - (port.location[0] - component.getRotationFlag()[1]) * (float) Math.sin(-Math.toRadians(component.getRotation()))*/) * WorkEnvironmentMain.Scale - WorkEnvironmentMain.Scale * 1.5F), Math.round((/*port.location[0] * (float) Math.sin(-Math.toRadians(component.getRotation()))*/ + (port.location[1] - component.getRotationFlag()[1]) * (float) Math.cos(-Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale - WorkEnvironmentMain.Scale * 1.5F)};
             int radius = Math.round(3 * WorkEnvironmentMain.Scale);
-            fillport(graphics, location, portlocation, radius, ColorList.GRAY[1]);
+            fillport(graphics, location, portlocation, radius, ColorList.GRAY[1], component.getRotation());
         }
     }
     //отрисовка тела компонента
@@ -209,28 +203,22 @@ public class DrawComponent {
         DrawMethods.drawLine(DrawMethods.GtoG2D(graphics), location, arg1, -arg2, arg3, arg4, (Color) LineData[4], stroke);
     }
     private void drawrect(Component component, Graphics graphics, Object[] RectData){
-        int arg1 = Math.round((((int) RectData[1] - component.getRotationFlag()[0]) * (float) Math.cos(Math.toRadians(component.getRotation())) - ((int) RectData[2] - component.getRotationFlag()[1]) * (float) Math.sin(Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale);
-        int arg2 = Math.round((((int) RectData[1] - component.getRotationFlag()[0]) * (float) Math.sin(Math.toRadians(component.getRotation())) + ((int) RectData[2] - component.getRotationFlag()[1]) * (float) Math.cos(Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale);
-        int[] location = new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)};
         Stroke stroke = new BasicStroke(((BasicStroke) RectData[6]).getLineWidth() * WorkEnvironmentMain.Scale, ((BasicStroke) RectData[6]).getEndCap(), ((BasicStroke) RectData[6]).getLineJoin(), ((BasicStroke) RectData[6]).getMiterLimit(), ((BasicStroke) RectData[6]).getDashArray(), ((BasicStroke) RectData[6]).getDashPhase());
-        DrawMethods.drawRect(DrawMethods.GtoG2D(graphics), location, arg1, arg2, Math.round((int) RectData[3] * WorkEnvironmentMain.Scale), Math.round((int) RectData[4] * WorkEnvironmentMain.Scale), (Color) RectData[5], stroke, component.getRotation());
+        DrawMethods.drawRect(DrawMethods.GtoG2D(graphics), new int[]{component.getComponentLocation()[0] - component.getRotationFlag()[0], component.getComponentLocation()[1] - component.getRotationFlag()[1]}, (int) RectData[1], (int) RectData[2], (int) RectData[3], (int) RectData[4], (Color) RectData[5], stroke, component.getRotation());
     }
     private void fillrect(Component component, Graphics graphics, Object[] RectData){
-        int arg1 = Math.round((((int) RectData[1] - component.getRotationFlag()[0]) * (float) Math.cos(Math.toRadians(component.getRotation())) - ((int) RectData[2] - component.getRotationFlag()[1]) * (float) Math.sin(Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale);
-        int arg2 = Math.round((((int) RectData[1] - component.getRotationFlag()[0]) * (float) Math.sin(Math.toRadians(component.getRotation())) + ((int) RectData[2] - component.getRotationFlag()[1]) * (float) Math.cos(Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale);
-        int[] location = new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)};
-        DrawMethods.fillRect(DrawMethods.GtoG2D(graphics), location, arg1, arg2,  Math.round((int) RectData[3] * WorkEnvironmentMain.Scale),  Math.round((int) RectData[4] * WorkEnvironmentMain.Scale), (Color) RectData[5], component.getRotation());
+        DrawMethods.fillRect(DrawMethods.GtoG2D(graphics), new int[]{component.getComponentLocation()[0] - component.getRotationFlag()[0], component.getComponentLocation()[1] - component.getRotationFlag()[1]}, (int) RectData[1], (int) RectData[2], (int) RectData[3], (int) RectData[4], (Color) RectData[5], component.getRotation());
     }
     private void drawoval(Component component, Graphics graphics, Object[] OvalData){
-        int arg1 = Math.round((((int) OvalData[1] - component.getRotationFlag()[0]) * (float) Math.cos(Math.toRadians(component.getRotation())) - ((int) OvalData[2] - component.getRotationFlag()[1]) * (float) Math.sin(Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale);
-        int arg2 = Math.round((((int) OvalData[1] - component.getRotationFlag()[0]) * (float) Math.sin(Math.toRadians(component.getRotation())) + ((int) OvalData[2] - component.getRotationFlag()[1]) * (float) Math.cos(Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale);
+        int arg1 = Math.round(((int) OvalData[1] - component.getRotationFlag()[0]) * WorkEnvironmentMain.Scale);
+        int arg2 = Math.round(((int) OvalData[2] - component.getRotationFlag()[1]) * WorkEnvironmentMain.Scale);
         int[] location = new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)};
         Stroke stroke = new BasicStroke(((BasicStroke) OvalData[6]).getLineWidth() * WorkEnvironmentMain.Scale, ((BasicStroke) OvalData[6]).getEndCap(), ((BasicStroke) OvalData[6]).getLineJoin(), ((BasicStroke) OvalData[6]).getMiterLimit(), ((BasicStroke) OvalData[6]).getDashArray(), ((BasicStroke) OvalData[6]).getDashPhase());
         DrawMethods.drawOval(DrawMethods.GtoG2D(graphics), location, arg1, arg2, Math.round((int) OvalData[3] * WorkEnvironmentMain.Scale), Math.round((int) OvalData[4] * WorkEnvironmentMain.Scale), (Color) OvalData[5], stroke, component.getRotation());
     }
     private void filloval(Component component, Graphics graphics, Object[] OvalData){
-        int arg1 = Math.round((((int) OvalData[1] - component.getRotationFlag()[0]) * (float) Math.cos(Math.toRadians(component.getRotation())) - ((int) OvalData[2] - component.getRotationFlag()[1]) * (float) Math.sin(Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale);
-        int arg2 = Math.round((((int) OvalData[1] - component.getRotationFlag()[0]) * (float) Math.sin(Math.toRadians(component.getRotation())) + ((int) OvalData[2] - component.getRotationFlag()[1]) * (float) Math.cos(Math.toRadians(component.getRotation()))) * WorkEnvironmentMain.Scale);
+        int arg1 = Math.round(((int) OvalData[1] - component.getRotationFlag()[0]) * WorkEnvironmentMain.Scale);
+        int arg2 = Math.round(((int) OvalData[2] - component.getRotationFlag()[1]) * WorkEnvironmentMain.Scale);
         int[] location = new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)};
         DrawMethods.fillOval(DrawMethods.GtoG2D(graphics), location, arg1, arg2,  Math.round((int) OvalData[3] * WorkEnvironmentMain.Scale), Math.round((int) OvalData[4] * WorkEnvironmentMain.Scale), (Color) OvalData[5], component.getRotation());
     }
@@ -272,7 +260,10 @@ public class DrawComponent {
         DrawMethods.drawPolyline(DrawMethods.GtoG2D(graphics), x, y, new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, (Color) PolyLine[2], strk, component.getRotation());
     }
     private void drawarc(Component component, Graphics graphics, Object[] Arc){
-        DrawMethods.drawArc(DrawMethods.GtoG2D(graphics), (int) Arc[0] - component.getRotationFlag()[0], (int) Arc[1] - component.getRotationFlag()[1], (int) Arc[2], (int) Arc[3], (int) Arc[4], (int) Arc[5], component.getComponentLocation(), (Color) Arc[6], (Stroke) Arc[7], component.getRotation());
+        DrawMethods.drawArc(DrawMethods.GtoG2D(graphics), (int) Arc[1] - component.getRotationFlag()[0], (int) Arc[2] - component.getRotationFlag()[1], (int) Arc[3], (int) Arc[4], (int) Arc[5], (int) Arc[6], component.getComponentLocation(), (Color) Arc[7], (Stroke) Arc[8], component.getRotation());
+    }
+    private void fillarc(Component component, Graphics graphics, Object[] Arc){
+        DrawMethods.fillArc(DrawMethods.GtoG2D(graphics), (int) Arc[1] - component.getRotationFlag()[0], (int) Arc[2] - component.getRotationFlag()[1], (int) Arc[3], (int) Arc[4], (int) Arc[5], (int) Arc[6], component.getComponentLocation(), (Color) Arc[7], component.getRotation());
     }
     private void draw(Component component, Graphics graphics, Object[] Shape){
         DrawMethods.draw(DrawMethods.GtoG2D(graphics), (Shape) Shape[0], component.getComponentLocation(), (Color) Shape[1], (Stroke) Shape[2], component.getRotation());
@@ -293,12 +284,6 @@ public class DrawComponent {
         Stroke stroke = new BasicStroke(((BasicStroke) RectData[6]).getLineWidth() * WorkEnvironmentMain.Scale, ((BasicStroke) RectData[6]).getEndCap(), ((BasicStroke) RectData[6]).getLineJoin(), ((BasicStroke) RectData[6]).getMiterLimit(), ((BasicStroke) RectData[6]).getDashArray(), ((BasicStroke) RectData[6]).getDashPhase());
         DrawMethods.drawRect(DrawMethods.GtoG2D(graphics), location, arg1, arg2, Math.round((int) RectData[3] * WorkEnvironmentMain.Scale), Math.round((int) RectData[4] * WorkEnvironmentMain.Scale), ColorList.GRAY[1], stroke, component.getRotation());
     }
-    private void fillrect(ComponentShadow component, Graphics graphics, Object[] RectData){
-        int arg1 = (int) ((int) RectData[1] * Math.cos(Math.toRadians(component.getRotation())) * WorkEnvironmentMain.Scale - (int) RectData[2] * Math.sin(Math.toRadians(component.getRotation())) * WorkEnvironmentMain.Scale);
-        int arg2 = (int) ((int) RectData[1] * Math.sin(Math.toRadians(component.getRotation())) * WorkEnvironmentMain.Scale + (int) RectData[2] * Math.cos(Math.toRadians(component.getRotation())) * WorkEnvironmentMain.Scale);
-        int[] location = new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)};
-        DrawMethods.fillRect(DrawMethods.GtoG2D(graphics), location, arg1, arg2,  Math.round((int) RectData[3] * WorkEnvironmentMain.Scale),  Math.round((int) RectData[4] * WorkEnvironmentMain.Scale), ColorList.GRAY[1], component.getRotation());
-    }
     private void drawoval(ComponentShadow component, Graphics graphics, Object[] OvalData){
         int arg1 = (int) ((int) OvalData[1] * (float) Math.cos(Math.toRadians(component.getRotation())) - (int) OvalData[2] * Math.sin(Math.toRadians(component.getRotation())));
         int arg2 = (int) ((int) OvalData[1] * Math.sin(Math.toRadians(component.getRotation())) + (int) OvalData[2] * Math.cos(Math.toRadians(component.getRotation())));
@@ -306,18 +291,9 @@ public class DrawComponent {
         Stroke stroke = new BasicStroke(((BasicStroke) OvalData[6]).getLineWidth() * WorkEnvironmentMain.Scale, ((BasicStroke) OvalData[6]).getEndCap(), ((BasicStroke) OvalData[6]).getLineJoin(), ((BasicStroke) OvalData[6]).getMiterLimit(), ((BasicStroke) OvalData[6]).getDashArray(), ((BasicStroke) OvalData[6]).getDashPhase());
         DrawMethods.drawOval(DrawMethods.GtoG2D(graphics), location, arg1, arg2, Math.round((int) OvalData[3] * WorkEnvironmentMain.Scale), Math.round((int) OvalData[4] * WorkEnvironmentMain.Scale), ColorList.GRAY[1], stroke, component.getRotation());
     }
-    private void filloval(ComponentShadow component, Graphics graphics, Object[] OvalData){
-        int arg1 = (int) ((int) OvalData[1] * Math.cos(Math.toRadians(component.getRotation())) - (int) OvalData[2] * Math.sin(Math.toRadians(component.getRotation())));
-        int arg2 = (int) ((int) OvalData[1] * Math.sin(Math.toRadians(component.getRotation())) + (int) OvalData[2] * Math.cos(Math.toRadians(component.getRotation())));
-        int[] location = new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)};
-        DrawMethods.fillOval(DrawMethods.GtoG2D(graphics), location, arg1, arg2,  Math.round((int) OvalData[3] * WorkEnvironmentMain.Scale), Math.round((int) OvalData[4] * WorkEnvironmentMain.Scale), ColorList.GRAY[1], component.getRotation());
-    }
     private void drawpoly(ComponentShadow component, Graphics graphics, Object[] PolyData){
         Stroke strk = new BasicStroke(((BasicStroke) PolyData[4]).getLineWidth() * WorkEnvironmentMain.Scale, ((BasicStroke) PolyData[4]).getEndCap(), ((BasicStroke) PolyData[4]).getLineJoin(), ((BasicStroke) PolyData[4]).getMiterLimit(), ((BasicStroke) PolyData[4]).getDashArray(), ((BasicStroke) PolyData[4]).getDashPhase());
         DrawMethods.drawPoly(DrawMethods.GtoG2D(graphics), component.getComponentLocation(), (int[]) PolyData[1], (int[]) PolyData[2], ColorList.GRAY[1], strk, component.getRotation());
-    }
-    private void fillpoly(ComponentShadow component, Graphics graphics, Object[] PolyData){
-        DrawMethods.fillPoly(DrawMethods.GtoG2D(graphics), component.getComponentLocation(), (int[]) PolyData[1], (int[]) PolyData[2], ColorList.GRAY[1], component.getRotation());
     }
     private void drawstring(ComponentShadow component, Graphics graphics, Object[] TextData){
         if (((String) TextData[0]).equals("center")){
@@ -350,13 +326,13 @@ public class DrawComponent {
         DrawMethods.drawPolyline(DrawMethods.GtoG2D(graphics), x, y, new int[] {Math.round(component.getComponentLocation()[0] * WorkEnvironmentMain.Scale), Math.round(component.getComponentLocation()[1] * WorkEnvironmentMain.Scale)}, ColorList.GRAY[1], strk, component.getRotation());
     }
     private void drawarc(ComponentShadow component, Graphics graphics, Object[] Arc){
-        DrawMethods.drawArc(DrawMethods.GtoG2D(graphics), (int) Arc[0] - component.getRotationFlag()[0], (int) Arc[1] - component.getRotationFlag()[1], (int) Arc[2], (int) Arc[3], (int) Arc[4], (int) Arc[5], component.getComponentLocation(), ColorList.GRAY[1], (Stroke) Arc[7], component.getRotation());
+        DrawMethods.drawArc(DrawMethods.GtoG2D(graphics), (int) Arc[1] - component.getRotationFlag()[0], (int) Arc[2] - component.getRotationFlag()[1], (int) Arc[3], (int) Arc[4], (int) Arc[5], (int) Arc[6], component.getComponentLocation(), ColorList.GRAY[1], (Stroke) Arc[8], component.getRotation());
     }
     private void draw(ComponentShadow component, Graphics graphics, Object[] Shape){
         DrawMethods.draw(DrawMethods.GtoG2D(graphics), (Shape) Shape[0], component.getComponentLocation(), ColorList.GRAY[1], (Stroke) Shape[2], component.getRotation());
     }
     //отрисовка порта
-    private void fillport(Graphics graphics, int[] location, int[] portlocation, int radius, Color portcolor){
-        DrawMethods.fillOval(DrawMethods.GtoG2D(graphics), location, portlocation[0], portlocation[1], radius, radius, portcolor, 0);
+    private void fillport(Graphics graphics, int[] location, int[] portlocation, int radius, Color portcolor, int rotation){
+        DrawMethods.fillOval(DrawMethods.GtoG2D(graphics), location, portlocation[0], portlocation[1], radius, radius, portcolor, rotation);
     };
 }

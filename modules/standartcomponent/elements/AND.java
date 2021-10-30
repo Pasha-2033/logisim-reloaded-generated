@@ -1,11 +1,7 @@
 package modules.standartcomponent.elements;
 import javax.swing.ImageIcon;
 import java.awt.BasicStroke;
-import java.awt.Shape;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.awt.geom.Path2D;
 import modules.methods.ComponentAttribute;
 import modules.workenvironment.ColorList;
 import modules.workenvironment.Component;
@@ -17,14 +13,22 @@ public class AND extends Component {
     }
     private void setPowerData(){
         //доделать
-        setRotationFlag(20, 20);
-        addPort(new Port(0, 5+5, false, true, this));
-        addPort(new Port(0, 25+5, false, true, this));
-        addPort(new Port(25, 15+5, true, false, this));
-        addLineData(0, 0+5, 0, 30+5, ColorList.BLACK[0], new BasicStroke(2.0F, 1, 1));
-        addLineData(0, 0+5, 10, 0+5, ColorList.BLACK[0], new BasicStroke(2.0F, 1, 1));
-        addLineData(0, 30+5, 10, 30+5, ColorList.BLACK[0], new BasicStroke(2.0F, 1, 1));
-        addArcData(-5, 0+5, 30, 30, -90, 180, ColorList.BLACK[0], new BasicStroke(2.0F, 1, 1));
+        setRotationFlag(30, 20);
+        addPort(new Port(0, 10, false, true, this));
+        addPort(new Port(0, 30, false, true, this));
+        addPort(new Port(30, 20, true, false, this));
+        addLineData(0, 5, 0, 35, ColorList.BLACK[0], new BasicStroke(2.0F, 1, 1));
+        addLineData(0, 5, 10, 5, ColorList.BLACK[0], new BasicStroke(2.0F, 1, 1));
+        addLineData(0, 35, 10, 35, ColorList.BLACK[0], new BasicStroke(2.0F, 1, 1));
+        addRectData("in", 0, 5, 11, 30, ColorList.WHITE[0], null);
+        addArcData("in", -10, 5, 40, 30, -90, 180, ColorList.WHITE[0], null);
+        addArcData("out", -10, 5, 40, 30, -90, 180, ColorList.BLACK[0], new BasicStroke(2.0F, 1, 1));
+        addDrawOder("RectData");
+        addDrawOder("ArcData");
+        addDrawOder("ArcData");
+        addDrawOder("LineData");
+        addDrawOder("LineData");
+        addDrawOder("LineData");
         start();
     }
     @Override
@@ -36,6 +40,14 @@ public class AND extends Component {
     @Override
     public void step(){
         ComponentAttribute.multySubData(getPorts(), this::funk, 1, 1);
+        if(getPorts().get(0).connection.ports.size() < 2){
+            getPorts().get(0).setdata(Port.multyData(1, "X"));
+            prestep();
+        }
+        if(getPorts().get(1).connection.ports.size() < 2){
+            getPorts().get(1).setdata(Port.multyData(1, "X"));
+            prestep();
+        }
     }
     public void funk(List<Port> ports, int step, int substep){
         //дописать

@@ -4,9 +4,8 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import modules.workenvironment.ColorList;
 import modules.workenvironment.Component;
-import modules.workenvironment.Connection;
 import modules.workenvironment.Port;
-public class resistor extends Component{
+public class resistor extends Component {
     public resistor(){
         super("resistor", new ImageIcon("resources/componenticon/wires/resistor.gif"));
         setResistorData();
@@ -26,13 +25,10 @@ public class resistor extends Component{
     @Override
     public void startcode(){
         getPorts().get(0).SubData = (Object) 1;
-        getPorts().get(0).setdata(Port.NData);
+        step();
     }
     @Override
     public void step(){
-        Connection connection = getPorts().get(0).connection;
-        if (connection.ports.size() == 1 && connection.ports.contains(getPorts().get(0))){
-            getPorts().get(0).setdata(Port.NData);
-        }
+        if (getPorts().get(0).connection.ports.size() < 2) getPorts().get(0).setdata(Port.NData);
     }
 }

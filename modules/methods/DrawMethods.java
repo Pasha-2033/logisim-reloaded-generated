@@ -11,7 +11,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import javax.swing.JComponent;
 import modules.workenvironment.WorkEnvironmentMain;
-public class DrawMethods extends JComponent{
+public class DrawMethods extends JComponent {
     public static final Graphics2D GtoG2D(Graphics g){
         return (Graphics2D) g.create();
     }
@@ -38,15 +38,21 @@ public class DrawMethods extends JComponent{
             strk = new BasicStroke(1.0F, 1, 1);
         }
         g2d.setColor(color);
+        g2d.setStroke(strk);
+        AffineTransform at = g2d.getTransform();
+        at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+        g2d.setTransform(at);
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.translate(componentlocation[0], componentlocation[1]);
-        g2d.setStroke(strk);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.drawRect(x, y, w, h);
         g2d.dispose();
     }
     public static final void fillRect(Graphics2D g2d, int[] componentlocation, int x, int y, int w, int h, Color color, int rotation){
         g2d.setColor(color);
+        AffineTransform at = g2d.getTransform();
+        at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+        g2d.setTransform(at);
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.translate(componentlocation[0], componentlocation[1]);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -117,6 +123,9 @@ public class DrawMethods extends JComponent{
         g2d.dispose();
     }
     public static final void drawPolyline(Graphics2D g2d, int[] x, int[] y, int[] componentlocation, Color color, Stroke strk, int rotation){
+        if (strk == null){
+            strk = new BasicStroke(1.0F, 1, 1);
+        }
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.setColor(color);
         g2d.setStroke(strk);
@@ -129,24 +138,41 @@ public class DrawMethods extends JComponent{
         g2d.dispose();
     }
     public static final void drawArc(Graphics2D g2d, int x, int y, int w, int h, int startAngle, int arcAngle, int[] componentlocation, Color color, Stroke strk, int rotation){
+        if (strk == null){
+            strk = new BasicStroke(1.0F, 1, 1);
+        }
         g2d.setColor(color);
         g2d.setStroke(strk);
-        g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         AffineTransform at = g2d.getTransform();
         at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
         g2d.setTransform(at);
+        g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.translate(componentlocation[0], componentlocation[1]);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.drawArc(x, y, w, h, startAngle, arcAngle);
         g2d.dispose();
     }
-    public static final void draw(Graphics2D g2d, Shape shape, int[] componentlocation, Color color, Stroke strk, int rotation){
+    public static final void fillArc(Graphics2D g2d, int x, int y, int w, int h, int startAngle, int arcAngle, int[] componentlocation, Color color, int rotation){
         g2d.setColor(color);
-        g2d.setStroke(strk);
-        g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         AffineTransform at = g2d.getTransform();
         at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
         g2d.setTransform(at);
+        g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
+        g2d.translate(componentlocation[0], componentlocation[1]);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.fillArc(x, y, w, h, startAngle, arcAngle);
+        g2d.dispose();
+    }
+    public static final void draw(Graphics2D g2d, Shape shape, int[] componentlocation, Color color, Stroke strk, int rotation){
+        if (strk == null){
+            strk = new BasicStroke(1.0F, 1, 1);
+        }
+        g2d.setColor(color);
+        g2d.setStroke(strk);
+        AffineTransform at = g2d.getTransform();
+        at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+        g2d.setTransform(at);
+        g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.translate(componentlocation[0], componentlocation[1]);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.draw(shape);

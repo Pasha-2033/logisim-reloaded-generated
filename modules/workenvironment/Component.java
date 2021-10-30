@@ -547,19 +547,19 @@ public class Component extends JPanel {
     public final void setArcData(List<Object[]> ArcData){
         this.ArcData = ArcData;
     }
-    public final void setArcData(int x, int y, int w, int h, int startAngle, int arcAngle, Color color, Stroke strk, int index){
+    public final void setArcData(String mode, int x, int y, int w, int h, int startAngle, int arcAngle, Color color, Stroke strk, int index){
         try {
-            ArcData.set(index, new Object[]{x, y, w, h, startAngle, arcAngle, color, strk});
+            ArcData.set(index, new Object[]{mode, x, y, w, h, startAngle, arcAngle, color, strk});
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public final void addArcData(int x, int y, int w, int h, int startAngle, int arcAngle, Color color, Stroke strk){
-        ArcData.add(new Object[]{x, y, w, h, startAngle, arcAngle, color, strk});
+    public final void addArcData(String mode, int x, int y, int w, int h, int startAngle, int arcAngle, Color color, Stroke strk){
+        ArcData.add(new Object[]{mode, x, y, w, h, startAngle, arcAngle, color, strk});
     }
-    public final void addArcData(int x, int y, int w, int h, int startAngle, int arcAngle, Color color, Stroke strk, int index){
+    public final void addArcData(String mode, int x, int y, int w, int h, int startAngle, int arcAngle, Color color, Stroke strk, int index){
         try {
-            ArcData.add(new Object[]{x, y, w, h, startAngle, arcAngle, color, strk});
+            ArcData.add(new Object[]{mode, x, y, w, h, startAngle, arcAngle, color, strk});
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -571,9 +571,9 @@ public class Component extends JPanel {
             e.printStackTrace();
         }
     }
-    public final void removeArcData(int x, int y, int w, int h, int startAngle, int arcAngle, Color color, Stroke strk){
+    public final void removeArcData(String mode, int x, int y, int w, int h, int startAngle, int arcAngle, Color color, Stroke strk){
         try {
-            ArcData.remove(new Object[]{x, y, w, h, startAngle, arcAngle, color, strk});
+            ArcData.remove(new Object[]{mode, x, y, w, h, startAngle, arcAngle, color, strk});
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -779,7 +779,7 @@ public class Component extends JPanel {
             }
         }
         for(Object[] object : ArcData){
-            Shape transformed = new AffineTransform().createTransformedShape(new Arc2D.Float((float)(int) object[0], (float)(int) object[1], (float)(int) object[2], (float)(int) object[3], (float)(int) object[4], (float)(int) object[5], Arc2D.OPEN));
+            Shape transformed = new AffineTransform().createTransformedShape(new Arc2D.Float((float)(int) object[1], (float)(int) object[2], (float)(int) object[3], (float)(int) object[4], (float)(int) object[5], (float)(int) object[6], Arc2D.OPEN));
             tmp.add(transformed.getBounds());
         }
         for(Object[] object : ShapeData){
@@ -797,10 +797,10 @@ public class Component extends JPanel {
     }
     //стандартные функции компоента, чтобы при вызове их у компонента не вызывало ошибку
     public final void start(){
-        init();
+        updatebounds(null);
         startcode();
     }
-    public void startcode(){}
+    public void startcode(){};
     public final void prestep(){
         if (WorkEnvironmentMain.isStepavaluable){
             WorkEnvironmentMain.excitationparser.addStepedComponent(this);
@@ -814,8 +814,5 @@ public class Component extends JPanel {
         if (intercomponentsandsircuts.size() > 0){
             isSircut = true;
         }
-    }
-    public final void init(){
-        updatebounds(null);
     }
 }

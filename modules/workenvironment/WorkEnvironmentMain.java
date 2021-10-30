@@ -36,6 +36,7 @@ import modules.methods.LayoutManagers.ScaleFrameButtonsLayout;
 import modules.methods.Listeners.ComponentListener;
 import modules.methods.Listeners.ComponentTreeListener;
 import modules.methods.Parsers.ExcitationParser;
+import modules.standartcomponent.elements.AND;
 import modules.standartcomponent.elements.mainelements;
 import modules.standartcomponent.wires.ground;
 import modules.standartcomponent.wires.mainwires;
@@ -95,6 +96,8 @@ public class WorkEnvironmentMain {
         addComponent(new ground(), 50, 50);
         addComponent(new power(), 200, 200);
         addComponent(new resistor(), 300, 300);
+        addComponent(new AND(), 250, 250);
+        //currentSircut.getintercomponentsandsircuts().get(4).setRotation(45);
         //конец тестовой закачки ===========================================================================
         mainframe.pack();
         //обновляем компоненты для работы с ними
