@@ -3,6 +3,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import modules.workenvironment.WorkEnvironmentMain;
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        System.setProperty("file.encoding","UTF-8");
         workenvironment = new WorkEnvironmentMain();
     }
     public static WorkEnvironmentMain workenvironment;

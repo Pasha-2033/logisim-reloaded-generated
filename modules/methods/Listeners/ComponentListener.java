@@ -81,7 +81,9 @@ public class ComponentListener extends MouseInputAdapter{
             for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
                 for (Port port : component.getPorts()){
                     //доделать условие, чтобы при повороте менялись координаты порта
-                    if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x - port.location[0] + component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y - port.location[1] + component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5) {
+                    int xp = Port.rotatedPort(port)[0];
+                    int yp = Port.rotatedPort(port)[1];
+                    if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x - xp - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y - yp - component.getComponentLocation()[1]) < 5) {
                         fromport = true;
                         break;
                     }
@@ -186,7 +188,9 @@ public class ComponentListener extends MouseInputAdapter{
             boolean fromport = false;
             for (Component component : WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts()){
                 for (Port port : component.getPorts()){
-                    if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x - port.location[0] + component.getRotationFlag()[0] - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y - port.location[1] + component.getRotationFlag()[1] - component.getComponentLocation()[1]) < 5){
+                    int xp = Port.rotatedPort(port)[0];
+                    int yp = Port.rotatedPort(port)[1];
+                    if (Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.x - xp - component.getComponentLocation()[0]) < 5 && Math.abs(WorkEnvironmentMain.absolutemousePressedPoint.y - yp - component.getComponentLocation()[1]) < 5){
                         fromport = true;
                         break;
                     }
@@ -295,7 +299,7 @@ public class ComponentListener extends MouseInputAdapter{
         if (e.getWheelRotation() < 0){
             if (WorkEnvironmentMain.Scale < 10.0F) WorkEnvironmentMain.Scale += 0.1F;
         } else {
-            if (WorkEnvironmentMain.Scale > 0.2F) WorkEnvironmentMain.Scale -= 0.1F;
+            if (WorkEnvironmentMain.Scale > 0.1F) WorkEnvironmentMain.Scale -= 0.1F;
         }
         Main.workenvironment.updateWorkplaceDimensionAndRerenderAll();
     }

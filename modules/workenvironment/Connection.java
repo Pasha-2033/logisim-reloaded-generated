@@ -47,6 +47,12 @@ public class Connection {
             connection.refreshData();
         }
     }
+    public static final void deleteConnection(Connection connection){
+        for (Port port : connection.ports){
+            connection.removePort(port);
+        }
+        connection.Data = null;
+    }
     public void refreshData(){
         Data = newData();
         for (Port port : ports){

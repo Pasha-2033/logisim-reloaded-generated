@@ -1,10 +1,13 @@
 package modules.gui;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+
+import javax.sound.sampled.Port;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import mainclassfolder.Main;
+import modules.methods.Parsers.PortParser;
 import modules.workenvironment.WorkEnvironmentMain;
 public class Buttons {
     //я не понимаю, почему нет текста?! почему он не устанавливается?!
@@ -49,6 +52,7 @@ public class Buttons {
             @Override
             public void actionPerformed(ActionEvent e) {
                 WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts().get(4).setRotation(WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts().get(4).getRotation() - 5);
+                WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts().get(0).setRotation(WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts().get(0).getRotation() - 5);
                 if (!WorkEnvironmentMain.DotsThere){
                     WorkEnvironmentMain.dots.setVisible(true);
                     WorkEnvironmentMain.DotsThere = true;

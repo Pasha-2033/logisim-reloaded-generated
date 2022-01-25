@@ -14,7 +14,7 @@ public class resistor extends Component {
         //дождаться переделки в drawcomponent для polyline и фиксануть все
         setRotationFlag(30, 32);
         addPort(new Port(30, 32, true, true, this));
-        addTextData("center", 30, 0, "1", ColorList.GREEN[0], 0, new Font("TimesRoman", Font.PLAIN, 8));
+        addTextData("center", 30, -2, "1", ColorList.GREEN[0], 0, new Font("TimesRoman", Font.BOLD, 10));
         addLineData(23, 2, 37, 2,  ColorList.GREEN[0], new BasicStroke(2.0F, 0, 0));
         addLineData(30, 5, 30, 2,  ColorList.GREEN[0], new BasicStroke(2.0F, 1, 0));
         addLineData(30, 27, 30, 32, ColorList.GRAY[1], new BasicStroke(2.0F, 1, 0));

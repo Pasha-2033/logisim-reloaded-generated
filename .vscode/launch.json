@@ -15,7 +15,7 @@
             "type": "java",
             "name": "Launch Java Program",
             "request": "launch",
-            "mainClass": "mainclassfolder.Main"
+            "mainClass": "mainclassfolder.Main",
         },
         {
             "type": "java",

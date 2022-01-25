@@ -50,6 +50,14 @@ public class Port implements Cloneable{
         updateColor();
         if (belongsto.isconnectable()) new Connection(this);
     }
+    public static int[] rotatedPort(Port port){
+        int x = (int) Math.round((port.location[0] - port.belongsto.getRotationFlag()[0]) * Math.cos(-Math.toRadians(port.belongsto.getRotation())) - (port.location[1] - port.belongsto.getRotationFlag()[1]) * Math.sin(-Math.toRadians(port.belongsto.getRotation())));
+        int y = (int) Math.round((port.location[1] - port.belongsto.getRotationFlag()[1]) * Math.cos(-Math.toRadians(port.belongsto.getRotation())) + (port.location[0] - port.belongsto.getRotationFlag()[0]) * Math.sin(-Math.toRadians(port.belongsto.getRotation())));
+        return new int[]{x, y};
+    }
+    public int[] rotatedPort(){
+        return rotatedPort(this);
+    }
     public final void updateColor(){
         if (Data.size() == 1) {
             if (Data.get(0).size() == 1){

@@ -8,7 +8,7 @@ import modules.workenvironment.Component;
 import modules.workenvironment.Port;
 public class AND extends Component {
     public AND(){
-        super("power", new ImageIcon("resources/componenticon/wires/power.gif"));
+        super("AND", new ImageIcon("resources/componenticon/wires/power.gif"));
         setPowerData();
     }
     private void setPowerData(){
@@ -39,15 +39,14 @@ public class AND extends Component {
     }
     @Override
     public void step(){
-        ComponentAttribute.multySubData(getPorts(), this::funk, 1, 1);
         if(getPorts().get(0).connection.ports.size() < 2){
             getPorts().get(0).setdata(Port.multyData(1, "X"));
-            prestep();
         }
         if(getPorts().get(1).connection.ports.size() < 2){
             getPorts().get(1).setdata(Port.multyData(1, "X"));
-            prestep();
         }
+        ComponentAttribute.multySubData(getPorts(), this::funk, 1, 1);
+        System.out.println(Port.rotatedPort(getPorts().get(0))[0] + ":" + Port.rotatedPort(getPorts().get(0))[1]);
     }
     public void funk(List<Port> ports, int step, int substep){
         //дописать
