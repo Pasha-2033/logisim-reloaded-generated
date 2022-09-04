@@ -14,7 +14,7 @@ import modules.workenvironment.WorkEnvironmentMain;
 public class DrawMethods extends JComponent {
     public static final Stroke StrokeRerender(Stroke stroke){
         BasicStroke strk = (BasicStroke) stroke;
-        return (Stroke) new BasicStroke(strk.getLineWidth() * WorkEnvironmentMain.Scale, strk.getEndCap(), strk.getLineJoin(), strk.getMiterLimit(), strk.getDashArray(), strk.getDashPhase());
+        return (Stroke) new BasicStroke(strk.getLineWidth() * WorkEnvironmentMain.scale, strk.getEndCap(), strk.getLineJoin(), strk.getMiterLimit(), strk.getDashArray(), strk.getDashPhase());
     }
     public static final Graphics2D GtoG2D(Graphics g){
         return (Graphics2D) g.create();
@@ -31,7 +31,7 @@ public class DrawMethods extends JComponent {
             g2d.setStroke(StrokeRerender(strk));
         }
         AffineTransform at = g2d.getTransform();
-        at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+        at.scale(WorkEnvironmentMain.scale, WorkEnvironmentMain.scale);
         g2d.setTransform(at);
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.translate(componentlocation[0], componentlocation[1]);
@@ -45,7 +45,7 @@ public class DrawMethods extends JComponent {
             g2d.setStroke(StrokeRerender(strk));
         }
         AffineTransform at = g2d.getTransform();
-        at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+        at.scale(WorkEnvironmentMain.scale, WorkEnvironmentMain.scale);
         g2d.setTransform(at);
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.translate(componentlocation[0], componentlocation[1]);
@@ -56,7 +56,7 @@ public class DrawMethods extends JComponent {
     }
     public static final void fillRect(Graphics2D g2d, int[] componentlocation, int x, int y, int w, int h, Color color, int rotation){
         AffineTransform at = g2d.getTransform();
-        at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+        at.scale(WorkEnvironmentMain.scale, WorkEnvironmentMain.scale);
         g2d.setTransform(at);
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.translate(componentlocation[0], componentlocation[1]);
@@ -71,7 +71,7 @@ public class DrawMethods extends JComponent {
                 g2d.setStroke(StrokeRerender(strk));
             }
             AffineTransform at = g2d.getTransform();
-            at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+            at.scale(WorkEnvironmentMain.scale, WorkEnvironmentMain.scale);
             g2d.setTransform(at);
             g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
             g2d.translate(componentlocation[0], componentlocation[1]);
@@ -84,7 +84,7 @@ public class DrawMethods extends JComponent {
     public static final void fillPoly(Graphics2D g2d, int[] componentlocation, int[] PolyX, int[] PolyY, Color color, int rotation){
         if (PolyX.length == PolyY.length) {
             AffineTransform at = g2d.getTransform();
-            at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+            at.scale(WorkEnvironmentMain.scale, WorkEnvironmentMain.scale);
             g2d.setTransform(at);
             g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
             g2d.translate(componentlocation[0], componentlocation[1]);
@@ -99,7 +99,7 @@ public class DrawMethods extends JComponent {
             g2d.setStroke(StrokeRerender(strk));
         }
         AffineTransform at = g2d.getTransform();
-        at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+        at.scale(WorkEnvironmentMain.scale, WorkEnvironmentMain.scale);
         g2d.setTransform(at);
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.translate(componentlocation[0], componentlocation[1]);
@@ -110,7 +110,7 @@ public class DrawMethods extends JComponent {
     }
     public static final void fillOval(Graphics2D g2d, int[] componentlocation, int x, int y, int w, int h, Color color, int rotation){
         AffineTransform at = g2d.getTransform();
-        at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+        at.scale(WorkEnvironmentMain.scale, WorkEnvironmentMain.scale);
         g2d.setTransform(at);
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.translate(componentlocation[0], componentlocation[1]);
@@ -121,7 +121,7 @@ public class DrawMethods extends JComponent {
     }
     public static final void drawString(Graphics2D g2d, int[] location, int[] componentlocation, String text, Color color, int rotation){
         AffineTransform at = g2d.getTransform();
-        at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+        at.scale(WorkEnvironmentMain.scale, WorkEnvironmentMain.scale);
         g2d.setColor(color);
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.translate(componentlocation[0], componentlocation[1]);
@@ -132,7 +132,7 @@ public class DrawMethods extends JComponent {
     }
     public static final void drawString(Graphics2D g2d, int[] location, int[] componentlocation, String text, Color color, int rotation, Font font){
         AffineTransform at = g2d.getTransform();
-        at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+        at.scale(WorkEnvironmentMain.scale, WorkEnvironmentMain.scale);
         g2d.setTransform(at);
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.translate(componentlocation[0], componentlocation[1]);
@@ -147,7 +147,7 @@ public class DrawMethods extends JComponent {
             g2d.setStroke(StrokeRerender(strk));
         }
         AffineTransform at = g2d.getTransform();
-        at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+        at.scale(WorkEnvironmentMain.scale, WorkEnvironmentMain.scale);
         g2d.setTransform(at);
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.setColor(color);
@@ -164,7 +164,7 @@ public class DrawMethods extends JComponent {
             g2d.setStroke(StrokeRerender(strk));
         }
         AffineTransform at = g2d.getTransform();
-        at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+        at.scale(WorkEnvironmentMain.scale, WorkEnvironmentMain.scale);
         g2d.setTransform(at);
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.translate(componentlocation[0], componentlocation[1]);
@@ -175,7 +175,7 @@ public class DrawMethods extends JComponent {
     }
     public static final void fillArc(Graphics2D g2d, int x, int y, int w, int h, int startAngle, int arcAngle, int[] componentlocation, Color color, int rotation){
         AffineTransform at = g2d.getTransform();
-        at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+        at.scale(WorkEnvironmentMain.scale, WorkEnvironmentMain.scale);
         g2d.setTransform(at);
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.translate(componentlocation[0], componentlocation[1]);
@@ -189,7 +189,7 @@ public class DrawMethods extends JComponent {
             g2d.setStroke(StrokeRerender(strk));
         }
         AffineTransform at = g2d.getTransform();
-        at.scale(WorkEnvironmentMain.Scale, WorkEnvironmentMain.Scale);
+        at.scale(WorkEnvironmentMain.scale, WorkEnvironmentMain.scale);
         g2d.setTransform(at);
         g2d.rotate(-Math.toRadians(rotation), componentlocation[0], componentlocation[1]);
         g2d.translate(componentlocation[0], componentlocation[1]);

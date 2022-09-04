@@ -4,18 +4,18 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
 public class ScaleFrameButtonsLayout implements LayoutManager{
-    private final int VALUE = 60; //настроить
+    private static final int WIDTH = 60; //настроить
     public void addLayoutComponent(String name, Component comp) {}
     public void removeLayoutComponent(Component comp) {}
     public ScaleFrameButtonsLayout(){}
     public Dimension preferredLayoutSize(Container parent) {
-        return new Dimension(VALUE, 50);
+        return new Dimension(WIDTH, 50);
     }
     public Dimension minimumLayoutSize(Container parent) {
-        return new Dimension(VALUE, 50);
+        return new Dimension(WIDTH, 50);
     }
     public Dimension maximumLayoutSize(Container container) {
-        return new Dimension(VALUE, 50);
+        return new Dimension(WIDTH, 50);
     }
     public void layoutContainer(Container container) {
         Component list[] = container.getComponents();

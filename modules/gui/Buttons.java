@@ -1,13 +1,9 @@
 package modules.gui;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-
-import javax.sound.sampled.Port;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import mainclassfolder.Main;
-import modules.methods.Parsers.PortParser;
 import modules.workenvironment.WorkEnvironmentMain;
 public class Buttons {
     //я не понимаю, почему нет текста?! почему он не устанавливается?!
@@ -20,9 +16,9 @@ public class Buttons {
         public class UPScaleAction extends AbstractAction {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (WorkEnvironmentMain.Scale < 10.0F){
-                    WorkEnvironmentMain.Scale += 0.1F;
-                    Main.workenvironment.updateWorkplaceDimensionAndRerenderAll();
+                if (WorkEnvironmentMain.scale < 10.0F){
+                    WorkEnvironmentMain.scale += 0.1F;
+                    WorkEnvironmentMain.scalelabel.setText(String.valueOf(Math.round(WorkEnvironmentMain.scale * 100)) + "%");
                 }
             }
         }
@@ -36,9 +32,9 @@ public class Buttons {
         public class DOWNScaleAction extends AbstractAction {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (WorkEnvironmentMain.Scale > 0.1F){
-                    WorkEnvironmentMain.Scale -= 0.1F;
-                    Main.workenvironment.updateWorkplaceDimensionAndRerenderAll();
+                if (WorkEnvironmentMain.scale > 0.1F){
+                    WorkEnvironmentMain.scale -= 0.1F;
+                    WorkEnvironmentMain.scalelabel.setText(String.valueOf(Math.round(WorkEnvironmentMain.scale * 100)) + "%");
                 }
             }
         }
@@ -51,15 +47,12 @@ public class Buttons {
         public class DoteButtonAction extends AbstractAction {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts().get(4).setRotation(WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts().get(4).getRotation() - 5);
-                WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts().get(0).setRotation(WorkEnvironmentMain.currentSircut.getintercomponentsandsircuts().get(0).getRotation() - 5);
-                if (!WorkEnvironmentMain.DotsThere){
+                if (!WorkEnvironmentMain.dotsthere){
                     WorkEnvironmentMain.dots.setVisible(true);
-                    WorkEnvironmentMain.DotsThere = true;
-                }else {
+                } else {
                     WorkEnvironmentMain.dots.setVisible(false);
-                    WorkEnvironmentMain.DotsThere = false;
                 }
+                WorkEnvironmentMain.dotsthere = !WorkEnvironmentMain.dotsthere;
             }
         }
     }

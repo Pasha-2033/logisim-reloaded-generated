@@ -4,8 +4,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
 public class ComponentLayoutManager implements LayoutManager{
-    private final int MAX_VALUE = 2147483647;
-    private final int MIN_VALUE = 0;
     private Dimension Size = new Dimension(500, 500);
     public void addLayoutComponent(String name, Component component){}
     public void removeLayoutComponent(Component component) {}
@@ -14,13 +12,13 @@ public class ComponentLayoutManager implements LayoutManager{
         this.Size = Size;
     }
     public Dimension minimumLayoutSize(Container container) {
-        return new Dimension(MIN_VALUE, MIN_VALUE);
+        return new Dimension(0, 0);
     }
     public Dimension preferredLayoutSize(Container container) {
         return Size;
     }
     public Dimension maximumLayoutSize(Container container) {
-        return new Dimension(MAX_VALUE, MAX_VALUE);
+        return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
     }
     public void layoutContainer(Container container){
         Component list[] = container.getComponents();

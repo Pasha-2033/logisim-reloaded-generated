@@ -65,15 +65,5 @@ public class ComponentAttribute {
     public final void setmaxLimit(Double maxLimit){
         if (maxLimit >= Double.valueOf(0) && maxLimit < Double.MAX_VALUE) this.maxLimit = maxLimit;
     }
-    public interface LambdaFunc{
-        void step(List<Port> ports, int step, int substep);
-    }
-    public static final void multySubData(List<Port> Ports, LambdaFunc func, int size, int width){
-        for (int step = 0; step < size; step++){
-            for (int substep = 0; substep < width; substep++){
-                func.step(Ports, step, substep);
-            }
-        }
-    }
     //можно еще шаблонов понаписать
 }

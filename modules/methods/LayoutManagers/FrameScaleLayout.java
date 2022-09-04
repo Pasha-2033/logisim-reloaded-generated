@@ -4,19 +4,17 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
 public class FrameScaleLayout implements LayoutManager{
-    private final int MAX_VALUE = 2147483647;
-    private final int MIN_VALUE = 0;
     public void addLayoutComponent(String name, Component component){}
     public void removeLayoutComponent(Component component) {}
     public FrameScaleLayout(){}
     public Dimension minimumLayoutSize(Container container) {
-        return new Dimension(MIN_VALUE, MIN_VALUE);
+        return new Dimension(0, 0);
     }
     public Dimension preferredLayoutSize(Container container) {
         return new Dimension(container.getWidth(), 30);
     }
     public Dimension maximumLayoutSize(Container container) {
-        return new Dimension(MAX_VALUE, MAX_VALUE);
+        return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
     }
     public void layoutContainer(Container container){
         Component list[] = container.getComponents();
